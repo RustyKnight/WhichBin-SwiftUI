@@ -1,0 +1,54 @@
+{
+   "type":"FeatureCollection",
+   "name":"Frankston City Council Garbage Collection Zones",
+   "features":[
+      {
+         "type":"Feature",
+         "geometry":{
+            "type":"MultiPolygon",
+            "coordinates":[
+               [
+                  [
+                     [
+                        145.205084864,
+                        -38.1446568331
+                     ],
+                     [
+                        145.2283478639,
+                        -38.1339348919
+                     ],
+                  ]
+               ],
+               [
+                  [
+                     [
+                        145.1276778363,
+                        -38.1410418565
+                     ],
+                     [
+                        145.1275398365,
+                        -38.1415928514
+                     ]
+                  ]
+               ]
+            ]
+         },
+         "properties":{
+            "rub_day":"Tuesday",
+            "rub_weeks":1,
+            "rub_start":"20170103",
+            "rec_day":"Tuesday",
+            "rec_weeks":2,
+            "rec_start":"20120110",
+            "grn_day":"Tuesday",
+            "grn_weeks":2,
+            "grn_start":"20120103",
+            "gls_day":"Tuesday",
+            "gls_weeks":4,
+            "gls_start":"20231010",
+            "Click for more information":"https://www.frankston.vic.gov.au/Environment-and-Waste/Waste-and-Recycling/Bin-Information",
+            "missed_ph":"1300 322 322"
+         }
+      }
+   ]
+}

@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  WhichBin-SwiftUI
+
+  Created by Shane Whitehead on 14/1/2024.
+  
+*/
+
+"previous-week" = "Previous week";
+"next-week" = "Next week";
+"no-events" = "No are no events within your specified location/period";
+"today" = "Today";
+
+"event-rubbish" = "Rubbish";
+"event-recycle" = "Recycle";
+"event-green" = "Green Waste";
+"event-glass" = "Glass";
+
+"in-number-of-days %@" = "in %@";
