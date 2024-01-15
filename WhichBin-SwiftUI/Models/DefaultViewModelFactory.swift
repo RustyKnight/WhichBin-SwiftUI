@@ -12,6 +12,7 @@ import WhichBinLib
 
 struct DefaultViewModelFactory: ViewModelFactory {
     private let dataSourceURL = URL(string: "https://data.gov.au/data/dataset/0af93e4d-4ef7-4d45-855b-364039c52f98/resource/172777d4-b8dc-4579-a268-acf836da4362/download/frankston-city-council-garbage-collection-zones.json")!
+    // Could replace `home` with CLLocationCoordinate2D(latitude: -38.1468737, longitude: 145.1201503,17)
     private let home = Secrets.home
     
     func make() async throws -> ViewModel {

@@ -32,6 +32,8 @@
 		700E3B692B55E74300F9AA5D /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700E3B682B55E74300F9AA5D /* RoundedCorner.swift */; };
 		700E3B6D2B55E76800F9AA5D /* LoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700E3B6B2B55E76800F9AA5D /* LoadView.swift */; };
 		700E3B6E2B55E76800F9AA5D /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700E3B6C2B55E76800F9AA5D /* ScheduleView.swift */; };
+		70C19F572B55E98E0005D9A5 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C19F562B55E98E0005D9A5 /* Secrets.swift */; };
+		70C19F5B2B55E9CA0005D9A5 /* WhichBinLib in Frameworks */ = {isa = PBXBuildFile; productRef = 70C19F5A2B55E9CA0005D9A5 /* WhichBinLib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +84,8 @@
 		700E3B6B2B55E76800F9AA5D /* LoadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadView.swift; sourceTree = "<group>"; };
 		700E3B6C2B55E76800F9AA5D /* ScheduleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		700E3B6F2B55E7BD00F9AA5D /* WhichBinLib */ = {isa = PBXFileReference; lastKnownFileType = text; path = WhichBinLib; sourceTree = SOURCE_ROOT; };
+		70C19F562B55E98E0005D9A5 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		70C19F582B55E9C20005D9A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70C19F5B2B55E9CA0005D9A5 /* WhichBinLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,10 +117,12 @@
 		700E3B0F2B55E21B00F9AA5D = {
 			isa = PBXGroup;
 			children = (
+				700E3B6F2B55E7BD00F9AA5D /* WhichBinLib */,
 				700E3B1A2B55E21B00F9AA5D /* WhichBin-SwiftUI */,
 				700E3B2C2B55E21C00F9AA5D /* WhichBin-SwiftUITests */,
 				700E3B362B55E21C00F9AA5D /* WhichBin-SwiftUIUITests */,
 				700E3B192B55E21B00F9AA5D /* Products */,
+				70C19F592B55E9CA0005D9A5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -132,6 +139,7 @@
 		700E3B1A2B55E21B00F9AA5D /* WhichBin-SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				70C19F582B55E9C20005D9A5 /* Info.plist */,
 				700E3B212B55E21C00F9AA5D /* WhichBin_SwiftUI.entitlements */,
 				700E3B1B2B55E21B00F9AA5D /* WhichBin_SwiftUIApp.swift */,
 				700E3B462B55E26900F9AA5D /* Assets */,
@@ -210,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				700E3B682B55E74300F9AA5D /* RoundedCorner.swift */,
+				70C19F562B55E98E0005D9A5 /* Secrets.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -217,12 +226,18 @@
 		700E3B6A2B55E75A00F9AA5D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				700E3B6F2B55E7BD00F9AA5D /* WhichBinLib */,
 				700E3B6B2B55E76800F9AA5D /* LoadView.swift */,
 				700E3B6C2B55E76800F9AA5D /* ScheduleView.swift */,
 				700E3B1D2B55E21B00F9AA5D /* ContentView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		70C19F592B55E9CA0005D9A5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +256,9 @@
 			dependencies = (
 			);
 			name = "WhichBin-SwiftUI";
+			packageProductDependencies = (
+				70C19F5A2B55E9CA0005D9A5 /* WhichBinLib */,
+			);
 			productName = "WhichBin-SwiftUI";
 			productReference = 700E3B182B55E21B00F9AA5D /* WhichBin-SwiftUI.app */;
 			productType = "com.apple.product-type.application";
@@ -357,6 +375,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				700E3B602B55E70700F9AA5D /* ViewModel.swift in Sources */,
+				70C19F572B55E98E0005D9A5 /* Secrets.swift in Sources */,
 				700E3B4B2B55E27900F9AA5D /* WhichBin.swift in Sources */,
 				700E3B1E2B55E21B00F9AA5D /* ContentView.swift in Sources */,
 				700E3B552B55E2AF00F9AA5D /* DateFormatter+Common.swift in Sources */,
@@ -538,6 +557,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "WhichBin-SwiftUI/Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -576,6 +596,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "WhichBin-SwiftUI/Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -731,6 +752,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		70C19F5A2B55E9CA0005D9A5 /* WhichBinLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WhichBinLib;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 700E3B102B55E21B00F9AA5D /* Project object */;
 }

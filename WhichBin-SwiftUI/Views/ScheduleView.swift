@@ -29,6 +29,7 @@ struct ScheduleView: View {
             navigationView()
             Divider()
             eventsView()
+            Divider()
             addressView()
         }
     }
