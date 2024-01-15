@@ -2,7 +2,7 @@
 
 # Which Bin
 
-If you’re rubbish collection is anything like mine, you will have multiple bins, each with its own individual schedule of when it needs to be put it.
+If you’re rubbish collection is anything like mine, you will have multiple bins, each with its own individual schedule of when it needs to be put out.
 
 At some point, it all just got a little bit crazy.
 
@@ -21,8 +21,6 @@ This problem allows me the opportunity to experiment with SwiftUI.  It’s a mul
 ![](Snapshots/PrimarySnapshot.png)
 
 While initially, this is looking okay, I would argue that the navigation title on MacOS is a little underwhelming.  Something to look into.
-
-![](Snapshots/Grouped.png)
 
 # What it doesn’t do…
 
