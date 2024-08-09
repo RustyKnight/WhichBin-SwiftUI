@@ -6,16 +6,7 @@
 //
 
 import SwiftUI
-
-private extension DateComponentsFormatter {
-    static var days: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.day]
-        formatter.unitsStyle = .full
-        return formatter
-    }()
-}
-
+import WhichBinLib
 
 struct ScheduleView: View {
     private let gridItems = [
@@ -148,7 +139,7 @@ struct ScheduleView: View {
                 .frame(height: 180)
             HStack {
                 Spacer()
-                Text(LocalizedStringKey(descrptionFor(event: event)))
+                Text(LocalizedStringKey(descriptionFor(event: event)))
                 Spacer()
             }
         }
@@ -169,7 +160,7 @@ struct ScheduleView: View {
         }
     }
     
-    private func descrptionFor(event: EventModel.EventWrapper) -> String {
+    private func descriptionFor(event: EventModel.EventWrapper) -> String {
         switch event.sourceEvent.collectionType {
         case .rubbish: "event-rubbish"
         case .recycling: "event-recycle"

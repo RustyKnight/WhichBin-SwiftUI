@@ -7,15 +7,22 @@
 
 import Foundation
 
-public struct Event {
-    public enum CollectionType {
-        case rubbish
+public func == (lhs: Event, rhs: Event) -> Bool {
+    lhs.collectionType == rhs.collectionType &&
+    lhs.day == rhs.day &&
+    lhs.weeks == rhs.weeks &&
+    lhs.epoch == rhs.epoch
+}
+
+public struct Event: Codable, Hashable, Equatable {
+    public enum CollectionType: Int, Codable {
+        case rubbish = 0
         case recycling
         case green
         case glass
     }
     
-    public enum DayOfWeek: String, Decodable {
+    public enum DayOfWeek: String, Codable {
         case monday = "Monday"
         case tuesday = "Tuesday"
         case wednesday = "Wednesday"
@@ -41,6 +48,13 @@ public struct Event {
     public let weeks: Int
     public let epoch: Date
     public let collectionType: CollectionType
+
+    public init(day: DayOfWeek, weeks: Int, epoch: Date, collectionType: CollectionType) {
+        self.day = day
+        self.weeks = weeks
+        self.epoch = epoch
+        self.collectionType = collectionType
+    }
 }
 
 public extension Event {

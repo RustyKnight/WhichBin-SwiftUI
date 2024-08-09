@@ -112,3 +112,14 @@ public extension Date {
         return (min(date1, date2) ... max(date1, date2)).contains(self)
     }
 }
+
+public extension DateFormatter {
+    static var shortDayFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        formatter.timeZone = .current
+        formatter.locale = .current
+        return formatter
+    }()
+}
