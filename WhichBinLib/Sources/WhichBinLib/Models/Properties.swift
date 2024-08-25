@@ -89,4 +89,8 @@ struct Properties: Decodable {
             collectionType: collectionType
         )
     }
+    
+    static func date(from value: String) -> Date? {
+        return eventDateFormatter.date(from: value)
+    }
 }

@@ -17,3 +17,4 @@
 "event-glass" = "Glass";
 
 "in-number-of-days %@" = "in %@";
+"in-days" = "in";

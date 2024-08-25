@@ -13,6 +13,7 @@ import WhichBinLib
 struct WidgetsAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         // Dynamic stateful properties about your activity go here!
+        var date: Date
         var events: [Event]
     }
 
@@ -20,16 +21,16 @@ struct WidgetsAttributes: ActivityAttributes {
     var name: String
 }
 
-extension ActivityViewContext where Attributes == WidgetsAttributes {
-    var date: Date {
-        state.events.first?.nextDate ?? Date().startOfDay.next(.wednesday)
-    }
-}
+//extension ActivityViewContext where Attributes == WidgetsAttributes {
+//    var date: Date {
+//        state.events.first?.nextDate ?? Date().startOfDay.next(.wednesday)
+//    }
+//}
 
 struct WidgetsLiveActivity: Widget {
     static var dayOfWeekFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEE dd MMM"
+        formatter.dateFormat = "EEEE"
         formatter.locale = .current
         formatter.timeZone = .current
         return formatter
@@ -41,8 +42,8 @@ struct WidgetsLiveActivity: Widget {
             VStack {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("\(WidgetsLiveActivity.dayOfWeekFormatter.string(from: context.date))")
-                        inNumberOfDaysView(from: context.date)
+                        Text(context.state.date, format: .dateTime.weekday(.wide))
+                        inNumberOfDaysView(from: context.state.date)
                     }
                     Spacer()
                     HStack {
@@ -50,6 +51,12 @@ struct WidgetsLiveActivity: Widget {
                             viewFor(event: event)
                         }
                     }
+//                    .padding()
+//                    .background(
+//                        Color.cellFill
+//                            .opacity(0.2)
+//                    )
+//                    .clipShape(RoundedRectangle(cornerRadius: 16))
                 }
                 .padding()
                 //Text("Hello \(context.state.events.count)")
@@ -84,49 +91,37 @@ struct WidgetsLiveActivity: Widget {
     }
 
     private func inNumberOfDaysView(from date: Date) -> some View {
-        let duration = Date.today.startOfDay.distance(to: date)
-        if duration > 0 {
-            return AnyView(
-                Text("in-number-of-days \(DateComponentsFormatter.days.string(from: duration) ?? "---")")
-                    .font(.footnote)
-            )
-        } else if duration == 0 {
-            return AnyView(
-                Text("today")
-            )
+        HStack {
+            Text("in-number-of-days \(date.startOfDay, style: .relative)")
         }
-        return AnyView(Text("---"))
+//        let duration = Date.today.startOfDay.distance(to: date)
+//        if duration > 0 {
+//            return AnyView(
+//                //Text("in-number-of-days \(DateComponentsFormatter.days.string(from: duration) ?? "---")")
+//                Text(date, style: .relative)
+//                    .font(.footnote)
+//            )
+//        } else if duration == 0 {
+//            return AnyView(
+//                Text("today")
+//            )
+//        }
+//        return AnyView(Text("---"))
     }
 
     private func viewFor(event: IdentifiableEvent) -> some View {
-        Rectangle()
-            .fill(Color.red)
-            .frame(width: 48, height: 48)
-//        VStack {
-//            imageFor(event: event.sourceEvent)
-//                .resizable()
-//                .aspectRatio(contentMode: .fit)
-//                .frame(height: 24)
-////            HStack {
-////                Spacer()
-////                Text(LocalizedStringKey(descriptionFor(event: event.)))
-////                Spacer()
-////            }
-//        }
-//        .padding()
-//        .background(
-//            Color.cellFill
-//                .opacity(0.9)
-//        )
-//        .clipShape(RoundedRectangle(cornerRadius: 16))
+            imageFor(event: event.sourceEvent)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 36)
     }
 
     private func imageFor(event: Event) -> Image {
         switch event.collectionType {
-        case .rubbish: Image(.redBin)
-        case .recycling: Image(.yellowBin)
-        case .green: Image(.greenBin)
-        case .glass: Image(.purpleBin)
+        case .rubbish: Image(.redBinVector)
+        case .recycling: Image(.yellowBinVector)
+        case .green: Image(.greenBinVector)
+        case .glass: Image(.purpleBinVector)
         }
     }
 }
@@ -139,13 +134,41 @@ extension WidgetsAttributes {
 
 extension WidgetsAttributes.ContentState {
     fileprivate static var smiley: WidgetsAttributes.ContentState {
-        WidgetsAttributes.ContentState(events: [
-            Event(day: .wednesday, weeks: 1, epoch: Date(), collectionType: .rubbish)
-        ])
+        WidgetsAttributes.ContentState(
+            date: Date().next(.wednesday).startOfDay,
+            events: [
+                Event(
+                    day: .wednesday,
+                    weeks: 1,
+                    epoch: Support.rubbishEpoch,
+                    collectionType: .rubbish
+                ),
+                Event(
+                    day: .wednesday,
+                    weeks: 1,
+                    epoch: Support.glassEpoch,
+                    collectionType: .glass
+                ),
+                Event(
+                    day: .wednesday,
+                    weeks: 1,
+                    epoch: Support.recyleEpoch,
+                    collectionType: .recycling
+                ),
+                Event(
+                    day: .wednesday,
+                    weeks: 1,
+                    epoch: Support.greenEpoch,
+                    collectionType: .green
+                )
+            ])
      }
      
      fileprivate static var starEyes: WidgetsAttributes.ContentState {
-         WidgetsAttributes.ContentState(events: [])
+         WidgetsAttributes.ContentState(
+            date: Date().next(.wednesday).startOfDay,
+            events: []
+         )
      }
 }
 

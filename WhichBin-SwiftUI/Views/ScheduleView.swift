@@ -10,11 +10,11 @@ import WhichBinLib
 
 struct ScheduleView: View {
     private let gridItems = [
-        GridItem(.adaptive(minimum: 180)),
+        GridItem(.adaptive(minimum: 150)),
     ]
-    
+
     @StateObject var model: ViewModel
-    
+
     var body: some View {
         VStack {
             navigationView()
@@ -24,7 +24,7 @@ struct ScheduleView: View {
             addressView()
         }
     }
-    
+
     private func navigationView() -> some View {
         HStack {
             Button {
@@ -33,7 +33,7 @@ struct ScheduleView: View {
                 Image(systemName: "chevron.left")
             }
             .help("previous-week")
-            
+
             Spacer()
             VStack {
                 Text(DateFormatter.fullDate.string(from: Date.today))
@@ -45,7 +45,7 @@ struct ScheduleView: View {
                 .font(.caption)
             }
             Spacer()
-            
+
             Button {
                 model.nextWeek()
             } label: {
@@ -55,17 +55,17 @@ struct ScheduleView: View {
         }
         .padding()
     }
-    
+
     private func eventsView() -> some View {
         let events = model.events.eventsWithinPeriod()
-        
+
         guard !events.isEmpty else {
             return AnyView(noEventsView())
         }
-        
+
         let groupedEvents = Dictionary(grouping: events) { $0.date }
         let sortedKeys = Array(groupedEvents.keys).sorted { $0 > $1 }
-        
+
         return AnyView(
             ScrollView {
                 LazyVGrid(columns: gridItems, alignment: .leading, spacing: 8) {
@@ -97,10 +97,11 @@ struct ScheduleView: View {
                         }
                     }
                 }
+                .padding(.horizontal)
             }
         )
     }
-    
+
     private func inNumberOfDaysView(from date: Date) -> some View {
         let duration = Date.today.distance(to: date)
         if duration > 0 {
@@ -115,7 +116,7 @@ struct ScheduleView: View {
         }
         return AnyView(EmptyView())
     }
-    
+
     private func noEventsView() -> some View {
         VStack(alignment: .center) {
             Spacer()
@@ -124,19 +125,19 @@ struct ScheduleView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 64)
                 .foregroundStyle(.yellow)
-                Text("no-events")
-                    .font(.title)
-                    .multilineTextAlignment(.center)
+            Text("no-events")
+                .font(.title)
+                .multilineTextAlignment(.center)
             Spacer()
         }
     }
-    
+
     private func viewFor(event: EventModel.EventWrapper) -> some View {
         VStack {
             imageFor(event: event)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(height: 180)
+                .frame(height: 125)
             HStack {
                 Spacer()
                 Text(LocalizedStringKey(descriptionFor(event: event)))
@@ -150,16 +151,16 @@ struct ScheduleView: View {
         )
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
-    
+
     private func imageFor(event: EventModel.EventWrapper) -> Image {
         switch event.sourceEvent.collectionType {
-        case .rubbish: Image(.redBin)
-        case .recycling: Image(.yellowBin)
-        case .green: Image(.greenBin)
-        case .glass: Image(.purpleBin)
+        case .rubbish: Image(.redBinVector)
+        case .recycling: Image(.yellowBinVector)
+        case .green: Image(.greenBinVector)
+        case .glass: Image(.purpleBinVector)
         }
     }
-    
+
     private func descriptionFor(event: EventModel.EventWrapper) -> String {
         switch event.sourceEvent.collectionType {
         case .rubbish: "event-rubbish"
@@ -168,7 +169,7 @@ struct ScheduleView: View {
         case .glass: "event-glass"
         }
     }
-    
+
     private func addressView() -> some View {
         guard let address = model.streetAddress else { return AnyView(EmptyView()) }
         return AnyView(
@@ -182,5 +183,32 @@ struct ScheduleView: View {
 }
 
 #Preview {
-    ScheduleView(model: ViewModel(streetAddress: "Address", events: EventModel([])))
+    ScheduleView(model: ViewModel(
+        streetAddress: "Address",
+        events: EventModel([
+            Event(
+                day: .wednesday,
+                weeks: 1,
+                epoch: Date(),
+                collectionType: .rubbish
+            ),
+            Event(
+                day: .wednesday,
+                weeks: 1,
+                epoch: Date(),
+                collectionType: .glass
+            ),
+            Event(
+                day: .wednesday,
+                weeks: 1,
+                epoch: Date(),
+                collectionType: .green
+            ),
+            Event(
+                day: .wednesday,
+                weeks: 1,
+                epoch: Date(),
+                collectionType: .recycling
+            )
+        ])))
 }
