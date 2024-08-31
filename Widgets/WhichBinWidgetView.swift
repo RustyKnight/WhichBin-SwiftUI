@@ -10,11 +10,11 @@ import WhichBinLib
 import WidgetKit
 
 struct WhichBinWidgetView: View {
-
+    
     @Environment(\.widgetFamily) var widgetFamily
-
+    
     let model: WidgetModel
-
+    
     var iconSize: CGFloat {
         switch widgetFamily {
         case .systemSmall: return 24
@@ -28,7 +28,7 @@ struct WhichBinWidgetView: View {
             return 36
         }
     }
-
+    
     var body: some View {
         if widgetFamily == .systemSmall {
             smallView()
@@ -40,7 +40,7 @@ struct WhichBinWidgetView: View {
             rectangularView()
         }
     }
-
+    
     @ViewBuilder
     private func largeView() -> some View {
         VStack {
@@ -59,7 +59,7 @@ struct WhichBinWidgetView: View {
             }
         }
     }
-
+    
     @ViewBuilder
     private func mediumView() -> some View {
         VStack {
@@ -76,7 +76,7 @@ struct WhichBinWidgetView: View {
             }
         }
     }
-
+    
     @ViewBuilder
     private func smallView() -> some View {
         VStack(alignment: .leading) {
@@ -89,7 +89,7 @@ struct WhichBinWidgetView: View {
             eventsView()
         }
     }
-
+    
     @ViewBuilder
     private func rectangularView() -> some View {
         VStack(alignment: .leading) {
@@ -97,10 +97,13 @@ struct WhichBinWidgetView: View {
                 .font(.subheadline)
             nextEventInDaysView()
                 .font(.caption)
-            eventsView()
+            HStack {
+                Spacer()
+                eventsView()
+            }
         }
     }
-
+    
     @ViewBuilder
     private func inlineView() -> some View {
         VStack(alignment: .leading) {
@@ -110,14 +113,14 @@ struct WhichBinWidgetView: View {
                 .font(.caption)
         }
     }
-
+    
     @ViewBuilder
     private func dateLineView() -> some View {
         if let date = model.eventsDate {
             Text(date.formattedWithSuffix())
         }
     }
-
+    
     @ViewBuilder
     private func nextEventInDaysView() -> some View {
         if let date = model.eventsDate {
@@ -128,7 +131,7 @@ struct WhichBinWidgetView: View {
             }
         }
     }
-
+    
     @ViewBuilder
     private func textDescriptionView() -> some View {
         VStack(alignment: .leading) {
@@ -140,7 +143,7 @@ struct WhichBinWidgetView: View {
                 } else {
                     inNumberOfDaysView(from: date)
                 }
-
+                
                 messageView(daysTillEvent: Calendar.current.daysBetween(date, and: Date()))
             } else {
                 Text("no-data-available")
@@ -151,21 +154,21 @@ struct WhichBinWidgetView: View {
             }
         }
     }
-
+    
     @ViewBuilder func messageView() -> some View {
         if let date = model.eventsDate {
             messageView(daysTillEvent: Calendar.current.daysBetween(date, and: Date()))
         }
     }
-
+    
     @ViewBuilder
     private func messageView(daysTillEvent: Int) -> some View {
-        //        if 0...1 ~= daysTillEvent {
-        Text("have-you-taken-the-bins-out-yet")
-            .padding(.top, 2)
-        //        }
+        if 0...1 ~= daysTillEvent {
+            Text("have-you-taken-the-bins-out-yet")
+                .padding(.top, 2)
+        }
     }
-
+    
     @ViewBuilder
     private func eventsView() -> some View {
         HStack {
@@ -174,11 +177,11 @@ struct WhichBinWidgetView: View {
             }
         }
     }
-
+    
     private func inNumberOfDaysView(from date: Date) -> some View {
         Text("in-number-of-days \(date.startOfDay, style: .relative)")
     }
-
+    
     private func viewFor(event: IdentifiableEvent) -> some View {
         Image.imageFor(event: event.sourceEvent, family: widgetFamily)
             .resizable()
@@ -201,15 +204,15 @@ private extension Date {
         formatter.dateFormat = "EEEE '\(self.daySuffix())'"
         return formatter.string(from: self)
     }
-
+    
     func daySuffix() -> String {
         let calendar = Calendar.current
         let components = (calendar as NSCalendar).components(.day, from: self)
         let dayOfMonth = components.day
-
+        
         let formatter = NumberFormatter()
         formatter.numberStyle = .ordinal
-
+        
         return formatter.string(for: dayOfMonth) ?? ""
     }
 }
@@ -219,7 +222,7 @@ private extension Calendar {
         let fromDate = from.startOfDay
         let toDate = to.startOfDay
         let numberOfDays = dateComponents([.day], from: fromDate, to: toDate) // <3>
-
+        
         return numberOfDays.day!
     }
 }
