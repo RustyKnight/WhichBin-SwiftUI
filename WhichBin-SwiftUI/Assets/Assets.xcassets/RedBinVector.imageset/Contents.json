@@ -3,6 +3,16 @@
     {
       "filename" : "RedBin.svg",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "RedBin-Dark.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

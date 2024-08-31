@@ -61,7 +61,7 @@ final class ResponseParserTest: XCTestCase {
         
         assert(!collection.features.isEmpty, "Features can't be empty")
         
-        let events = collection.features[0].events
+        let events = collection.features[0].properties
         assert(!events.isEmpty, "Events can't be empty")
     }
 }

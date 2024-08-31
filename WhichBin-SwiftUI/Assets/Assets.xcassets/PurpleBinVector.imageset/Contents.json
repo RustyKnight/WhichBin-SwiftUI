@@ -3,6 +3,16 @@
     {
       "filename" : "PurpleBin.svg",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "PurpleBin-Dark.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

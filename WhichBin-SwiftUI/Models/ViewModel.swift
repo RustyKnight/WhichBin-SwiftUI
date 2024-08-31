@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import WhichBinLib
 
 class ViewModel: ObservableObject {
     let streetAddress: String?

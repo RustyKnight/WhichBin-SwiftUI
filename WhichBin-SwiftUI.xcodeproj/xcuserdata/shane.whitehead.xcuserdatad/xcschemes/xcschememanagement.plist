@@ -7,12 +7,35 @@
 		<key>WhichBin-SwiftUI.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>0</integer>
 		</dict>
 		<key>WidgetsExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>700E3B172B55E21B00F9AA5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>700E3B282B55E21C00F9AA5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>700E3B322B55E21C00F9AA5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CE144F542C64371800C0BBC9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

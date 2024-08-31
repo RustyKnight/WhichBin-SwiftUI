@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="256"
+   height="256"
+   viewBox="0 0 256 256"
+   xml:space="preserve"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+
+<defs
+   id="defs1" />
+<g
+   style="display:inline;fill:none;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+   transform="matrix(2.81,0,0,2.81,1.548595,1.551405)"
+   id="g2">
+	<path
+   d="M 56.438,34.646 54.893,32 C 52.149,27.304 50.699,21.947 50.699,16.509 V 8.927 h 0.661 c 1.107,0 2.009,-0.901 2.009,-2.009 V 2.009 C 53.368,0.901 52.467,0 51.359,0 H 38.64 c -1.107,0 -2.009,0.901 -2.009,2.009 v 4.909 c 0,1.107 0.901,2.009 2.009,2.009 h 0.662 v 7.582 c 0,5.439 -1.45,10.795 -4.194,15.491 l -1.546,2.646 c -3.81,6.521 -5.824,13.959 -5.824,21.511 v 29.901 c 0,2.173 1.768,3.941 3.941,3.941 h 26.643 c 2.173,0 3.941,-1.769 3.941,-3.941 V 56.157 c 0,-7.552 -2.014,-14.99 -5.825,-21.511 z"
+   style="opacity:1;fill:#7f7f7f;fill-opacity:0.9;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+   stroke-linecap="round"
+   id="path1-9" />
+</g><g
+   style="display:inline;opacity:1;fill:none;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+   transform="matrix(2.81,0,0,2.81,1.4065934,1.4065934)"
+   id="g1">
+	<path
+   d="M 56.438,34.646 54.893,32 C 52.149,27.304 50.699,21.947 50.699,16.509 V 8.927 h 0.661 c 1.107,0 2.009,-0.901 2.009,-2.009 V 2.009 C 53.368,0.901 52.467,0 51.359,0 H 38.64 c -1.107,0 -2.009,0.901 -2.009,2.009 v 4.909 c 0,1.107 0.901,2.009 2.009,2.009 h 0.662 v 7.582 c 0,5.439 -1.45,10.795 -4.194,15.491 l -1.546,2.646 c -3.81,6.521 -5.824,13.959 -5.824,21.511 v 29.901 c 0,2.173 1.768,3.941 3.941,3.941 h 26.643 c 2.173,0 3.941,-1.769 3.941,-3.941 V 56.157 c 0,-7.552 -2.014,-14.99 -5.825,-21.511 z M 38.631,6.918 38.64,2 h 12.719 l 0.009,0.009 -0.009,4.918 z m 21.632,79.141 c 0,1.07 -0.871,1.941 -1.941,1.941 H 31.678 c -1.07,0 -1.941,-0.871 -1.941,-1.941 V 56.157 c 0,-7.197 1.919,-14.287 5.55,-20.502 l 1.546,-2.646 c 2.923,-5.001 4.468,-10.707 4.468,-16.5 V 8.927 h 7.396 v 7.582 c 0,5.792 1.545,11.498 4.468,16.5 l 1.546,2.646 c 3.631,6.215 5.551,13.305 5.551,20.502 v 29.902 z"
+   style="opacity:1;fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+   stroke-linecap="round"
+   id="path1" />
+</g>
+</svg>

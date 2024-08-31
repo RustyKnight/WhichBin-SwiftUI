@@ -3,6 +3,16 @@
     {
       "filename" : "YellowBin.svg",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "YellowBin-Dark.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

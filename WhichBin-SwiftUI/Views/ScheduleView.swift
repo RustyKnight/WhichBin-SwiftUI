@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WhichBinLib
+import WidgetKit
 
 struct ScheduleView: View {
     private let gridItems = [
@@ -22,6 +23,7 @@ struct ScheduleView: View {
             eventsView()
             Divider()
             addressView()
+            debugView()
         }
     }
 
@@ -132,7 +134,7 @@ struct ScheduleView: View {
         }
     }
 
-    private func viewFor(event: EventModel.EventWrapper) -> some View {
+    private func viewFor(event: EventModel.Event) -> some View {
         VStack {
             imageFor(event: event)
                 .resizable()
@@ -152,8 +154,8 @@ struct ScheduleView: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
-    private func imageFor(event: EventModel.EventWrapper) -> Image {
-        switch event.sourceEvent.collectionType {
+    private func imageFor(event: EventModel.Event) -> Image {
+        switch event.collectionType {
         case .rubbish: Image(.redBinVector)
         case .recycling: Image(.yellowBinVector)
         case .green: Image(.greenBinVector)
@@ -161,8 +163,8 @@ struct ScheduleView: View {
         }
     }
 
-    private func descriptionFor(event: EventModel.EventWrapper) -> String {
-        switch event.sourceEvent.collectionType {
+    private func descriptionFor(event: EventModel.Event) -> String {
+        switch event.collectionType {
         case .rubbish: "event-rubbish"
         case .recycling: "event-recycle"
         case .green: "event-green"
@@ -180,35 +182,22 @@ struct ScheduleView: View {
             }
         )
     }
+
+    @ViewBuilder
+    private func debugView() -> some View {
+        Button("Reload Widget") {
+            print(">> reload widget")
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+        .padding()
+    }
 }
 
 #Preview {
-    ScheduleView(model: ViewModel(
-        streetAddress: "Address",
-        events: EventModel([
-            Event(
-                day: .wednesday,
-                weeks: 1,
-                epoch: Date(),
-                collectionType: .rubbish
-            ),
-            Event(
-                day: .wednesday,
-                weeks: 1,
-                epoch: Date(),
-                collectionType: .glass
-            ),
-            Event(
-                day: .wednesday,
-                weeks: 1,
-                epoch: Date(),
-                collectionType: .green
-            ),
-            Event(
-                day: .wednesday,
-                weeks: 1,
-                epoch: Date(),
-                collectionType: .recycling
-            )
-        ])))
+    ScheduleView(
+        model: ViewModel(
+            streetAddress: "Address",
+            events: EventModel.sample
+        )
+    )
 }

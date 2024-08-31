@@ -16,7 +16,7 @@ public struct Feature: Decodable {
     
     public let type: FeatureType
     public let polygon: MKMultiPolygon?
-    public let events: [Event]
+    public let properties: [Property]
 
     enum CodingKeys: CodingKey {
         case type
@@ -31,13 +31,11 @@ public struct Feature: Decodable {
         // The `geometry` structure is just a container for a single polygon
         // so it doesn't add any value outside of the library context
         let geometry = try container.decode(Geometry.self, forKey: .geometry)
-        polygon = geometry.polygon
-        
+        self.polygon = geometry.polygon
+
         // The `properties` structure is just a container for unstructured events
         // so we doesn't really need to expose it, since we transform the contents
         // anyway it doesn't serve any real purpose outside of the library context
-        let properties = try container.decode(Properties.self, forKey: .properties)
-
-        events = properties.events
+        self.properties = try container.decode(PropertyDTO.self, forKey: .properties).properties
     }
 }

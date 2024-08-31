@@ -10,12 +10,12 @@ import WhichBinLib
 
 struct IdentifiableEvent: Identifiable {
     var id: String {
-        "\(sourceEvent.day)-\(sourceEvent.collectionType)"
+        "\(sourceEvent.date)-\(sourceEvent.day)-\(sourceEvent.collectionType)"
     }
-    let sourceEvent: Event
+    let sourceEvent: EventModel.Event
 }
 
-extension Array where Element == Event {
+extension Array where Element == EventModel.Event {
     func mapToIdentifiableEvents() -> [IdentifiableEvent] {
         map { IdentifiableEvent(sourceEvent: $0) }
     }
