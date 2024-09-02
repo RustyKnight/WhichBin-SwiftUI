@@ -1,7 +1,31 @@
 {
   "images" : [
     {
-      "filename" : "WhichBin1024.png",
+      "filename" : "WhichBin-FilledBackground.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "WhichBinDark-FilledBackground.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "filename" : "WhichBinTinted.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
