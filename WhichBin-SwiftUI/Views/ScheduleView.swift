@@ -104,19 +104,23 @@ struct ScheduleView: View {
         )
     }
 
+    @ViewBuilder
     private func inNumberOfDaysView(from date: Date) -> some View {
-        let duration = Date.today.distance(to: date)
-        if duration > 0 {
-            return AnyView(
-                Text("in-number-of-days \(DateComponentsFormatter.days.string(from: duration) ?? "---")")
+        let daysRemaining = Calendar.current.daysBetween(.today.startOfDay, and: date.startOfDay)
+        if daysRemaining > 1 {
+            let duration = Date.today.distance(to: date)
+            Text("in-number-of-days \(DateComponentsFormatter.days.string(from: duration) ?? "---")")
                     .font(.footnote)
-            )
-        } else if duration == 0 {
-            return AnyView(
-                Text("today")
-            )
+        } else {
+            Text("have-you-taken-the-bins-out-yet")
         }
-        return AnyView(EmptyView())
+//        if duration > 0 {
+//        } else if duration == 0 {
+//            return AnyView(
+//                Text("today")
+//            )
+//        }
+//        return AnyView(EmptyView())
     }
 
     private func noEventsView() -> some View {

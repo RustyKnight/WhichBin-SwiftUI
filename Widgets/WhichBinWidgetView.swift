@@ -127,11 +127,14 @@ struct WhichBinWidgetView: View {
     @ViewBuilder
     private func nextEventInDaysView() -> some View {
         if let date = model.eventsDate {
-            let duration = Date.today.startOfDay.distance(to: date.startOfDay)
-            if duration > 0 {
-                Text("in-number-of-days \(DateComponentsFormatter.days.string(from: duration) ?? "---")")
-            } else if duration == 0 {
+            let daysRemaining = Calendar.current.daysBetween(.today.startOfDay, and: date.startOfDay)
+            if daysRemaining == 0 {
                 Text("today")
+            } else if daysRemaining == 1 {
+                Text("tomorrow")
+            } else {
+                let duration = Date.today.startOfDay.distance(to: date.startOfDay)
+                Text("in-number-of-days \(DateComponentsFormatter.days.string(from: duration) ?? "---")")
             }
         }
     }
@@ -169,7 +172,7 @@ struct WhichBinWidgetView: View {
     
     @ViewBuilder func messageView() -> some View {
         if let date = model.eventsDate {
-            messageView(daysTillEvent: Calendar.current.daysBetween(date, and: Date()))
+            messageView(daysTillEvent: Calendar.current.daysBetween(.today.startOfDay, and: date.startOfDay))
         }
     }
     
@@ -229,17 +232,7 @@ private extension Date {
     }
 }
 
-private extension Calendar {
-    func daysBetween(_ from: Date, and to: Date) -> Int {
-        let fromDate = from.startOfDay
-        let toDate = to.startOfDay
-        let numberOfDays = dateComponents([.day], from: fromDate, to: toDate) // <3>
-        
-        return numberOfDays.day!
-    }
-}
-
-#Preview(as: .accessoryRectangular) {
+#Preview(as: .systemMedium) {
     StaticWidget()
 } timeline: {
     WidgetModel.sample
