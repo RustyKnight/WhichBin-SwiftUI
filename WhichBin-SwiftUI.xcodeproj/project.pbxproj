@@ -130,7 +130,6 @@
 		CE3A1ED92C7FF78100D06B13 /* Image+Bins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Bins.swift"; sourceTree = "<group>"; };
 		CE3A1EDC2C800F0700D06B13 /* StaticWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticWidget.swift; sourceTree = "<group>"; };
 		CE3A1EDE2C800FD300D06B13 /* WidgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetModel.swift; sourceTree = "<group>"; };
-		CE3A1EE22C801FEE00D06B13 /* UserDefaultsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultsTests.swift; path = WhichBinLib/Tests/WhichBinLibTests/UserDefaultsTests.swift; sourceTree = "<group>"; };
 		CE3A1EE32C80305000D06B13 /* WhichBinWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhichBinWidgetView.swift; sourceTree = "<group>"; };
 		CE752BA92C6590D200F03C7A /* IdentifiableEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableEvent.swift; sourceTree = "<group>"; };
 		CEC07CE62C8138EF00CF3196 /* Sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Sample.json; sourceTree = "<group>"; };
@@ -180,7 +179,6 @@
 			isa = PBXGroup;
 			children = (
 				CEC07CEE2C814B3B00CF3196 /* WidgetsExtension.entitlements */,
-				CE3A1EE22C801FEE00D06B13 /* UserDefaultsTests.swift */,
 				700E3B6F2B55E7BD00F9AA5D /* WhichBinLib */,
 				700E3B1A2B55E21B00F9AA5D /* WhichBin-SwiftUI */,
 				700E3B2C2B55E21C00F9AA5D /* WhichBin-SwiftUITests */,

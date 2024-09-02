@@ -52,11 +52,3 @@ public extension Date {
         self + DateParts.minutes(minutes)
     }
 }
-
-public extension Date {
-    var durationTillNextHour: TimeInterval {
-        let components = Calendar.current.dateComponents([.hour], from: self.plus(hours: 1))
-        let nextHour = Calendar.current.date(bySettingHour: components.hour!, minute: 0, second: 0, of: self)!
-        return distance(to: nextHour)
-    }
-}
