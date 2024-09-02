@@ -63,12 +63,15 @@ struct WhichBinWidgetView: View {
     @ViewBuilder
     private func mediumView() -> some View {
         VStack {
-            VStack(alignment: .leading) {
-                dateLineView()
-                    .font(.title)
-                nextEventInDaysView()
-                messageView()
-                    .font(.caption)
+            HStack {
+                VStack(alignment: .leading) {
+                    dateLineView()
+                        .font(.title)
+                    nextEventInDaysView()
+                    messageView()
+                        .font(.caption)
+                }
+                Spacer()
             }
             HStack {
                 Spacer()
@@ -124,36 +127,45 @@ struct WhichBinWidgetView: View {
     @ViewBuilder
     private func nextEventInDaysView() -> some View {
         if let date = model.eventsDate {
-            if date.startOfDay == Date().startOfDay {
+            let duration = Date.today.startOfDay.distance(to: date.startOfDay)
+            if duration > 0 {
+                Text("in-number-of-days \(DateComponentsFormatter.days.string(from: duration) ?? "---")")
+            } else if duration == 0 {
                 Text("today")
-            } else {
-                inNumberOfDaysView(from: date)
             }
         }
     }
-    
-    @ViewBuilder
-    private func textDescriptionView() -> some View {
-        VStack(alignment: .leading) {
-            if let date = model.eventsDate {
-                Text(date.formattedWithSuffix())
-                    .font(.title)
-                if date.startOfDay == Date().startOfDay {
-                    Text("today")
-                } else {
-                    inNumberOfDaysView(from: date)
-                }
-                
-                messageView(daysTillEvent: Calendar.current.daysBetween(date, and: Date()))
-            } else {
-                Text("no-data-available")
-                Text(model.date, format: .dateTime)
-                if let debug = model.debugDetails {
-                    Text(debug)
-                }
-            }
-        }
-    }
+//    
+//    @ViewBuilder
+//    private func textDescriptionView() -> some View {
+//        VStack(alignment: .leading) {
+//            if let date = model.eventsDate {
+//                let duration = Date.today.distance(to: date)
+//                if duration > 0 {
+//                    Text("in-number-of-days \(DateComponentsFormatter.days.string(from: duration) ?? "---")")
+//                } else if duration == 0 {
+//                    Text("today")
+//                }
+////                Text(date.formattedWithSuffix())
+////                    .font(.title)
+////                if date.startOfDay == Date().startOfDay {
+////                    Text("today")
+////                } else if Calendar.current.daysBetween(Date(), and: date) < 1 {
+////                    Text("tomorrow")
+////                } else {
+////                    inNumberOfDaysView(from: date)
+////                }
+//                
+//                messageView(daysTillEvent: Calendar.current.daysBetween(date, and: Date()))
+//            } else {
+//                Text("no-data-available")
+//                Text(model.date, format: .dateTime)
+//                if let debug = model.debugDetails {
+//                    Text(debug)
+//                }
+//            }
+//        }
+//    }
     
     @ViewBuilder func messageView() -> some View {
         if let date = model.eventsDate {

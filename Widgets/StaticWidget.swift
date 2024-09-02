@@ -21,7 +21,6 @@ struct StaticTimeLineProvider: TimelineProvider {
     typealias Entry = WidgetModel
 
     func placeholder(in context: Context) -> WidgetModel {
-        print(">> placeHolder...")
         let targetDate = Date().next(.wednesday).startOfDay
         return WidgetModel(
             eventsDate: targetDate,
@@ -31,12 +30,10 @@ struct StaticTimeLineProvider: TimelineProvider {
 
     // Consider it as a "preview"
     func getSnapshot(in context: Context, completion: @escaping @Sendable (WidgetModel) -> Void) {
-        print(">> snapshot...")
         return completion(WidgetModel.sample)
     }
 
     func getTimeline(in context: Context, completion: @escaping @Sendable (Timeline<WidgetModel>) -> Void) {
-        print(">> timeline...")
         Task {
             do {
                 let config = try loadConfiguration()
@@ -47,12 +44,10 @@ struct StaticTimeLineProvider: TimelineProvider {
                 )
 
                 do {
-                    print(">> Load events")
                     let eventModel = try await factory.load()
+                    // The default timeline updates once a day, at the
+                    // of the day
                     let widgetModel = nextEventsFrom(eventModel: eventModel)
-
-                    print(">> Next event date = \(widgetModel.eventsDate)")
-                    print(">> Next events = \(widgetModel.events)")
 
                     let timeLine = Timeline(
                         entries: [widgetModel],
@@ -79,10 +74,6 @@ struct StaticTimeLineProvider: TimelineProvider {
     }
 
     private func loadConfiguration() throws -> (CLLocationCoordinate2D, URL) {
-        print(">> defaults = \(UserDefaults.shared)")
-        print(">> location = \(UserDefaults.shared?.location(forKey: Support.Key.location))")
-        print(">> dataSource = \(UserDefaults.shared?.url(forKey: Support.Key.dataSource))")
-
         guard let defaults = UserDefaults.shared else {
             throw Error.missingSharedDefaults
         }
@@ -94,14 +85,6 @@ struct StaticTimeLineProvider: TimelineProvider {
         }
 
         return (location, dataSource)
-
-        //        guard let dataSource = Bundle.main.url(forResource: "Sample", withExtension: "json") else {
-        //            print(">> Missing sample datasource")
-        //            return nil
-        //        }
-        //
-        //        print(">> load from samples")
-        //        return (Secrets.home, dataSource)
     }
 }
 
