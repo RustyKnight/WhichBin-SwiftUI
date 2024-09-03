@@ -19,6 +19,10 @@ public extension Date {
     }
 
     static var today: Date {
+        Date().startOfDay
+    }
+
+    static var now: Date {
         Date()
     }
 }
@@ -104,6 +108,14 @@ public extension Date {
         var dateComponent = DateComponents()
         dateComponent.day = days
         return Calendar.current.date(byAdding: dateComponent, to: self)!
+    }
+
+    func set(hour: Int, minute: Int = 0, second: Int = 0) -> Date {
+        return Calendar.current.date(bySettingHour: hour, minute: minute, second: second, of: self)!
+    }
+
+    var weekDay: Int {
+        Calendar.current.component(.weekday, from: self)
     }
 }
 

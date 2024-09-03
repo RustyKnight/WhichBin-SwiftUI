@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreLocation
 import WhichBinLib
+import WidgetKit
 
 @main
 struct WhichBin_SwiftUIApp: App {
@@ -27,6 +28,12 @@ struct WhichBin_SwiftUIApp: App {
                         Support.preferredDataSource,
                         forKey: Support.Key.dataSource
                     )
+
+                    UNUserNotificationCenter.current().delegate = Support.shared
+
+                    WidgetCenter.shared.reloadAllTimelines()
+
+                    Support.requestNotificationAuthorisation()
                 }
         }
     }

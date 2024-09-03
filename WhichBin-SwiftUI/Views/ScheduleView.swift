@@ -189,9 +189,14 @@ struct ScheduleView: View {
 
     @ViewBuilder
     private func debugView() -> some View {
-        Button("Reload Widget") {
-            print(">> reload widget")
-            WidgetCenter.shared.reloadAllTimelines()
+        VStack(spacing: 8) {
+            Button("Reload Widget") {
+                print(">> reload widget")
+                WidgetCenter.shared.reloadAllTimelines()
+            }
+            Button("Notification") {
+                Support.debugNotification()
+            }
         }
         .padding()
     }

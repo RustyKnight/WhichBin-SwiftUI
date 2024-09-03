@@ -37,6 +37,7 @@ struct ContentView: View{
 extension ContentView: LoadDelegate {
     func didLoadModel(viewModel: ViewModel) {
         route = .schedule(viewModel)
+        Support.scheduleNotification(model: viewModel.events)
     }
     
     func loadDidFail(error: Error) {

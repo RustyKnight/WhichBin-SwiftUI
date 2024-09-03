@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1540"
+   LastUpgradeVersion = "1610"
    wasCreatedForAppExtension = "YES"
    version = "2.0">
    <BuildAction
@@ -91,6 +91,11 @@
          <EnvironmentVariable
             key = "_XCWidgetFamily"
             value = "systemMedium"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "sample"
+            value = "true"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

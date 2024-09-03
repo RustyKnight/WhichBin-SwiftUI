@@ -42,6 +42,10 @@
 		CE3A1EDD2C800F0F00D06B13 /* StaticWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A1EDC2C800F0700D06B13 /* StaticWidget.swift */; };
 		CE3A1EDF2C800FF500D06B13 /* WidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A1EDE2C800FD300D06B13 /* WidgetModel.swift */; };
 		CE3A1EE42C80305000D06B13 /* WhichBinWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A1EE32C80305000D06B13 /* WhichBinWidgetView.swift */; };
+		CE57BD022C86F872009F4416 /* Cadmus in Frameworks */ = {isa = PBXBuildFile; productRef = CE57BD012C86F872009F4416 /* Cadmus */; };
+		CE57BD042C86F931009F4416 /* Cadmus in Frameworks */ = {isa = PBXBuildFile; productRef = CE57BD032C86F931009F4416 /* Cadmus */; };
+		CE57BD062C87BE1C009F4416 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE57BD052C87BE15009F4416 /* String+Localization.swift */; };
+		CE57BD072C87BE1C009F4416 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE57BD052C87BE15009F4416 /* String+Localization.swift */; };
 		CE752BA82C658BB000F03C7A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 700E3B472B55E27900F9AA5D /* Localizable.strings */; };
 		CE752BAA2C6590D200F03C7A /* IdentifiableEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE752BA92C6590D200F03C7A /* IdentifiableEvent.swift */; };
 		CEC07CE72C8138EF00CF3196 /* Sample.json in Resources */ = {isa = PBXBuildFile; fileRef = CEC07CE62C8138EF00CF3196 /* Sample.json */; };
@@ -131,6 +135,7 @@
 		CE3A1EDC2C800F0700D06B13 /* StaticWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticWidget.swift; sourceTree = "<group>"; };
 		CE3A1EDE2C800FD300D06B13 /* WidgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetModel.swift; sourceTree = "<group>"; };
 		CE3A1EE32C80305000D06B13 /* WhichBinWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhichBinWidgetView.swift; sourceTree = "<group>"; };
+		CE57BD052C87BE15009F4416 /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		CE752BA92C6590D200F03C7A /* IdentifiableEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableEvent.swift; sourceTree = "<group>"; };
 		CEC07CE62C8138EF00CF3196 /* Sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Sample.json; sourceTree = "<group>"; };
 		CEC07CE92C81421C00CF3196 /* UserDefaults+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Shared.swift"; sourceTree = "<group>"; };
@@ -145,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70C19F5B2B55E9CA0005D9A5 /* WhichBinLib in Frameworks */,
+				CE57BD022C86F872009F4416 /* Cadmus in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +175,7 @@
 				CE144F592C64371800C0BBC9 /* SwiftUI.framework in Frameworks */,
 				CE3A1ED82C7FEE3E00D06B13 /* WhichBinLib in Frameworks */,
 				CE144F572C64371800C0BBC9 /* WidgetKit.framework in Frameworks */,
+				CE57BD042C86F931009F4416 /* Cadmus in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +263,7 @@
 		700E3B4D2B55E29D00F9AA5D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				CE57BD052C87BE15009F4416 /* String+Localization.swift */,
 				700E3B502B55E2AE00F9AA5D /* DateFormatter+Common.swift */,
 				CE3A1ED92C7FF78100D06B13 /* Image+Bins.swift */,
 				700E3B4E2B55E2AE00F9AA5D /* View+CornerRadius.swift */,
@@ -341,6 +349,7 @@
 			name = "WhichBin-SwiftUI";
 			packageProductDependencies = (
 				70C19F5A2B55E9CA0005D9A5 /* WhichBinLib */,
+				CE57BD012C86F872009F4416 /* Cadmus */,
 			);
 			productName = "WhichBin-SwiftUI";
 			productReference = 700E3B182B55E21B00F9AA5D /* WhichBin-SwiftUI.app */;
@@ -397,6 +406,7 @@
 			name = WidgetsExtension;
 			packageProductDependencies = (
 				CE3A1ED72C7FEE3E00D06B13 /* WhichBinLib */,
+				CE57BD032C86F931009F4416 /* Cadmus */,
 			);
 			productName = WidgetsExtension;
 			productReference = CE144F552C64371800C0BBC9 /* WidgetsExtension.appex */;
@@ -410,7 +420,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					700E3B172B55E21B00F9AA5D = {
 						CreatedOnToolsVersion = 15.2;
@@ -437,6 +447,9 @@
 				Base,
 			);
 			mainGroup = 700E3B0F2B55E21B00F9AA5D;
+			packageReferences = (
+				CE57BD002C86F855009F4416 /* XCRemoteSwiftPackageReference "Cadmus" */,
+			);
 			productRefGroup = 700E3B192B55E21B00F9AA5D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -503,6 +516,7 @@
 				700E3B692B55E74300F9AA5D /* RoundedCorner.swift in Sources */,
 				700E3B612B55E70700F9AA5D /* DefaultViewModelFactory.swift in Sources */,
 				700E3B6D2B55E76800F9AA5D /* LoadView.swift in Sources */,
+				CE57BD072C87BE1C009F4416 /* String+Localization.swift in Sources */,
 				CE3A1EDA2C7FF78A00D06B13 /* Image+Bins.swift in Sources */,
 				CEEFB7AF2C812CD8001ABEB5 /* Support.swift in Sources */,
 				700E3B1C2B55E21B00F9AA5D /* WhichBin_SwiftUIApp.swift in Sources */,
@@ -538,6 +552,7 @@
 				CE3A1EDF2C800FF500D06B13 /* WidgetModel.swift in Sources */,
 				CE144F5E2C64371800C0BBC9 /* WidgetsLiveActivity.swift in Sources */,
 				CE144F622C64371800C0BBC9 /* AppIntent.swift in Sources */,
+				CE57BD062C87BE1C009F4416 /* String+Localization.swift in Sources */,
 				CEC07CEB2C81425D00CF3196 /* Support.swift in Sources */,
 				CE144F602C64371800C0BBC9 /* Widgets.swift in Sources */,
 				CEEFB7AD2C8063E2001ABEB5 /* Timeline+EmptyState.swift in Sources */,
@@ -604,6 +619,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -665,6 +681,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -687,12 +704,12 @@
 		700E3B3E2B55E21C00F9AA5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "WhichBin-SwiftUI/WhichBin_SwiftUI.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"WhichBin-SwiftUI/Preview Content\"";
 				DEVELOPMENT_TEAM = YWXH886EY3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -729,12 +746,12 @@
 		700E3B3F2B55E21C00F9AA5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "WhichBin-SwiftUI/WhichBin_SwiftUI.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"WhichBin-SwiftUI/Preview Content\"";
 				DEVELOPMENT_TEAM = YWXH886EY3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -771,10 +788,10 @@
 		700E3B412B55E21C00F9AA5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = YWXH886EY3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
@@ -794,10 +811,10 @@
 		700E3B422B55E21C00F9AA5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = YWXH886EY3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
@@ -817,9 +834,9 @@
 		700E3B442B55E21C00F9AA5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = YWXH886EY3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
@@ -839,9 +856,9 @@
 		700E3B452B55E21C00F9AA5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = YWXH886EY3;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
@@ -969,6 +986,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		CE57BD002C86F855009F4416 /* XCRemoteSwiftPackageReference "Cadmus" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RustyKnight/Cadmus";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		70C19F5A2B55E9CA0005D9A5 /* WhichBinLib */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -977,6 +1005,16 @@
 		CE3A1ED72C7FEE3E00D06B13 /* WhichBinLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WhichBinLib;
+		};
+		CE57BD012C86F872009F4416 /* Cadmus */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE57BD002C86F855009F4416 /* XCRemoteSwiftPackageReference "Cadmus" */;
+			productName = Cadmus;
+		};
+		CE57BD032C86F931009F4416 /* Cadmus */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE57BD002C86F855009F4416 /* XCRemoteSwiftPackageReference "Cadmus" */;
+			productName = Cadmus;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

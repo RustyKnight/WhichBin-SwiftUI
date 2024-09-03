@@ -9,6 +9,7 @@ import WidgetKit
 import SwiftUI
 import WhichBinLib
 import CoreLocation
+import Cadmus
 
 struct StaticTimeLineProvider: TimelineProvider {
 
@@ -67,6 +68,8 @@ struct StaticTimeLineProvider: TimelineProvider {
         let events = Dictionary(grouping: eventModel.nextEventsOnOrAfterToday()) {
             $0.date.startOfDay
         }
+        let sortedKeys = events.keys.sorted()
+        log(debug: "sortedKeys = \(sortedKeys)")
         guard let targetDate = events.keys.sorted().first, let nextEvents = events[targetDate] else {
             return WidgetModel(date: Date().plus(minutes: 5), eventsDate: nil, events: [])
         }

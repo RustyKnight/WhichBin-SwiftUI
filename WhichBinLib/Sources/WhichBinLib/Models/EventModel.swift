@@ -90,7 +90,7 @@ public class EventModel {
         properties.map {
             Event(
                 property: $0,
-                date: $0.nextEventDateOnOrAfter(weekStarting)
+                date: $0.nextEventDateOnOrAfter(.today)
             )
         }
     }

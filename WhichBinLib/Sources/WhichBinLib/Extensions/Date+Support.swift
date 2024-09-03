@@ -52,3 +52,20 @@ public extension Date {
         self + DateParts.minutes(minutes)
     }
 }
+
+extension Date {
+    var formattedDateTime: String {
+        return DateFormatter.dateTime.string(from: self)
+    }
+}
+
+public extension DateFormatter {
+    static var dateTime: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        formatter.timeZone = .current
+        formatter.locale = .current
+        return formatter
+    }()
+}

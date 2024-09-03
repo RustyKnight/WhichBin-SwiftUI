@@ -63,9 +63,8 @@ public extension Property {
     }
     
     func nextEventDateOnOrAfter(_ date: Date) -> Date {
-        let anchor = date.endOfDay
+        let anchor = date.startOfDay
         var date = epoch.endOfDay
-        //var nextPeriod = anchor.next(day.weekday, considerToday: true).endOfDay
         let calendar = Calendar.current
         while date <= anchor {
             date = calendar.date(byAdding: .day, value: 7 * weeks, to: date)!.endOfDay
