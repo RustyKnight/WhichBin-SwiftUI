@@ -15,19 +15,19 @@ public class EventModel {
         public var id: String {
             "\(property.day)-\(property.collectionType)"
         }
-
+        
         let property: Property
-
+        
         public let date: Date
-
+        
         public var day: Property.DayOfWeek {
             property.day
         }
-
+        
         public var collectionType: Property.CollectionType {
             property.collectionType
         }
-
+        
         init(property: Property, date: Date) {
             self.property = property
             self.date = date
@@ -44,7 +44,7 @@ public class EventModel {
         }
     }
     public private(set) var weekEnding: Date
-
+    
     public init(_ properties: [Property]) {
         self.properties = properties
         let today = Date.today.startOfDay
@@ -85,7 +85,7 @@ public class EventModel {
             return $0.date.isBetween(weekStarting, and: weekEnding)
         }
     }
-
+    
     public func nextEventsOnOrAfterToday() -> [Event] {
         properties.map {
             Event(
@@ -93,5 +93,17 @@ public class EventModel {
                 date: $0.nextEventDateOnOrAfter(.today)
             )
         }
+    }
+    
+    public func previousEventsBeforeToday() -> [Event] {
+        let targetDate = Date.today.plus(days: -7)
+        return properties
+            .map {
+                Event(
+                    property: $0,
+                    date: $0.nextEventDateAfter(targetDate)
+                )
+            }
+            .filter { $0.date.endOfDay <= .today.endOfDay }
     }
 }

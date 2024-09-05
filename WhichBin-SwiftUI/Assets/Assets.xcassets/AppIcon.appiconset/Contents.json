@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "WhichBin-FilledBackground.png",
+      "filename" : "WhichBin-02-Light.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "WhichBinDark-FilledBackground.png",
+      "filename" : "WhichBin-02-Dark.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,7 +25,7 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "WhichBinTinted.png",
+      "filename" : "WhichBin-02-Dark 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

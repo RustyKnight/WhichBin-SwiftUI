@@ -14,7 +14,8 @@ struct WhichBinWidgetView: View {
     @Environment(\.widgetFamily) var widgetFamily
     
     let model: WidgetModel
-    
+    let currentDate: Date
+
     var iconSize: CGFloat {
         switch widgetFamily {
         case .systemSmall: return 24
@@ -28,7 +29,12 @@ struct WhichBinWidgetView: View {
             return 36
         }
     }
-    
+
+    init(model: WidgetModel, currentDate: Date = .now) {
+        self.model = model
+        self.currentDate = currentDate
+    }
+
     var body: some View {
         if widgetFamily == .systemSmall {
             smallView()
@@ -43,19 +49,16 @@ struct WhichBinWidgetView: View {
     
     @ViewBuilder
     private func largeView() -> some View {
-        VStack {
-            VStack(alignment: .leading) {
-                dateLineView()
-                    .font(.title)
-                nextEventInDaysView()
-            }
+        VStack(alignment: .leading) {
+            dateLineView()
+                .font(.title)
+            nextEventInDaysView()
+            timelineView()
             Spacer()
+            messageView()
             HStack {
                 Spacer()
-                VStack(alignment: .trailing) {
-                    messageView()
-                    eventsView()
-                }
+                eventsView()
             }
         }
     }
@@ -68,12 +71,13 @@ struct WhichBinWidgetView: View {
                     dateLineView()
                         .font(.title)
                     nextEventInDaysView()
-                    messageView()
-                        .font(.caption)
+                    timelineView()
                 }
                 Spacer()
             }
             HStack {
+                messageView()
+                    .font(.caption)
                 Spacer()
                 eventsView()
             }
@@ -87,9 +91,14 @@ struct WhichBinWidgetView: View {
                 .font(.subheadline)
             nextEventInDaysView()
                 .font(.caption)
+            timelineView()
+            Spacer()
             messageView()
                 .font(.caption)
-            eventsView()
+            HStack {
+                Spacer()
+                eventsView()
+            }
         }
     }
     
@@ -100,6 +109,7 @@ struct WhichBinWidgetView: View {
                 .font(.subheadline)
             nextEventInDaysView()
                 .font(.caption)
+            timelineView()
             HStack {
                 Spacer()
                 eventsView()
@@ -127,52 +137,35 @@ struct WhichBinWidgetView: View {
     @ViewBuilder
     private func nextEventInDaysView() -> some View {
         if let date = model.eventsDate {
-            let daysRemaining = Calendar.current.daysBetween(.today.startOfDay, and: date.startOfDay)
+            let daysRemaining = Calendar.current.daysBetween(currentDate.startOfDay, and: date.startOfDay)
             if daysRemaining == 0 {
                 Text("today")
             } else if daysRemaining == 1 {
                 Text("tomorrow")
             } else {
-                let duration = Date.today.startOfDay.distance(to: date.startOfDay)
+                let duration = currentDate.startOfDay.distance(to: date.startOfDay)
                 Text("in-number-of-days \(DateComponentsFormatter.days.string(from: duration) ?? "---")")
             }
         }
     }
-//    
-//    @ViewBuilder
-//    private func textDescriptionView() -> some View {
-//        VStack(alignment: .leading) {
-//            if let date = model.eventsDate {
-//                let duration = Date.today.distance(to: date)
-//                if duration > 0 {
-//                    Text("in-number-of-days \(DateComponentsFormatter.days.string(from: duration) ?? "---")")
-//                } else if duration == 0 {
-//                    Text("today")
-//                }
-////                Text(date.formattedWithSuffix())
-////                    .font(.title)
-////                if date.startOfDay == Date().startOfDay {
-////                    Text("today")
-////                } else if Calendar.current.daysBetween(Date(), and: date) < 1 {
-////                    Text("tomorrow")
-////                } else {
-////                    inNumberOfDaysView(from: date)
-////                }
-//                
-//                messageView(daysTillEvent: Calendar.current.daysBetween(date, and: Date()))
-//            } else {
-//                Text("no-data-available")
-//                Text(model.date, format: .dateTime)
-//                if let debug = model.debugDetails {
-//                    Text(debug)
-//                }
-//            }
-//        }
-//    }
+
+    @ViewBuilder
+    private func timelineView() -> some View {
+        if let targetDate = model.eventsDate?.endOfDay,
+           let previousEventDate = model.previousEventDate?.endOfDay,
+           targetDate > previousEventDate &&
+            currentDate.startOfDay < targetDate.startOfDay
+        {
+            let range = targetDate.timeIntervalSince1970 - previousEventDate.timeIntervalSince1970
+            let value = currentDate.timeIntervalSince1970 - previousEventDate.timeIntervalSince1970
+
+            ProgressView(value: value, total: range)
+        }
+    }
     
     @ViewBuilder func messageView() -> some View {
         if let date = model.eventsDate {
-            messageView(daysTillEvent: Calendar.current.daysBetween(.today.startOfDay, and: date.startOfDay))
+            messageView(daysTillEvent: Calendar.current.daysBetween(currentDate.startOfDay, and: date.startOfDay))
         }
     }
     
@@ -232,7 +225,7 @@ private extension Date {
     }
 }
 
-#Preview(as: .systemMedium) {
+#Preview(as: .systemSmall) {
     StaticWidget()
 } timeline: {
     WidgetModel.sample

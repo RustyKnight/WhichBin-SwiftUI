@@ -100,6 +100,7 @@ extension WidgetsAttributes.ContentState {
         return WidgetsAttributes.ContentState(
             model: WidgetModel(
                 eventsDate: targetDate,
+                previousEventDate: .today,
                 events: EventModel.sampleEvents(targetDate)
             )
         )
@@ -109,6 +110,7 @@ extension WidgetsAttributes.ContentState {
         WidgetsAttributes.ContentState(
             model: WidgetModel(
                 eventsDate: Date().next(.wednesday).startOfDay,
+                previousEventDate: .today,
                 events: []
             )
         )

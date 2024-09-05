@@ -25,6 +25,7 @@ struct StaticTimeLineProvider: TimelineProvider {
         let targetDate = Date().next(.wednesday).startOfDay
         return WidgetModel(
             eventsDate: targetDate,
+            previousEventDate: .today,
             events: EventModel.sampleEvents(targetDate)
         )
     }
@@ -46,12 +47,29 @@ struct StaticTimeLineProvider: TimelineProvider {
 
                 do {
                     let eventModel = try await factory.load()
-                    // The default timeline updates once a day, at the
-                    // of the day
-                    let widgetModel = nextEventsFrom(eventModel: eventModel)
+                    /*
+                     We could re-load the timeline every hour, but because
+                     the data is unlikely to change over the course of the
+                     day, it seems like a waste.  Instead, in order to keep
+                     the progress bar moving (even a little), we establish
+                     a timeline of events for every hour from now till the
+                     end of the day, after which the time line is reloaded
+                     */
+
+                    let widgetModel = widgetModel(from: eventModel)
+
+                    var entries = [WidgetModel]()
+
+                    // This creates a date representing the current hour
+                    var currentTime = Date.now.topOfHour.adding(hours: 1)
+                    let endOfDay = Date.now.endOfDay
+                    while currentTime < endOfDay {
+                        currentTime = currentTime.adding(hours: 1)
+                        entries.append(widgetModel.expired(at: currentTime))
+                    }
 
                     let timeLine = Timeline(
-                        entries: [widgetModel],
+                        entries: entries,
                         policy: .atEnd
                     )
                     completion(timeLine)
@@ -64,16 +82,32 @@ struct StaticTimeLineProvider: TimelineProvider {
         }
     }
 
-    private func nextEventsFrom(eventModel: EventModel) -> WidgetModel {
+    private func widgetModel(from eventModel: EventModel) -> WidgetModel {
+        guard let nextEvents = nextEventsFrom(from: eventModel) else {
+            return WidgetModel(date: Date().plus(minutes: 5), eventsDate: nil, previousEventDate: nil, events: [])
+        }
+
+        return WidgetModel(
+            eventsDate: nextEvents.0,
+            previousEventDate: previousEventDate(from: eventModel),
+            events: nextEvents.1)
+    }
+
+    private func nextEventsFrom(from eventModel: EventModel) -> (Date, [EventModel.Event])? {
         let events = Dictionary(grouping: eventModel.nextEventsOnOrAfterToday()) {
             $0.date.startOfDay
         }
         let sortedKeys = events.keys.sorted()
-        log(debug: "sortedKeys = \(sortedKeys)")
-        guard let targetDate = events.keys.sorted().first, let nextEvents = events[targetDate] else {
-            return WidgetModel(date: Date().plus(minutes: 5), eventsDate: nil, events: [])
+        guard let targetDate = sortedKeys.first, let nextEvents = events[targetDate] else {
+            //return WidgetModel(date: Date().plus(minutes: 5), eventsDate: nil, events: [])
+            return nil
         }
-        return WidgetModel(eventsDate: targetDate, events: nextEvents)
+//        return WidgetModel(eventsDate: targetDate, events: nextEvents)
+        return (targetDate, nextEvents)
+    }
+
+    private func previousEventDate(from eventModel: EventModel) -> Date? {
+        eventModel.previousEventsBeforeToday().map { $0.date }.sorted().first
     }
 
     private func loadConfiguration() throws -> (CLLocationCoordinate2D, URL) {
@@ -91,6 +125,12 @@ struct StaticTimeLineProvider: TimelineProvider {
     }
 }
 
+private extension Date {
+    var topOfHour: Date {
+        self.set(hour: self.hour, minute: 0, second: 0)
+    }
+}
+
 struct StaticWidget: Widget {
     var body: some WidgetConfiguration {
         //        A Widget can have two configurations: StaticConfiguration or AppIntentConfiguration.
@@ -99,7 +139,11 @@ struct StaticWidget: Widget {
         StaticConfiguration(
             kind: "org.kaizen.WhichBinWidget",
             provider: StaticTimeLineProvider()) { entry in
-                WhichBinWidgetView(model: entry)
+                WhichBinWidgetView(
+                    model: entry
+//                    ,
+//                    currentDate: Date().next(.wednesday)
+                )
                     .containerBackground(.fill.tertiary, for: .widget)
             }
             .configurationDisplayName("WhichBin")

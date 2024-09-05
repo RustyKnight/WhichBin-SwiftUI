@@ -41,7 +41,7 @@ final class NextEventsTests: XCTestCase {
         ).load()
     }
 
-    func test() throws {
+    func testNextEventsOnOrAfterToday() throws {
         let waitFor = expectation(description: "Waiting for stuff")
         Task {
             let mockedModel = try await mockedModel()
@@ -53,7 +53,27 @@ final class NextEventsTests: XCTestCase {
             let events = Dictionary(grouping: model) {
                 $0.date.startOfDay
             }
-            let sortedKeys = events.keys.sorted { $0 < $1 }
+            let sortedKeys = events.keys.sorted()
+            print(">> sortedKeys = \(sortedKeys.map { $0.formattedDateTime })")
+
+            waitFor.fulfill()
+        }
+        wait(for: [waitFor])
+    }
+
+    func testPreviousEventsBeforeToday() throws {
+        let waitFor = expectation(description: "Waiting for stuff")
+        Task {
+            let mockedModel = try await mockedModel()
+            print("\n==========\n")
+            let model = mockedModel.previousEventsBeforeToday()
+
+            print(">> model = \(model.map { $0.date.formattedDateTime })")
+
+            let events = Dictionary(grouping: model) {
+                $0.date.startOfDay
+            }
+            let sortedKeys = events.keys.sorted()
             print(">> sortedKeys = \(sortedKeys.map { $0.formattedDateTime })")
 
             waitFor.fulfill()

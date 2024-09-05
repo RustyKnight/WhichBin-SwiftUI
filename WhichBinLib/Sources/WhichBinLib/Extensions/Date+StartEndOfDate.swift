@@ -21,10 +21,6 @@ public extension Date {
     static var today: Date {
         Date().startOfDay
     }
-
-    static var now: Date {
-        Date()
-    }
 }
 
 public extension Date {
@@ -110,12 +106,22 @@ public extension Date {
         return Calendar.current.date(byAdding: dateComponent, to: self)!
     }
 
+    func adding(hours: Int) -> Date {
+        var dateComponent = DateComponents()
+        dateComponent.hour = hours
+        return Calendar.current.date(byAdding: dateComponent, to: self)!
+    }
+
     func set(hour: Int, minute: Int = 0, second: Int = 0) -> Date {
-        return Calendar.current.date(bySettingHour: hour, minute: minute, second: second, of: self)!
+        Calendar.current.date(bySettingHour: hour, minute: minute, second: second, of: self)!
     }
 
     var weekDay: Int {
         Calendar.current.component(.weekday, from: self)
+    }
+
+    var hour: Int {
+        Calendar.current.component(.hour, from: self)
     }
 }
 

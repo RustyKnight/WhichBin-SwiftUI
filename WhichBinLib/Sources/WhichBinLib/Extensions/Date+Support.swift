@@ -51,6 +51,10 @@ public extension Date {
     func plus(minutes: Int) -> Date {
         self + DateParts.minutes(minutes)
     }
+
+    func plus(days: Int) -> Date {
+        self + DateParts.days(days)
+    }
 }
 
 extension Date {
