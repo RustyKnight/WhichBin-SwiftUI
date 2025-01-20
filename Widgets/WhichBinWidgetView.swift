@@ -56,6 +56,7 @@ struct WhichBinWidgetView: View {
             timelineView()
             Spacer()
             messageView()
+                .font(.caption2)
             HStack {
                 Spacer()
                 eventsView()
@@ -77,7 +78,9 @@ struct WhichBinWidgetView: View {
             }
             HStack {
                 messageView()
-                    .font(.caption)
+                    .font(.caption2)
+//                debugView()
+//                    .font(.caption)
                 Spacer()
                 eventsView()
             }
@@ -196,6 +199,11 @@ struct WhichBinWidgetView: View {
             .aspectRatio(contentMode: .fit)
             .frame(height: iconSize)
     }
+
+    @ViewBuilder
+    private func debugView() -> some View {
+        Text("\(model.date.formatted(date: .abbreviated, time: .shortened))")
+    }
 }
 
 private extension WhichBinWidgetView {
@@ -225,7 +233,7 @@ private extension Date {
     }
 }
 
-#Preview(as: .systemSmall) {
+#Preview(as: .systemMedium) {
     StaticWidget()
 } timeline: {
     WidgetModel.sample

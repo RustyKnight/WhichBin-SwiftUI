@@ -61,7 +61,7 @@ struct StaticTimeLineProvider: TimelineProvider {
                     var entries = [WidgetModel]()
 
                     // This creates a date representing the current hour
-                    var currentTime = Date.now.topOfHour.adding(hours: 1)
+                    var currentTime = Date.now.topOfHour
                     let endOfDay = Date.now.endOfDay
                     while currentTime < endOfDay {
                         currentTime = currentTime.adding(hours: 1)

@@ -53,3 +53,27 @@ Nice idea, can’t see many users doing that, maybe build a small list of areas 
 ## Better configuration for bin colors
 
 Because standardisation is to hard.
+
+# Decisions and ideas
+
+## Local Government Area (LGA)
+
+No two councils use the same data sources, because otherwise it would be easy.
+
+Make use of [Local Government Areas - Australia](https://data.opendatasoft.com/explore/dataset/georef-australia-local-government-area%40public/export/?disjunctive.ste_code&disjunctive.ste_name&disjunctive.lga_code&disjunctive.lga_name) to build the "geo areas" and then use the "location" details of the user to determine which LGA they are in.  From there we'd need to define "parsers" for each area to make it look like a single unified solution, rather then the mess it actually is.
+
+Probably need to make use of `CLGeocoder` so we can look up the coordinates of the address.
+
+This is also going to cause issues with identifing the types of bins and colors.  This may need to be user configurable at some point :/.
+
+## Multiple locations
+
+Either use the users current location (a little easier) or `CLGeocoder` to allow the user to look up an address.  These should then be stored and maintained to allow the user to switch between them or see them all at a glance.
+
+The complicates the widgets -> Show the "next" event?
+
+Maybe provide a "unified" view of all the locations, showing all the "next" events?
+
+## Rethink the loading (better caching)
+
+Because it's unlikely that the schedule changes often, instead of loading the data sets up front, present the user with a "cached" version if possible and load the data sets in the background and then re-sync them.
