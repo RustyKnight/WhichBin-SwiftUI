@@ -10,6 +10,7 @@ import MapKit
 
 // MARK: - Collection
 public struct Collection: Decodable {
-    public let type, name: String
+    public let type: String
+    public let name: String?
     public let features: [Feature]
 }

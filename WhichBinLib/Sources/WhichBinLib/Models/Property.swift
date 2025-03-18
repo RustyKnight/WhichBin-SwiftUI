@@ -45,11 +45,11 @@ public struct Property: Codable, Hashable, Equatable {
     }
 
     public let day: DayOfWeek
-    public let weeks: Int
+    public let weeks: Double
     public let epoch: Date
     public let collectionType: CollectionType
 
-    public init(day: DayOfWeek, weeks: Int, epoch: Date, collectionType: CollectionType) {
+    public init(day: DayOfWeek, weeks: Double, epoch: Date, collectionType: CollectionType) {
         self.day = day
         self.weeks = weeks
         self.epoch = epoch
@@ -67,7 +67,7 @@ public extension Property {
         var date = epoch.endOfDay
         let calendar = Calendar.current
         while date <= anchor {
-            date = calendar.date(byAdding: .day, value: 7 * weeks, to: date)!.endOfDay
+            date = calendar.date(byAdding: .day, value: Int(ceil(7.0 * weeks)), to: date)!.endOfDay
         }
         return date
     }
@@ -77,7 +77,7 @@ public extension Property {
         var date = epoch.endOfDay
         let calendar = Calendar.current
         while date <= anchor {
-            date = calendar.date(byAdding: .day, value: 7 * weeks, to: date)!.endOfDay
+            date = calendar.date(byAdding: .day, value: Int(ceil(7 * weeks)), to: date)!.endOfDay
         }
         return date
     }

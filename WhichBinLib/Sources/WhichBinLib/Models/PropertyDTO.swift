@@ -53,7 +53,7 @@ struct PropertyDTO: Decodable {
 
     private static var eventDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyyMMdd"
+        formatter.dateFormat = "yyyy-MM-dd"
         formatter.timeZone = TimeZone(identifier: "Australia/Melbourne")
         return formatter
     }()
@@ -77,7 +77,7 @@ struct PropertyDTO: Decodable {
         guard let keys = PropertyDTO.keyMappings[collectionType] else { return nil }
         
         let dayOfWeek = try container.decode(Property.DayOfWeek.self, forKey: keys.day)
-        let weeks = try container.decode(Int.self, forKey: keys.weeks)
+        let weeks = try container.decode(Double.self, forKey: keys.weeks)
         let epoch = try container.decode(String.self, forKey: keys.start)
 
         guard let date = PropertyDTO.eventDateFormatter.date(from: epoch) else { return nil }

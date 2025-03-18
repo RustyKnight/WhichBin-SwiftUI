@@ -11,7 +11,7 @@ import MapKit
 public struct Feature: Decodable {
     public enum FeatureType: String, Decodable {
         case feature = "Feature"
-        case unkown
+        case unknown
     }
     
     public let type: FeatureType

@@ -24,12 +24,13 @@ final class ResponseParserTest: XCTestCase {
         // Should be using `Bundle.module`, but I can't see
         // to get it to work
         
-        let thisSourceFile = URL(fileURLWithPath: #file)
-        let thisDirectory = thisSourceFile.deletingLastPathComponent()
-        let resourceURL = thisDirectory
-            .appending(component: "Resources", directoryHint: .isDirectory)
-            .appendingPathComponent("MockedResponse.json")
-        return try Data(contentsOf: resourceURL)
+//        let thisSourceFile = URL(fileURLWithPath: #file)
+//        let thisDirectory = thisSourceFile.deletingLastPathComponent()
+        return try Resource.mockedNewResponse.data()
+//        let resourceURL = thisDirectory
+//            .appending(component: "Resources", directoryHint: .isDirectory)
+//            .appendingPathComponent("MockedResponse.json")
+//        return try Data(contentsOf: resourceURL)
     }
     
     func mockedSinglePolygonData() throws -> Data {
@@ -60,7 +61,9 @@ final class ResponseParserTest: XCTestCase {
         let collection = try JSONDecoder().decode(Collection.self, from: data)
         
         assert(!collection.features.isEmpty, "Features can't be empty")
-        
+
+        print(">> collection.features[0] = \(collection.features[0])")
+
         let events = collection.features[0].properties
         assert(!events.isEmpty, "Events can't be empty")
     }

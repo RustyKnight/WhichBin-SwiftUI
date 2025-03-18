@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Cadmus
 
 @MainActor
 protocol LoadDelegate {
@@ -34,6 +35,7 @@ struct LoadView: View {
                     let model = try await factory.make()
                     delegate?.didLoadModel(viewModel: model)
                 } catch {
+                    log(error: "Failed to load model: \(error)")
                     delegate?.loadDidFail(error: error)
                 }
             }
