@@ -1,0 +1,33 @@
+{
+  "originHash" : "35c7b41adf42b35de6831b86b3917afcd2e1de77ae6c62ce1eb93ec4dec40b5f",
+  "pins" : [
+    {
+      "identity" : "cadmus",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/RustyKnight/Cadmus",
+      "state" : {
+        "branch" : "master",
+        "revision" : "f190b70b8c4fca5589151125a862596cc42f10ed"
+      }
+    },
+    {
+      "identity" : "whichbinlib",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/RustyKnight/WhichBinLib",
+      "state" : {
+        "branch" : "main",
+        "revision" : "f9976239639382155e27e94687bd75774c243457"
+      }
+    },
+    {
+      "identity" : "whichbinmapkitlib",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/RustyKnight/WhichBinMapKitLib",
+      "state" : {
+        "branch" : "main",
+        "revision" : "750b38b584f564da0e0885299e37bb210297d0d0"
+      }
+    }
+  ],
+  "version" : 3
+}
