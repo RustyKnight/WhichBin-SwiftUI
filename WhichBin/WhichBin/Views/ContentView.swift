@@ -9,14 +9,33 @@ import SwiftUI
 import WhichBinLib
 
 struct ContentView: View {
+    @EnvironmentObject var siteManager: SiteManager
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        switch siteManager.state {
+        case .error(let error):
+            errorView(error)
+        default:
+            siteListView()
         }
-        .padding()
+    }
+}
+
+private extension ContentView {
+    func errorView(_ error: Error) -> some View {
+        HStack {
+            Spacer()
+            ErrorView(
+                title: "Failed to load site details",
+                subTitle: error.localizedDescription
+            )
+            Spacer()
+        }
+        .background(.cellFill)
+    }
+    
+    func siteListView() -> some View {
+        SitesListView()
     }
 }
 

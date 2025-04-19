@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CEBF5E3F2DB2213E001D8D66 /* WhichBinMapKitLib in Frameworks */ = {isa = PBXBuildFile; productRef = CEBF5E3E2DB2213E001D8D66 /* WhichBinMapKitLib */; };
+		CEBF5E542DB35032001D8D66 /* CoreExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = CEBF5E532DB35032001D8D66 /* CoreExtensions */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEBF5E3F2DB2213E001D8D66 /* WhichBinMapKitLib in Frameworks */,
+				CEBF5E542DB35032001D8D66 /* CoreExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +128,7 @@
 			name = WhichBin;
 			packageProductDependencies = (
 				CEBF5E3E2DB2213E001D8D66 /* WhichBinMapKitLib */,
+				CEBF5E532DB35032001D8D66 /* CoreExtensions */,
 			);
 			productName = WhichBin;
 			productReference = CE54CCF12DB21BEB0008311B /* WhichBin.app */;
@@ -211,6 +214,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				CEBF5E3C2DB22129001D8D66 /* XCRemoteSwiftPackageReference "WhichBinMapKitLib" */,
+				CEBF5E522DB35026001D8D66 /* XCRemoteSwiftPackageReference "CoreExtensions" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CE54CCF22DB21BEB0008311B /* Products */;
@@ -612,6 +616,14 @@
 				kind = branch;
 			};
 		};
+		CEBF5E522DB35026001D8D66 /* XCRemoteSwiftPackageReference "CoreExtensions" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RustyKnight/CoreExtensions";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.14;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -619,6 +631,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CEBF5E3C2DB22129001D8D66 /* XCRemoteSwiftPackageReference "WhichBinMapKitLib" */;
 			productName = WhichBinMapKitLib;
+		};
+		CEBF5E532DB35032001D8D66 /* CoreExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEBF5E522DB35026001D8D66 /* XCRemoteSwiftPackageReference "CoreExtensions" */;
+			productName = CoreExtensions;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

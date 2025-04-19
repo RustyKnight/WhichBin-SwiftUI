@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct WhichBinApp: App {
+    @StateObject private var siteManager = SiteManager()
+
+    init() {
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(siteManager)
         }
     }
 }

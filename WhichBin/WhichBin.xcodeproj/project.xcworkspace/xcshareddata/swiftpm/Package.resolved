@@ -1,5 +1,5 @@
 {
-  "originHash" : "35c7b41adf42b35de6831b86b3917afcd2e1de77ae6c62ce1eb93ec4dec40b5f",
+  "originHash" : "7e6a034eaa292f7d5c8d099476ad98b955f620d99f65f8e3dd1772a01a2a65e6",
   "pins" : [
     {
       "identity" : "cadmus",
@@ -8,6 +8,24 @@
       "state" : {
         "branch" : "master",
         "revision" : "f190b70b8c4fca5589151125a862596cc42f10ed"
+      }
+    },
+    {
+      "identity" : "coreextensions",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/RustyKnight/CoreExtensions",
+      "state" : {
+        "revision" : "89dcc24cf35920d34525b6a31b058b3705a6291b",
+        "version" : "1.0.14"
+      }
+    },
+    {
+      "identity" : "swifthash",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onmyway133/SwiftHash",
+      "state" : {
+        "revision" : "a900fc3f33c67eb33c9e650651edf6e23a410b3c",
+        "version" : "2.0.2"
       }
     },
     {

@@ -7,7 +7,7 @@
 
 import MapKit
 
-struct Site: Codable {
+struct Site: Codable, Hashable {
     /// Friendly name
     let name: String
     /// Intended to provide the address details
@@ -18,7 +18,7 @@ struct Site: Codable {
 }
 
 extension Site {
-    struct Coordinates: Codable {
+    struct Coordinates: Codable, Hashable {
         let latitude: Double
         let longitude: Double
     }
