@@ -416,6 +416,10 @@
 				DEVELOPMENT_TEAM = YWXH886EY3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Assist in finding your current location";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Assist in finding your current location";
+				INFOPLIST_KEY_NSLocationUsageDescription = "Assist in finding your current location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Assist in finding your current location";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -454,6 +458,10 @@
 				DEVELOPMENT_TEAM = YWXH886EY3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Assist in finding your current location";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Assist in finding your current location";
+				INFOPLIST_KEY_NSLocationUsageDescription = "Assist in finding your current location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Assist in finding your current location";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
