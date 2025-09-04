@@ -31,10 +31,7 @@ struct LocationView: View {
                     Spacer()
                     HStack {
                         Spacer()
-                        Image.Location.circle
-                            .resizable()
-                            .frame(width: 32, height: 32)
-                            .foregroundStyle(.secondary)
+                        locationButton
                     }
                     HStack {
                         cancelButton
@@ -74,7 +71,7 @@ private extension LocationView {
             Button {
                 viewModel.clearSearch()
             } label: {
-                Image.Multiply.Circle.fill
+                Image.Multiply.Circle.filled
                     .symbolRenderingMode(.palette)
                     .foregroundStyle(.searchForeground, .searchBackground)
             }
@@ -95,9 +92,27 @@ private extension LocationView {
         }
     }
 
+    var locationButton: some View {
+        Button {
+            viewModel.targetCurrentLocation()
+        } label: {
+            if viewModel.isTargetingLocation {
+                ProgressView()
+            } else {
+                Image.Location.circle
+                    .resizable()
+                    .frame(width: 32, height: 32)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .buttonStyle(.plain)
+        .disabled(viewModel.canTargetCurrentLocation == false)
+    }
+
     var selectButton: some View {
         Button {
-            // update site details ...
+            viewModel.selectLocation()
+            dismiss()
         } label: {
             Text("Select")
                 .frame(maxWidth: .infinity)
@@ -106,6 +121,7 @@ private extension LocationView {
         .buttonStyle(.borderedProminent)
         .buttonBorderShape(.capsule)
         .tint(Color.blue)
+        .disabled(viewModel.selectedPlaceMaker == nil)
     }
 
     var cancelButton: some View {
@@ -114,8 +130,4 @@ private extension LocationView {
         }
     }
 
-}
-
-#Preview {
-    LocationView(viewModel: .init())
 }

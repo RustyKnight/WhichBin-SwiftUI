@@ -20,6 +20,8 @@ struct SiteView: View {
     @State
     var selectDataSource = false
 
+    private let trailingPadding: CGFloat = 36
+
     var body: some View {
         VStack(spacing: 20) {
             titleView
@@ -32,6 +34,14 @@ struct SiteView: View {
 
             dataSourceView
 
+            HStack {
+                Spacer()
+                VStack(alignment: .trailing) {
+                    verifyActionView
+                    verificationStatusView
+                }
+            }
+
             Spacer()
 
             HStack {
@@ -41,36 +51,45 @@ struct SiteView: View {
         }
         .padding()
         .sheet(isPresented: $selectLocation) {
-            LocationView(viewModel: .init())
+            LocationView(viewModel: .init(target: $viewModel.locationTarget))
         }
         .sheet(isPresented: $selectDataSource) {
-            Text("Hello")
+            if let location = viewModel.locationTarget?.location {
+                DataSourceListView(viewModel: .init(location: location))
+            } else {
+                EmptyView()
+            }
         }
     }
 }
 
 private extension SiteView {
+
     var titleView: some View {
         HStack {
+            Image.Trash.Circle.unfilled
+                .resizable()
+                .frame(width: 32, height: 32)
             Text("Site Details")
                 .font(.title)
             Spacer()
-            Image.House.circle
-                .resizable()
-                .frame(width: 32, height: 32)
         }
+        .padding(.bottom, 32)
     }
 
     var nameView: some View {
         HStack {
             Text("Name")
+                .foregroundStyle(.secondary)
+
             Spacer()
             TextField(
-                "Name",
+                "Friendly Name",
                 text: $viewModel.name
             )
             .multilineTextAlignment(.trailing)
             .lineLimit(1)
+            .padding(.trailing, trailingPadding)
         }
     }
 
@@ -80,6 +99,7 @@ private extension SiteView {
         } label: {
             HStack {
                 Text("Location")
+                    .foregroundStyle(.secondary)
 
                 Spacer()
 
@@ -99,32 +119,32 @@ private extension SiteView {
     }
 
     var descriptionView: some View {
-        HStack {
+        HStack(alignment: .top) {
             Text("Description")
+                .foregroundStyle(.secondary)
             Spacer()
             TextField(
-                "Description",
-                text: $viewModel.description
+                "Address or other descriptive details",
+                text: $viewModel.description,
+                axis: .vertical
             )
             .multilineTextAlignment(.trailing)
-            //            .lineLimit(1)
+            .lineLimit(5...10)
         }
+        .padding(.trailing, trailingPadding)
     }
 
     var dataSourceView: some View {
         Button {
-
+            selectDataSource.toggle()
         } label: {
             HStack {
-                Text("Data source")
+                Text("Collection schedule")
+                    .foregroundStyle(.secondary)
 
                 Spacer()
 
-                if let coordinates = viewModel.coordinates {
-                    Text("\(coordinates.latitude), \(coordinates.longitude)")
-                } else {
-                    Text("---")
-                }
+                Text("---")
 
                 Image.Chevron.right
                     .foregroundStyle(.secondary)
@@ -133,6 +153,67 @@ private extension SiteView {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .disabled(viewModel.locationTarget == nil)
+    }
+
+    @ViewBuilder
+    var verifyActionView: some View {
+        if viewModel.isVerifying {
+            ProgressView()
+        } else {
+            Button {
+
+            } label: {
+                HStack {
+                    Text("Verify")
+                    verifyImageView
+                }
+            }
+            .disabled(viewModel.canVerify == false)
+        }
+    }
+
+    var verificationColor: Color {
+        switch viewModel.verificationState {
+        case .none:
+            return .secondary
+        case .failed:
+            return .red
+        case .successful:
+            return .green
+        }
+    }
+
+    @ViewBuilder
+    var verificationStatusView: some View {
+        switch viewModel.verificationState {
+        case .none:
+            EmptyView()
+
+        case .failed:
+            Text("Verification failed - location may not be within specified collection area!")
+                .multilineTextAlignment(.trailing)
+                .foregroundStyle(.red)
+                .font(.caption)
+
+        case .successful:
+            Text("Verification was successful")
+                .multilineTextAlignment(.trailing)
+                .foregroundStyle(.green)
+                .font(.caption)
+        }
+    }
+
+    @ViewBuilder
+    var verifyImageView: some View {
+        switch viewModel.verificationState {
+        case .none:
+            Image(systemName: "checkmark.circle")
+
+        case .failed, .successful:
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(verificationColor)
+        }
     }
 
     var saveButton: some View {
@@ -146,6 +227,7 @@ private extension SiteView {
         .buttonStyle(.borderedProminent)
         .buttonBorderShape(.capsule)
         .tint(Color.green)
+        .disabled(viewModel.canSave == false)
 
     }
 

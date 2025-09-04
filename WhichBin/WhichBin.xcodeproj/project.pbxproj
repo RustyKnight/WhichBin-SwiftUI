@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE7284ED2E66B9A000B254E8 /* SwiftLocation in Frameworks */ = {isa = PBXBuildFile; productRef = CE7284EC2E66B9A000B254E8 /* SwiftLocation */; };
 		CEBF5E3F2DB2213E001D8D66 /* WhichBinMapKitLib in Frameworks */ = {isa = PBXBuildFile; productRef = CEBF5E3E2DB2213E001D8D66 /* WhichBinMapKitLib */; };
 		CEBF5E542DB35032001D8D66 /* CoreExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = CEBF5E532DB35032001D8D66 /* CoreExtensions */; };
 /* End PBXBuildFile section */
@@ -34,9 +35,22 @@
 		CE54CD0C2DB21BED0008311B /* WhichBinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhichBinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CE7284EF2E66BB8500B254E8 /* Exceptions for "WhichBin" folder in "WhichBin" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CE54CCF02DB21BEB0008311B /* WhichBin */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CE54CCF32DB21BEB0008311B /* WhichBin */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CE7284EF2E66BB8500B254E8 /* Exceptions for "WhichBin" folder in "WhichBin" target */,
+			);
 			path = WhichBin;
 			sourceTree = "<group>";
 		};
@@ -58,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEBF5E3F2DB2213E001D8D66 /* WhichBinMapKitLib in Frameworks */,
+				CE7284ED2E66B9A000B254E8 /* SwiftLocation in Frameworks */,
 				CEBF5E542DB35032001D8D66 /* CoreExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,6 +144,7 @@
 			packageProductDependencies = (
 				CEBF5E3E2DB2213E001D8D66 /* WhichBinMapKitLib */,
 				CEBF5E532DB35032001D8D66 /* CoreExtensions */,
+				CE7284EC2E66B9A000B254E8 /* SwiftLocation */,
 			);
 			productName = WhichBin;
 			productReference = CE54CCF12DB21BEB0008311B /* WhichBin.app */;
@@ -215,6 +231,7 @@
 			packageReferences = (
 				CEBF5E3C2DB22129001D8D66 /* XCRemoteSwiftPackageReference "WhichBinMapKitLib" */,
 				CEBF5E522DB35026001D8D66 /* XCRemoteSwiftPackageReference "CoreExtensions" */,
+				CE7284E82E66B93900B254E8 /* XCRemoteSwiftPackageReference "SwiftLocation" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CE54CCF22DB21BEB0008311B /* Products */;
@@ -416,10 +433,11 @@
 				DEVELOPMENT_TEAM = YWXH886EY3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Assist in finding your current location";
+				INFOPLIST_FILE = WhichBin/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Assist in managing your collection sites";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Assist in finding your current location";
 				INFOPLIST_KEY_NSLocationUsageDescription = "Assist in finding your current location";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Assist in finding your current location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Assist in managing your collection sites";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -458,10 +476,11 @@
 				DEVELOPMENT_TEAM = YWXH886EY3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Assist in finding your current location";
+				INFOPLIST_FILE = WhichBin/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Assist in managing your collection sites";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Assist in finding your current location";
 				INFOPLIST_KEY_NSLocationUsageDescription = "Assist in finding your current location";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Assist in finding your current location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Assist in managing your collection sites";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -616,6 +635,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CE7284E82E66B93900B254E8 /* XCRemoteSwiftPackageReference "SwiftLocation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/malcommac/SwiftLocation";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 		CEBF5E3C2DB22129001D8D66 /* XCRemoteSwiftPackageReference "WhichBinMapKitLib" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RustyKnight/WhichBinMapKitLib";
@@ -635,6 +662,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CE7284EC2E66B9A000B254E8 /* SwiftLocation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE7284E82E66B93900B254E8 /* XCRemoteSwiftPackageReference "SwiftLocation" */;
+			productName = SwiftLocation;
+		};
 		CEBF5E3E2DB2213E001D8D66 /* WhichBinMapKitLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CEBF5E3C2DB22129001D8D66 /* XCRemoteSwiftPackageReference "WhichBinMapKitLib" */;
