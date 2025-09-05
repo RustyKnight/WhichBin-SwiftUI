@@ -17,6 +17,7 @@ extension Image {
     enum Multiply {
         enum Circle {
             static let filled = Image(systemName: "multiply.circle.fill")
+            static let unfilled = Image(systemName: "multiply.circle")
         }
     }
 
@@ -34,6 +35,20 @@ extension Image {
         enum Circle {
             static let unfilled = Image(systemName: "trash.circle")
             static let filled = Image(systemName: "trash.circle.fill")
+        }
+    }
+
+    enum Question {
+        enum Circle {
+            static let filled = Image(systemName: "questionmark.circle.fill")
+            static let unfilled = Image(systemName: "questionmark.circle")
+        }
+    }
+
+    enum Checkmark {
+        enum Circle {
+            static let filled = Image(systemName: "checkmark.circle.fill")
+            static let unfilled = Image(systemName: "checkmark.circle")
         }
     }
 }

@@ -87,17 +87,75 @@ private extension DataSourceListView {
     var groupedByDistanceView: some View {
         List {
             ForEach(viewModel.listByDistance, id: \.id) { item in
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(item.dataSource.name)
-                        Text(item.dataSource.locationDescription)
-                            .multilineTextAlignment(.leading)
-                            .foregroundStyle(.secondary)
-                            .font(.caption)
+                Button {
+                    Task {
+                        await viewModel.verifyDataSource(item.key)
                     }
-                    Spacer()
-                    Text(item.distanceDescription)
+                } label: {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(item.dataSource.name)
+                            Text(item.dataSource.locationDescription)
+                                .multilineTextAlignment(.leading)
+                                .foregroundStyle(.secondary)
+                                .font(.caption)
+                        }
+                        Spacer()
+
+                        VStack {
+                            Text(item.distanceDescription)
+                            verificationStateView(for: item.key)
+                        }
+
+                    }
                 }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+
+    func verificationStateView(for key: DataSourceRegistry.Key) -> some View {
+        HStack {
+            switch viewModel.verificationState[key] {
+            case .unknown, .none:
+                Text("Unverified")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
+            case .verifying:
+                ProgressView()
+
+            case .verified(let state):
+                if state {
+                    Image.Question.Circle.unfilled
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                        .foregroundStyle(.green)
+                    
+                    Text("Verified")
+                        .font(.caption)
+                        .foregroundStyle(.green)
+                } else {
+                    Image.Multiply.Circle.unfilled
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                        .foregroundStyle(.red)
+
+                    Text("Not within area")
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                }
+
+            case .error(let error):
+                Image(systemName: "exclamationmark.triangle")
+                    .resizable()
+                    .frame(width: 16, height: 16)
+                    .foregroundStyle(.red)
+                    .help(error.localizedDescription)
+
+                Text("Failed")
+                    .font(.caption)
+                    .foregroundStyle(.red)
             }
         }
     }

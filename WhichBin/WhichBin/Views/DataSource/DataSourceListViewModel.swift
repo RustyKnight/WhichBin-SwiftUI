@@ -5,8 +5,10 @@
 //  Created by Shane Whitehead on 3/9/2025.
 //
 
+import Cadmus
 import SwiftUI
 import WhichBinLib
+import WhichBinMapKitLib
 
 class DataSourceListViewModel: ObservableObject {
     // Would really like a target location if
@@ -17,6 +19,13 @@ class DataSourceListViewModel: ObservableObject {
         case distance = "By distance"
 
         var id: String { rawValue }
+    }
+
+    enum VerificationState {
+        case unknown
+        case verifying
+        case verified(Bool)
+        case error(Error)
     }
 
     struct DataSourceDistance: Identifiable {
@@ -31,6 +40,9 @@ class DataSourceListViewModel: ObservableObject {
     let listByDistance: [DataSourceDistance]
 
     @Published var selectedViewType: ViewType = .location
+
+    @Published
+    private(set) var verificationState: [DataSourceRegistry.Key: VerificationState] = [:]
 
     init(location: LocationCoordinate) {
         self.location = location
@@ -51,6 +63,37 @@ class DataSourceListViewModel: ObservableObject {
                     unit: .meters
                 )
             )
+        }
+    }
+
+    @MainActor
+    func verifyDataSource(_ key: DataSourceRegistry.Key) async {
+        if let result = verificationState[key] {
+            log(debug: "\(key) already verified: \(result)")
+            return
+        }
+
+        guard let dataSource = DataSourceRegistry.shared.dataSources[key] else {
+            log(debug: "Unknown data source: \(key)")
+            return
+        }
+
+        log(debug: "Verifying data source: \(key)")
+        verificationState[key] = .verifying
+
+        do {
+            let coordinate = location.coreLocation.coordinate
+            let schedules = try await dataSource.load()
+
+            let contains = schedules.contains { schedule in
+                schedule.polygon.mapMultiPolygon.contains(coordinate)
+            }
+
+            log(debug: "Data source verified: \(key) \(contains)")
+            verificationState[key] = .verified(contains)
+        } catch {
+            log(error: "Failed to load data source \(key): \(error)")
+            verificationState[key] = .error(error)
         }
     }
 }
