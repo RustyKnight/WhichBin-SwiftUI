@@ -49,7 +49,7 @@ class LocationViewModel: ObservableObject {
     private var searchTask: Task<Void, Never>?
     private var subscribers: Set<AnyCancellable> = []
 
-    private let location: Location = .init()
+    private let location: LocationController = .init()
 
     init(target: Binding<Target?>) {
         self._target = target

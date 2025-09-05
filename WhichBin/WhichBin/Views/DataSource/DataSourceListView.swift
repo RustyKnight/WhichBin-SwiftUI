@@ -13,18 +13,23 @@ struct DataSourceListView: View {
     @ObservedObject var viewModel: DataSourceListViewModel
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            titleView
-
-            segmentView
-
-            if viewModel.selectedViewType == .distance {
-                groupedByDistanceView
-            } else {
-                groupedByLocationView
+        ZStack {
+            VStack(alignment: .leading, spacing: 0) {
+                titleView
+                
+                segmentView
+                
+                if viewModel.selectedViewType == .distance {
+                    groupedByDistanceView
+                } else {
+                    groupedByLocationView
+                }
+                
+                Spacer()
             }
-
-            Spacer()
+            if viewModel.isVerifyingCollection {
+                verificationView
+            }
         }
     }
 }
@@ -102,61 +107,36 @@ private extension DataSourceListView {
                         }
                         Spacer()
 
-                        VStack {
-                            Text(item.distanceDescription)
-                            verificationStateView(for: item.key)
-                        }
-
+                        Text(item.distanceDescription)
                     }
                 }
                 .buttonStyle(.plain)
             }
         }
     }
-
-    func verificationStateView(for key: DataSourceRegistry.Key) -> some View {
+    
+    var verificationView: some View {
         HStack {
-            switch viewModel.verificationState[key] {
-            case .unknown, .none:
-                Text("Unverified")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-
-            case .verifying:
-                ProgressView()
-
-            case .verified(let state):
-                if state {
-                    Image.Question.Circle.unfilled
-                        .resizable()
-                        .frame(width: 16, height: 16)
-                        .foregroundStyle(.green)
-                    
-                    Text("Verified")
-                        .font(.caption)
-                        .foregroundStyle(.green)
-                } else {
-                    Image.Multiply.Circle.unfilled
-                        .resizable()
-                        .frame(width: 16, height: 16)
-                        .foregroundStyle(.red)
-
-                    Text("Not within area")
-                        .font(.caption)
-                        .foregroundStyle(.red)
+            Spacer()
+            VStack {
+                Spacer()
+                VStack {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .controlSize(.extraLarge)
+                        .padding(.bottom, .Padding.standard)
+                    Text("Validating collection area")
+                        .font(.title)
+                    Text("Please wait")
+                        .font(.body)
                 }
-
-            case .error(let error):
-                Image(systemName: "exclamationmark.triangle")
-                    .resizable()
-                    .frame(width: 16, height: 16)
-                    .foregroundStyle(.red)
-                    .help(error.localizedDescription)
-
-                Text("Failed")
-                    .font(.caption)
-                    .foregroundStyle(.red)
+                .padding()
+                .background(Color(UIColor.systemGroupedBackground))
+                .cornerRadius(.Padding.standard)
+                Spacer()
             }
+            Spacer()
         }
+        .background(.secondary.opacity(0.9))
     }
 }

@@ -1,5 +1,5 @@
 {
-  "originHash" : "435cc8d5c1d207192d3a09c527c0cc38237d66effff515d5cede17697825b610",
+  "originHash" : "bce0e4e6d88526406ce5a4dbd3c3a9f670426980a92523b938a4cdb97728d778",
   "pins" : [
     {
       "identity" : "cadmus",
@@ -31,10 +31,10 @@
     {
       "identity" : "swiftlocation",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/malcommac/SwiftLocation",
+      "location" : "https://github.com/RustyKnight/SwiftLocation",
       "state" : {
-        "revision" : "010073e62cea4daefea61042a51b8619d23cdc35",
-        "version" : "6.0.0"
+        "branch" : "master",
+        "revision" : "da42fb4f9ee90f448484982b4ab3c39de1da0a67"
       }
     },
     {
@@ -43,7 +43,7 @@
       "location" : "https://github.com/RustyKnight/WhichBinLib",
       "state" : {
         "branch" : "main",
-        "revision" : "585c08a7e3d8c76f3137f7f99c74cb861fb41f06"
+        "revision" : "cffe26d379378fd86305327f735afa9d161958c0"
       }
     },
     {

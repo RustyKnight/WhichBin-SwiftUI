@@ -42,7 +42,14 @@ class DataSourceListViewModel: ObservableObject {
     @Published var selectedViewType: ViewType = .location
 
     @Published
-    private(set) var verificationState: [DataSourceRegistry.Key: VerificationState] = [:]
+    private(set) var verificationState: VerificationState = .unknown
+    
+    var isVerifyingCollection: Bool {
+        switch verificationState {
+        case .verifying: true
+        default: false
+        }
+    }
 
     init(location: LocationCoordinate) {
         self.location = location
@@ -66,20 +73,28 @@ class DataSourceListViewModel: ObservableObject {
         }
     }
 
+    /*
+     Verification step should take place when the user
+     selects the data source.  A alert should be presented
+     to the user if the location is out side the
+     collection area and they should have the option
+     to use it or not.
+     
+     Maybe show a map?!?
+     */
+    
     @MainActor
     func verifyDataSource(_ key: DataSourceRegistry.Key) async {
-        if let result = verificationState[key] {
-            log(debug: "\(key) already verified: \(result)")
-            return
-        }
-
+        log(debug: "Verifying ... \(key)")
+        verificationState = .unknown
+        
         guard let dataSource = DataSourceRegistry.shared.dataSources[key] else {
             log(debug: "Unknown data source: \(key)")
             return
         }
 
         log(debug: "Verifying data source: \(key)")
-        verificationState[key] = .verifying
+        verificationState = .verifying
 
         do {
             let coordinate = location.coreLocation.coordinate
@@ -89,11 +104,13 @@ class DataSourceListViewModel: ObservableObject {
                 schedule.polygon.mapMultiPolygon.contains(coordinate)
             }
 
+            try? await Task.sleep(for: .seconds(5))
+            
             log(debug: "Data source verified: \(key) \(contains)")
-            verificationState[key] = .verified(contains)
+            verificationState = .verified(contains)
         } catch {
             log(error: "Failed to load data source \(key): \(error)")
-            verificationState[key] = .error(error)
+            verificationState = .error(error)
         }
     }
 }
