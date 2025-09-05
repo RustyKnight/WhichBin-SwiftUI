@@ -8,6 +8,11 @@
 import SwiftUI
 import WhichBinLib
 
+/*
+    We should allow for the displaying of a map showing
+    the collection area, with the specified location ...
+ */
+
 struct DataSourceListView: View {
 
     @Environment(\.dismiss) var dismiss
@@ -123,7 +128,6 @@ private extension DataSourceListView {
                 }
             }
         }
-//        .contentMargins(.top, 0)
         .listStyle(GroupedListStyle())
     }
 
