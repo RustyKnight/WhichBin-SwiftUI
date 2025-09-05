@@ -34,14 +34,6 @@ struct SiteView: View {
 
             dataSourceView
 
-            HStack {
-                Spacer()
-                VStack(alignment: .trailing) {
-                    verifyActionView
-                    verificationStatusView
-                }
-            }
-
             Spacer()
 
             HStack {
@@ -55,7 +47,7 @@ struct SiteView: View {
         }
         .sheet(isPresented: $selectDataSource) {
             if let location = viewModel.locationTarget?.location {
-                DataSourceListView(viewModel: .init(location: location))
+                DataSourceListView(viewModel: .init(location: location, dataSourceKey: $viewModel.dataSource))
             } else {
                 EmptyView()
             }
@@ -144,7 +136,11 @@ private extension SiteView {
 
                 Spacer()
 
-                Text("---")
+                if let description = viewModel.dataSourceDescription {
+                    Text(description)
+                } else {
+                    Text("---")
+                }
 
                 Image.Chevron.right
                     .foregroundStyle(.secondary)
@@ -154,66 +150,6 @@ private extension SiteView {
         }
         .buttonStyle(.plain)
         .disabled(viewModel.locationTarget == nil)
-    }
-
-    @ViewBuilder
-    var verifyActionView: some View {
-        if viewModel.isVerifying {
-            ProgressView()
-        } else {
-            Button {
-
-            } label: {
-                HStack {
-                    Text("Verify")
-                    verifyImageView
-                }
-            }
-            .disabled(viewModel.canVerify == false)
-        }
-    }
-
-    var verificationColor: Color {
-        switch viewModel.verificationState {
-        case .none:
-            return .secondary
-        case .failed:
-            return .red
-        case .successful:
-            return .green
-        }
-    }
-
-    @ViewBuilder
-    var verificationStatusView: some View {
-        switch viewModel.verificationState {
-        case .none:
-            EmptyView()
-
-        case .failed:
-            Text("Verification failed - location may not be within specified collection area!")
-                .multilineTextAlignment(.trailing)
-                .foregroundStyle(.red)
-                .font(.caption)
-
-        case .successful:
-            Text("Verification was successful")
-                .multilineTextAlignment(.trailing)
-                .foregroundStyle(.green)
-                .font(.caption)
-        }
-    }
-
-    @ViewBuilder
-    var verifyImageView: some View {
-        switch viewModel.verificationState {
-        case .none:
-            Image(systemName: "checkmark.circle")
-
-        case .failed, .successful:
-            Image(systemName: "checkmark.circle.fill")
-                .foregroundStyle(verificationColor)
-        }
     }
 
     var saveButton: some View {

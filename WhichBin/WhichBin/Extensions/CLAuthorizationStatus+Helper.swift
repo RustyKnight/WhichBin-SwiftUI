@@ -6,10 +6,11 @@
 //
 
 import CoreLocation
+import Cadmus
 
 extension CLAuthorizationStatus {
     
-    var isAuthorized: Bool {
+    var isAuthorised: Bool {
         switch self {
         case .authorizedAlways, .authorizedWhenInUse:
             return true
@@ -17,6 +18,23 @@ extension CLAuthorizationStatus {
             return false
         @unknown default:
             return false
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case .notDetermined:
+            "Not determined"
+        case .restricted:
+            "Restricted"
+        case .denied:
+            "Denied"
+        case .authorizedAlways:
+            "Authorized always"
+        case .authorizedWhenInUse:
+            "Authorized when in use"
+        @unknown default:
+            "Unknown"
         }
     }
 }

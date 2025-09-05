@@ -43,6 +43,9 @@ struct LocationView: View {
             }
         }
         .ignoresSafeArea(.all, edges: [.bottom])
+        .task {
+            await viewModel.requestLocationPermission()
+        }
     }
 }
 

@@ -10,12 +10,6 @@ import WhichBinLib
 
 class SiteViewModel: ObservableObject {
 
-    enum VerificationState {
-        case none
-        case successful
-        case failed
-    }
-
     @Published
     var name: String = ""
 
@@ -37,21 +31,16 @@ class SiteViewModel: ObservableObject {
     @Published
     var dataSource: DataSourceRegistry.Key?
 
-    @Published
-    private(set) var isVerifying = false
-
-    @Published
-    private(set) var verificationState: VerificationState = .none
-
-    var canVerify: Bool {
-        coordinates != nil && dataSource != nil
-    }
-
     var canSave: Bool {
         !name.trimmed.isEmpty &&
         coordinates != nil &&
         !description.trimmed.isEmpty &&
         dataSource != nil
+    }
+    
+    var dataSourceDescription: String? {
+        guard let dataSource else { return nil }
+        return DataSourceRegistry.shared.dataSources[dataSource]?.name
     }
 
     init() {

@@ -9,6 +9,7 @@ import Cadmus
 import SwiftUI
 import WhichBinLib
 import WhichBinMapKitLib
+import Combine
 
 class DataSourceListViewModel: ObservableObject {
     // Would really like a target location if
@@ -22,9 +23,9 @@ class DataSourceListViewModel: ObservableObject {
     }
 
     enum VerificationState {
-        case unknown
-        case verifying
-        case verified(Bool)
+        case unverified
+        case withinBounds
+        case outsideBounds
         case error(Error)
     }
 
@@ -35,23 +36,56 @@ class DataSourceListViewModel: ObservableObject {
         let distance: Measurement<UnitLength>
     }
 
+    @Published var selectedViewType: ViewType = .location
+
+    @Published
+    private(set) var verificationState: VerificationState = .unverified
+    
+    @Published
+    var isVerifyingCollection = false
+    
+    @Published
+    var collectionVerificationOutsideOfLocationBounds: Bool = false
+    
+    @Binding
+    var dataSourceKey: DataSourceRegistry.Key? {
+        didSet {
+            guard dataSourceKey != nil else { return }
+            dismissView.send(true)
+        }
+    }
+
     let location: LocationCoordinate
     let groupedByLocation: [Tree]
     let listByDistance: [DataSourceDistance]
 
-    @Published var selectedViewType: ViewType = .location
-
-    @Published
-    private(set) var verificationState: VerificationState = .unknown
-    
-    var isVerifyingCollection: Bool {
+    var isLocationWithCollectionBounds: Bool {
         switch verificationState {
-        case .verifying: true
+        case .withinBounds: true
         default: false
         }
     }
+    
+    var isLocationOutsideCollectionBounds: Bool {
+        switch verificationState {
+        case .outsideBounds: true
+        default: false
+        }
+    }
+    
+    var verificationDidError: Bool {
+        switch verificationState {
+        case .error: true
+        default: false
+        }
+    }
+    
+    var dismissView = PassthroughSubject<Bool, Never>()
+    
+    private var outOfBoundsDataSource: DataSourceRegistry.Key?
 
-    init(location: LocationCoordinate) {
+    init(location: LocationCoordinate, dataSourceKey: Binding<DataSourceRegistry.Key?>) {
+        self._dataSourceKey = dataSourceKey
         self.location = location
 
         groupedByLocation = DataSourceRegistry.shared.grouped
@@ -72,21 +106,16 @@ class DataSourceListViewModel: ObservableObject {
             )
         }
     }
-
-    /*
-     Verification step should take place when the user
-     selects the data source.  A alert should be presented
-     to the user if the location is out side the
-     collection area and they should have the option
-     to use it or not.
-     
-     Maybe show a map?!?
-     */
+    
+    func selectOutOfBoundsDataSource() {
+        dataSourceKey = outOfBoundsDataSource
+    }
     
     @MainActor
     func verifyDataSource(_ key: DataSourceRegistry.Key) async {
-        log(debug: "Verifying ... \(key)")
-        verificationState = .unknown
+        outOfBoundsDataSource = nil
+        verificationState = .unverified
+        isVerifyingCollection = true
         
         guard let dataSource = DataSourceRegistry.shared.dataSources[key] else {
             log(debug: "Unknown data source: \(key)")
@@ -94,7 +123,6 @@ class DataSourceListViewModel: ObservableObject {
         }
 
         log(debug: "Verifying data source: \(key)")
-        verificationState = .verifying
 
         do {
             let coordinate = location.coreLocation.coordinate
@@ -104,14 +132,24 @@ class DataSourceListViewModel: ObservableObject {
                 schedule.polygon.mapMultiPolygon.contains(coordinate)
             }
 
-            try? await Task.sleep(for: .seconds(5))
-            
             log(debug: "Data source verified: \(key) \(contains)")
-            verificationState = .verified(contains)
+            verificationState = contains ? .withinBounds : .outsideBounds
+
+            if contains {
+                try? await Task.sleep(for: .seconds(1))
+                
+                dataSourceKey = key
+            } else {
+                outOfBoundsDataSource = key
+                isVerifyingCollection.toggle()
+                collectionVerificationOutsideOfLocationBounds.toggle()
+            }
         } catch {
             log(error: "Failed to load data source \(key): \(error)")
             verificationState = .error(error)
         }
+        
+        isVerifyingCollection = false
     }
 }
 

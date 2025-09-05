@@ -10,6 +10,8 @@ import WhichBinLib
 
 struct DataSourceListView: View {
 
+    @Environment(\.dismiss) var dismiss
+
     @ObservedObject var viewModel: DataSourceListViewModel
 
     var body: some View {
@@ -29,6 +31,35 @@ struct DataSourceListView: View {
             }
             if viewModel.isVerifyingCollection {
                 verificationView
+            }
+        }
+        .alert(
+            "Outside of bounds",
+            isPresented: $viewModel.collectionVerificationOutsideOfLocationBounds,
+            actions: {
+                /// Add a button that opens the article URL.
+                Button("No") {
+                }
+                /// Make it the default action on the alert
+                .keyboardShortcut(.defaultAction)
+                
+                /// Add a generic OK button.
+                Button("Yes") {
+                    viewModel.selectOutOfBoundsDataSource()
+                }
+            }, message: {
+                    Text(
+                        """
+                        The site location is not within selected collection bounds.
+                        
+                        Do you wish to use it anyway?
+                        """
+                    )
+            }
+        )
+        .onReceive(viewModel.dismissView) { shouldDismiss in
+            if shouldDismiss {
+                self.dismiss()
             }
         }
     }
@@ -74,18 +105,25 @@ private extension DataSourceListView {
                 case .state(let state):
                     Text(state.description)
                 case .city(let city, let key):
-                    VStack(alignment: .leading) {
-                        Text(city.description)
-                        if let dataSource = DataSourceRegistry.shared.dataSources[key] {
-                            Text(dataSource.name)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                    Button {
+                        Task {
+                            await viewModel.verifyDataSource(key)
+                        }
+                    } label: {
+                        VStack(alignment: .leading) {
+                            Text(city.description)
+                            if let dataSource = DataSourceRegistry.shared.dataSources[key] {
+                                Text(dataSource.name)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                     }
+                    .buttonStyle(.plain)
                 }
             }
         }
-        .contentMargins(.top, 0)
+//        .contentMargins(.top, 0)
         .listStyle(GroupedListStyle())
     }
 
@@ -121,14 +159,34 @@ private extension DataSourceListView {
             VStack {
                 Spacer()
                 VStack {
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .controlSize(.extraLarge)
-                        .padding(.bottom, .Padding.standard)
-                    Text("Validating collection area")
-                        .font(.title)
-                    Text("Please wait")
-                        .font(.body)
+                    if viewModel.isLocationWithCollectionBounds {
+                        Image.Checkmark.Circle.filled
+                            .size(.large)
+                            .foregroundStyle(.green)
+                        Text("Validation Successful")
+                            .font(.title)
+                        Text("Site location is within the collection area")
+                            .multilineTextAlignment(.center)
+                    } else if viewModel.isLocationOutsideCollectionBounds {
+                        Image.Multiply.Circle.filled
+                            .size(.large)
+                            .foregroundStyle(.red)
+                        Text("Validation Failed")
+                            .font(.title)
+                        Text("Site location is not within the collection area")
+                            .multilineTextAlignment(.center)
+                    } else {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .controlSize(.extraLarge)
+                            .padding(.bottom, .Padding.standard)
+                        
+                        Text("Validating collection area")
+                            .font(.title)
+                            .multilineTextAlignment(.center)
+                        Text("Please wait")
+                            .font(.body)
+                    }
                 }
                 .padding()
                 .background(Color(UIColor.systemGroupedBackground))

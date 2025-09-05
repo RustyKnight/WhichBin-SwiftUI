@@ -41,7 +41,7 @@ class LocationViewModel: ObservableObject {
     @Binding var target: Target?
 
     var canTargetCurrentLocation: Bool {
-        location.authorizationStatus.isAuthorized
+        location.authorizationStatus.isAuthorised
     }
 
     @Published private(set) var isTargetingLocation = false
@@ -79,8 +79,8 @@ class LocationViewModel: ObservableObject {
         )
     }
 
-    private func requestPermission() async {
-        guard location.authorizationStatus.isAuthorized == false else { return }
+    func requestLocationPermission() async {
+        guard location.authorizationStatus.isAuthorised == false else { return }
 
         do {
             try await location.requestPermission(.whenInUse)
@@ -93,8 +93,8 @@ class LocationViewModel: ObservableObject {
     func targetCurrentLocation() {
         isTargetingLocation = true
         Task {
-            await requestPermission()
-            guard location.authorizationStatus.isAuthorized else { return }
+            await requestLocationPermission()
+            guard location.authorizationStatus.isAuthorised else { return }
 
             defer {
                 isTargetingLocation = false

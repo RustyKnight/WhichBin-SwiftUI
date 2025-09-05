@@ -51,4 +51,11 @@ extension Image {
             static let unfilled = Image(systemName: "checkmark.circle")
         }
     }
+    
+    enum Triangle {
+        enum ExclamationMark {
+            static let filled = Image(systemName: "exclamationmark.triangle.fill")
+            static let unfilled = Image(systemName: "exclamationmark.triangle")
+        }
+    }
 }

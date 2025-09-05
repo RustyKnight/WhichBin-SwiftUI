@@ -15,5 +15,14 @@ extension CGFloat {
         static let large: CGFloat = 24.0
         static let extraLarge: CGFloat = 32.0
     }
+
+    enum Size: CGFloat {
+        case extraSmall = 4.0
+        case small = 8.0
+        case medium = 16.0
+        case standard = 24.0
+        case large = 32.0
+        case extraLarge = 64.0
+    }
 }
 
