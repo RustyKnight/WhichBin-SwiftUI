@@ -45,6 +45,11 @@ class SiteManager: ObservableObject {
         sites.remove(site)
         try save()
     }
+    
+    func remove(siteWithId id: UUID) throws {
+        guard sites.remove(siteWithId: id) else { return }
+        try save()
+    }
 
     private func load() throws {
         let url = FileManager.libraryDirectory
@@ -61,4 +66,33 @@ class SiteManager: ObservableObject {
         let data = try JSONEncoder().encode(Array(sites))
         try data.write(to: url)
     }
+}
+
+extension SiteManager {
+    
+    func delete(_ indexSet: IndexSet) throws {
+        var temp = Array(sites)
+        temp.remove(atOffsets: indexSet)
+        
+        sites = Set(temp)
+        
+        try save()
+    }
+}
+
+private extension Set where Element == Site {
+    
+    @discardableResult
+    mutating func remove(siteWithId id: UUID) -> Bool {
+        guard let index = index(ofSiteWithId: id) else { return false }
+        remove(at: index)
+        return true
+    }
+    
+    func index(ofSiteWithId id: UUID) -> Set<Site>.Index? {
+        firstIndex { site in
+            site.id == id
+        }
+    }
+    
 }

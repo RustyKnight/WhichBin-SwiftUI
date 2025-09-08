@@ -58,4 +58,16 @@ extension Image {
             static let unfilled = Image(systemName: "exclamationmark.triangle")
         }
     }
+    
+    enum Gear {
+        static let filled = Image(systemName: "gearshape.fill")
+        static let unfilled = Image(systemName: "gearshape")
+    }
+    
+    enum Lock {
+        enum Shield {
+            static let filled = Image(systemName: "lock.shield.fill")
+            static let unfilled = Image(systemName: "lock.shield")
+        }
+    }
 }

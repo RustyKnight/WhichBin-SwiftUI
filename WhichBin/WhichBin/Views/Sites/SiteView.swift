@@ -23,25 +23,30 @@ struct SiteView: View {
     private let trailingPadding: CGFloat = 36
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 0) {
             titleView
-
-            nameView
-
-            locationView
-
-            descriptionView
-
-            dataSourceView
-
-            Spacer()
-
-            HStack {
-                cancelButton
-                saveButton
+                .ignoresSafeArea()
+            
+            VStack(spacing: 20) {
+                
+                nameView
+                
+                locationView
+                
+                descriptionView
+                
+                dataSourceView
+                
+                Spacer()
+                
+                HStack {
+                    cancelButton
+                    saveButton
+                }
             }
+            .padding()
         }
-        .padding()
+        .background(Color.background.darken(by: 0.4))
         .sheet(isPresented: $selectLocation) {
             LocationView(viewModel: .init(target: $viewModel.locationTarget))
         }
@@ -51,6 +56,9 @@ struct SiteView: View {
             } else {
                 EmptyView()
             }
+        }
+        .alert("Unable to save site details", isPresented: $viewModel.saveError) {
+            Button.okay()
         }
     }
 }
@@ -66,7 +74,10 @@ private extension SiteView {
                 .font(.title)
             Spacer()
         }
+        .padding(.top)
+        .padding(.horizontal)
         .padding(.bottom, 32)
+        .background(Color.background)
     }
 
     var nameView: some View {
@@ -154,7 +165,8 @@ private extension SiteView {
 
     var saveButton: some View {
         Button {
-            // update site details ...
+            viewModel.save(siteManager)
+            dismiss()
         } label: {
             Text("Save")
                 .frame(maxWidth: .infinity)

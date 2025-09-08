@@ -11,31 +11,16 @@ import WhichBinLib
 struct ContentView: View {
     @EnvironmentObject var siteManager: SiteManager
 
-    var body: some View {
-        switch siteManager.state {
-        case .error(let error):
-            errorView(error)
-        default:
-            siteListView()
-        }
-    }
-}
-
-private extension ContentView {
-    func errorView(_ error: Error) -> some View {
-        HStack {
-            Spacer()
-            ErrorView(
-                title: "Failed to load site details",
-                subTitle: error.localizedDescription
-            )
-            Spacer()
-        }
-        .background(.cellFill)
-    }
+    // Need ability to determine if any sites exist or not
+    // and show the site list if not and the
+    // schedule view if to does ...
     
-    func siteListView() -> some View {
-        SitesListView()
+    var body: some View {
+        NavigationStack {
+            SchedulesView(viewModel: .init(siteManager: siteManager))
+        }
+        .toolbarTheme
+        .background(Color.background)
     }
 }
 

@@ -17,12 +17,12 @@ extension CGFloat {
     }
 
     enum Size: CGFloat {
-        case extraSmall = 4.0
-        case small = 8.0
-        case medium = 16.0
-        case standard = 24.0
-        case large = 32.0
-        case extraLarge = 64.0
+        case small4 = 4.0
+        case small8 = 8.0
+        case medium16 = 16.0
+        case medium24 = 24.0
+        case large32 = 32.0
+        case extraLarge64 = 64.0
     }
 }
 

@@ -80,7 +80,7 @@ class DataSourceListViewModel: ObservableObject {
         }
     }
     
-    var dismissView = PassthroughSubject<Bool, Never>()
+    let dismissView = PassthroughSubject<Bool, Never>()
     
     private var outOfBoundsDataSource: DataSourceRegistry.Key?
 

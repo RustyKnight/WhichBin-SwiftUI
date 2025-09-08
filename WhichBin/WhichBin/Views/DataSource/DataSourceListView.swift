@@ -165,7 +165,7 @@ private extension DataSourceListView {
                 VStack {
                     if viewModel.isLocationWithCollectionBounds {
                         Image.Checkmark.Circle.filled
-                            .size(.large)
+                            .size(.large32)
                             .foregroundStyle(.green)
                         Text("Validation Successful")
                             .font(.title)
@@ -173,7 +173,7 @@ private extension DataSourceListView {
                             .multilineTextAlignment(.center)
                     } else if viewModel.isLocationOutsideCollectionBounds {
                         Image.Multiply.Circle.filled
-                            .size(.large)
+                            .size(.large32)
                             .foregroundStyle(.red)
                         Text("Validation Failed")
                             .font(.title)

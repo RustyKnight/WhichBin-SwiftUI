@@ -5,6 +5,8 @@
 //  Created by Shane Whitehead on 20/4/2025.
 //
 
+import Cadmus
+import Combine
 import SwiftUI
 import WhichBinLib
 
@@ -30,6 +32,13 @@ class SiteViewModel: ObservableObject {
 
     @Published
     var dataSource: DataSourceRegistry.Key?
+    
+    @Published
+    var saveError: Bool = false
+
+    let dismissView = PassthroughSubject<Bool, Never>()
+    
+    private let originalSiteId: UUID?
 
     var canSave: Bool {
         !name.trimmed.isEmpty &&
@@ -44,12 +53,35 @@ class SiteViewModel: ObservableObject {
     }
 
     init() {
-
+        originalSiteId = nil
     }
 
     init(site: Site) {
         name = site.name
         description = site.description
         coordinates = site.location
+        originalSiteId = site.id
+    }
+    
+    func save(_ siteManager: SiteManager) {
+        guard let locationTarget, let dataSource else { return }
+        
+        // Need to provide update workflow :/
+        let site = Site(
+            name: name,
+            description: description,
+            location: locationTarget.location,
+            dataSourceKey: dataSource
+        )
+        
+        do {
+            if let originalSiteId {
+                try siteManager.remove(siteWithId: originalSiteId)
+            }
+            try siteManager.add(site: site)
+            dismissView.send(true)
+        } catch {
+            log(error: "Failed to save site details: \(error)")
+        }
     }
 }

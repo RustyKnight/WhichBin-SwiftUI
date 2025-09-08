@@ -5,10 +5,13 @@
 //  Created by Shane Whitehead on 18/4/2025.
 //
 
+import Foundation
 import MapKit
 import WhichBinLib
 
-struct Site: Codable, Hashable {
+struct Site: Codable, Hashable, Identifiable {
+    
+    let id: UUID
     
     /// Friendly name
     let name: String
@@ -22,22 +25,18 @@ struct Site: Codable, Hashable {
 
     /// The data source that this site is associated with
     let dataSourceKey: DataSourceRegistry.Key
+    
+    init(
+        id: UUID = UUID(),
+        name: String,
+        description: String,
+        location: LocationCoordinate,
+        dataSourceKey: DataSourceRegistry.Key
+    ) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.location = location
+        self.dataSourceKey = dataSourceKey
+    }
 }
-//
-//extension Site {
-//
-//    struct Coordinates: Codable, Hashable {
-//        let latitude: Double
-//        let longitude: Double
-//
-//        init(latitude: Double, longitude: Double) {
-//            self.latitude = latitude
-//            self.longitude = longitude
-//        }
-//
-//        init(coordinate: CLLocationCoordinate2D) {
-//            self.latitude = coordinate.latitude
-//            self.longitude = coordinate.longitude
-//        }
-//    }
-//}
