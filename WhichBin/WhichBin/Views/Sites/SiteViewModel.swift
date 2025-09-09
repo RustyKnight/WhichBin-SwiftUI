@@ -10,6 +10,12 @@ import Combine
 import SwiftUI
 import WhichBinLib
 
+struct SiteDescription: SiteDescribable {
+    let name: String
+    let location: WhichBinLib.LocationCoordinate
+    let dataSource: any WhichBinLib.DataSource
+}
+
 class SiteViewModel: ObservableObject {
 
     @Published
@@ -51,6 +57,30 @@ class SiteViewModel: ObservableObject {
         guard let dataSource else { return nil }
         return DataSourceRegistry.shared.dataSources[dataSource]?.name
     }
+    
+    private var siteDescription: SiteDescribable? {
+        guard name.trimmed.isEmpty == false,
+              let coordinates,
+              let dataSourceKey = dataSource,
+              let dataSource = DataSourceRegistry.shared.dataSources[dataSourceKey] else { return nil }
+        return SiteDescription(
+            name: name,
+            location: coordinates,
+            dataSource: dataSource
+        )
+    }
+    
+    private var _collectionMapViewModel: CollectionMapViewModel?
+    
+    var collectionMapViewModel: CollectionMapViewModel? {
+        if let _collectionMapViewModel {
+            return _collectionMapViewModel
+        }
+        guard let description = siteDescription else { return nil }
+        let model = CollectionMapViewModel(site: description)
+        _collectionMapViewModel = model
+        return model
+    }
 
     init() {
         originalSiteId = nil
@@ -61,6 +91,7 @@ class SiteViewModel: ObservableObject {
         description = site.description
         coordinates = site.location
         originalSiteId = site.id
+        dataSource = site.dataSourceKey
     }
     
     func save(_ siteManager: SiteManager) {

@@ -7,45 +7,55 @@
 
 import SwiftUI
 
+/*
+ Make snapshot of the collection area and user location???
+ Probably still need a live map view :P
+ 
+ Ability to apply color configuration for each bin type -
+ stored based on the site id :P
+ */
+
 struct SiteView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var siteManager: SiteManager
-
+    
     @ObservedObject
     var viewModel: SiteViewModel
-
+    
     @State
     var selectLocation = false
-
+    
     @State
     var selectDataSource = false
-
+    
     private let trailingPadding: CGFloat = 36
-
+    
     var body: some View {
-        VStack(spacing: 0) {
-            titleView
-                .ignoresSafeArea()
+        //        VStack(spacing: 0) {
+        //            titleView
+        //                .ignoresSafeArea()
+        //
+        VStack(spacing: 20) {
             
-            VStack(spacing: 20) {
-                
-                nameView
-                
-                locationView
-                
-                descriptionView
-                
-                dataSourceView
-                
-                Spacer()
-                
-                HStack {
-                    cancelButton
-                    saveButton
-                }
+            nameView
+            
+            locationView
+            
+            descriptionView
+            
+            dataSourceView
+            
+            collectionMapView
+            
+            Spacer()
+            
+            HStack {
+                cancelButton
+                saveButton
             }
-            .padding()
         }
+        .padding()
+        //        }
         .background(Color.background.darken(by: 0.4))
         .sheet(isPresented: $selectLocation) {
             LocationView(viewModel: .init(target: $viewModel.locationTarget))
@@ -60,11 +70,12 @@ struct SiteView: View {
         .alert("Unable to save site details", isPresented: $viewModel.saveError) {
             Button.okay()
         }
+        .navigationTitle("Site Details")
     }
 }
 
 private extension SiteView {
-
+    
     var titleView: some View {
         HStack {
             Image.Trash.Circle.unfilled
@@ -79,12 +90,12 @@ private extension SiteView {
         .padding(.bottom, 32)
         .background(Color.background)
     }
-
+    
     var nameView: some View {
         HStack {
             Text("Name")
                 .foregroundStyle(.secondary)
-
+            
             Spacer()
             TextField(
                 "Friendly Name",
@@ -95,7 +106,7 @@ private extension SiteView {
             .padding(.trailing, trailingPadding)
         }
     }
-
+    
     var locationView: some View {
         Button {
             selectLocation.toggle()
@@ -103,15 +114,15 @@ private extension SiteView {
             HStack {
                 Text("Location")
                     .foregroundStyle(.secondary)
-
+                
                 Spacer()
-
+                
                 if let coordinates = viewModel.coordinates {
                     Text("\(coordinates.latitude), \(coordinates.longitude)")
                 } else {
                     Text("---")
                 }
-
+                
                 Image.Chevron.right
                     .foregroundStyle(.secondary)
                     .padding(.leading)
@@ -120,7 +131,7 @@ private extension SiteView {
         }
         .buttonStyle(.plain)
     }
-
+    
     var descriptionView: some View {
         HStack(alignment: .top) {
             Text("Description")
@@ -136,7 +147,7 @@ private extension SiteView {
         }
         .padding(.trailing, trailingPadding)
     }
-
+    
     var dataSourceView: some View {
         Button {
             selectDataSource.toggle()
@@ -144,15 +155,15 @@ private extension SiteView {
             HStack {
                 Text("Collection schedule")
                     .foregroundStyle(.secondary)
-
+                
                 Spacer()
-
+                
                 if let description = viewModel.dataSourceDescription {
                     Text(description)
                 } else {
                     Text("---")
                 }
-
+                
                 Image.Chevron.right
                     .foregroundStyle(.secondary)
                     .padding(.leading)
@@ -162,7 +173,21 @@ private extension SiteView {
         .buttonStyle(.plain)
         .disabled(viewModel.locationTarget == nil)
     }
+}
 
+private extension SiteView {
+    @ViewBuilder
+    var collectionMapView: some View {
+        if let collectionMapViewModel = viewModel.collectionMapViewModel {
+            CollectionMapView(viewModel: collectionMapViewModel)
+        } else {
+            EmptyView()
+        }
+    }
+}
+
+private extension SiteView {
+    
     var saveButton: some View {
         Button {
             viewModel.save(siteManager)
@@ -176,9 +201,9 @@ private extension SiteView {
         .buttonBorderShape(.capsule)
         .tint(Color.green)
         .disabled(viewModel.canSave == false)
-
+        
     }
-
+    
     var cancelButton: some View {
         CancelButton {
             dismiss()

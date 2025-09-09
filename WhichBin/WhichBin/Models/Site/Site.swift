@@ -40,3 +40,9 @@ struct Site: Codable, Hashable, Identifiable {
         self.dataSourceKey = dataSourceKey
     }
 }
+
+extension Site {
+    var dataSource: DataSource? {
+        DataSourceRegistry.shared.dataSources[dataSourceKey]
+    }
+}

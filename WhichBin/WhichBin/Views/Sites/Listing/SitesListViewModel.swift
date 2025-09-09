@@ -10,6 +10,10 @@ import SwiftUI
 
 class SitesListViewModel: ObservableObject {
     
+    enum Destination: Hashable {
+        case site(Site)
+    }
+    
     let siteManager: SiteManager
     
     @Published

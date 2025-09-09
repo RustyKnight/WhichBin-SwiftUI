@@ -9,7 +9,6 @@ import SwiftUI
 import WhichBinLib
 
 struct SitesListView: View {
-    //@EnvironmentObject var siteManager: SiteManager
     
     @ObservedObject
     var viewModel: SitesListViewModel
@@ -31,6 +30,12 @@ struct SitesListView: View {
             }
             .navigationBarTitle("Sites", displayMode: .inline)
             .toolbarTheme
+            .navigationDestination(for: SitesListViewModel.Destination.self) { target in
+                switch target {
+                case .site(let site):
+                    SiteView(viewModel: .init(site: site))
+                }
+            }
     }
 }
 
@@ -73,27 +78,29 @@ extension SitesListView {
     
     @ViewBuilder
     private func siteView(_ site: Site) -> some View {
-        if let dataSource = DataSourceRegistry.shared.dataSources[site.dataSourceKey] {
-            HStack {
+        NavigationLink(value: SitesListViewModel.Destination.site(site)) {
+            if let dataSource = DataSourceRegistry.shared.dataSources[site.dataSourceKey] {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(site.name)
+                        Text(dataSource.locationDescription)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            } else {
                 VStack(alignment: .leading) {
+                    HStack {
+                        Image.Triangle.ExclamationMark.unfilled
+                        Text("Invalid collection schedule")
+                            .font(.caption)
+                    }
+                    .foregroundStyle(.red)
                     Text(site.name)
-                    Text(dataSource.locationDescription)
+                    Text(site.description)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
-            }
-        } else {
-            VStack(alignment: .leading) {
-                HStack {
-                    Image.Triangle.ExclamationMark.unfilled
-                    Text("Invalid collection schedule")
-                        .font(.caption)
-                }
-                .foregroundStyle(.red)
-                Text(site.name)
-                Text(site.description)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
             }
         }
     }
