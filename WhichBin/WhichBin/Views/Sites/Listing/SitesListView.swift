@@ -34,7 +34,12 @@ struct SitesListView: View {
                 switch target {
                 case .site(let site):
                     SiteView(viewModel: .init(site: site))
+                case .addSite:
+                    SiteView(viewModel: .init())
                 }
+            }
+            .toolbar {
+                addSiteButton
             }
     }
 }
@@ -72,8 +77,7 @@ extension SitesListView {
                 viewModel.deleteSites(at: indexSet)
             }
         }
-        .background(Color.background.darken(by: 0.4))
-        .scrollContentBackground(.hidden)
+        .listTheme
     }
     
     @ViewBuilder
@@ -103,5 +107,15 @@ extension SitesListView {
                 }
             }
         }
+    }
+}
+
+extension SitesListView {
+    
+    var addSiteButton: some View {
+        NavigationLink(value: SitesListViewModel.Destination.addSite) {
+            Image.Plus.Circle.unfilled
+        }
+        .tint(.tint)
     }
 }

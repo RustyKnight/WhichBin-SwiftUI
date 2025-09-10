@@ -70,4 +70,11 @@ extension Image {
             static let unfilled = Image(systemName: "lock.shield")
         }
     }
+    
+    enum Plus {
+        enum Circle {
+            static let filled = Image(systemName: "plus.circle.fill")
+            static let unfilled = Image(systemName: "plus.circle")
+        }
+    }
 }

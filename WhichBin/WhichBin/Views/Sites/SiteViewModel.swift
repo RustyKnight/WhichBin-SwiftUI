@@ -17,6 +17,10 @@ struct SiteDescription: SiteDescribable {
 }
 
 class SiteViewModel: ObservableObject {
+    
+    enum Destination: Hashable {
+        case binConfiguration(DataSourceRegistry.Key)
+    }
 
     @Published
     var name: String = ""
@@ -92,6 +96,10 @@ class SiteViewModel: ObservableObject {
         coordinates = site.location
         originalSiteId = site.id
         dataSource = site.dataSourceKey
+        locationTarget = .init(
+            description: site.description,
+            location: site.location
+        )
     }
     
     func save(_ siteManager: SiteManager) {

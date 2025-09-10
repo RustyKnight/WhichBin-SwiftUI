@@ -21,6 +21,7 @@ struct CancelButton: View {
         .padding()
         .buttonStyle(.bordered)
         .buttonBorderShape(.capsule)
-        .tint(Color.secondary)
+//        .tint(Color.green.darken(by: 0.1))
+        .tint(Color.green)
     }
 }

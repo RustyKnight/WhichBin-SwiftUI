@@ -31,32 +31,46 @@ struct SiteView: View {
     private let trailingPadding: CGFloat = 36
     
     var body: some View {
-        //        VStack(spacing: 0) {
-        //            titleView
-        //                .ignoresSafeArea()
-        //
-        VStack(spacing: 20) {
-            
-            nameView
-            
-            locationView
-            
-            descriptionView
-            
-            dataSourceView
-            
-            collectionMapView
-            
-            Spacer()
-            
-            HStack {
-                cancelButton
-                saveButton
+        VStack(spacing: 0) {
+            List {
+                Section {
+                    nameView
+                        .listRowBackground(Color.background)
+
+                    locationView
+                        .listRowBackground(Color.background)
+
+                    descriptionView
+                        .listRowBackground(Color.background)
+
+                    dataSourceView
+                        .listRowBackground(Color.background)
+                }
+                
+                Section {
+                    collectionMapView
+                        .listRowBackground(Color.clear)
+                }
+                
+                Section {
+                    binsConfigurationView
+                        .listRowBackground(Color.background)
+                }
+                //
+                //            Spacer()
+                //
+                //            HStack {
+                //                cancelButton
+                //                saveButton
+                //            }
             }
+            .listStyle(.grouped)
+            .listTheme
+            
+            actionButtons
         }
-        .padding()
-        //        }
-        .background(Color.background.darken(by: 0.4))
+//        .padding()
+//        .background(Color.background.darken(by: 0.4))
         .sheet(isPresented: $selectLocation) {
             LocationView(viewModel: .init(target: $viewModel.locationTarget))
         }
@@ -71,6 +85,15 @@ struct SiteView: View {
             Button.okay()
         }
         .navigationTitle("Site Details")
+        .navigationDestination(for: SiteViewModel.Destination.self) { target in
+            switch target {
+            case .binConfiguration(let key):
+                BinListView(viewModel: .init(dataSourceKey: key))
+            }
+        }
+//        .toolbar {
+//            saveToolbarButton
+//        }
     }
 }
 
@@ -127,7 +150,7 @@ private extension SiteView {
                     .foregroundStyle(.secondary)
                     .padding(.leading)
             }
-            .contentShape(Rectangle())
+//            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
     }
@@ -136,7 +159,9 @@ private extension SiteView {
         HStack(alignment: .top) {
             Text("Description")
                 .foregroundStyle(.secondary)
+            
             Spacer()
+            
             TextField(
                 "Address or other descriptive details",
                 text: $viewModel.description,
@@ -168,10 +193,42 @@ private extension SiteView {
                     .foregroundStyle(.secondary)
                     .padding(.leading)
             }
-            .contentShape(Rectangle())
+//            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .disabled(viewModel.locationTarget == nil)
+    }
+    
+    @ViewBuilder
+    var binsConfigurationView: some View {
+        if let key = viewModel.dataSource {
+            HStack {
+                NavigationLink(
+                    value: SiteViewModel.Destination.binConfiguration(key)
+                ) {
+                    Text("Bins")
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+
+                Spacer()
+//
+//                Image.Chevron.right
+//                    .foregroundStyle(.secondary)
+//                    .padding(.leading)
+            }
+//        } else {
+//            HStack {
+//                Text("Bins")
+//                    .foregroundStyle(.secondary)
+//
+//                Spacer()
+//
+//                Image.Chevron.right
+//                    .foregroundStyle(.secondary)
+//                    .padding(.leading)
+//            }
+        }
     }
 }
 
@@ -180,6 +237,7 @@ private extension SiteView {
     var collectionMapView: some View {
         if let collectionMapViewModel = viewModel.collectionMapViewModel {
             CollectionMapView(viewModel: collectionMapViewModel)
+                .frame(height: 256)
         } else {
             EmptyView()
         }
@@ -188,10 +246,31 @@ private extension SiteView {
 
 private extension SiteView {
     
+//    var saveToolbarButton: some View {
+//        Button {
+//            viewModel.save(siteManager)
+//        } label: {
+//            Text("Save")
+//                .frame(maxWidth: .infinity)
+//        }
+//        .tint(.tint)
+//    }
+    
+    var actionButtons: some View {
+        VStack {
+            Divider()
+            HStack {
+                cancelButton
+                saveButton
+            }
+        }
+        .background(Color.listBackground)
+    }
+    
     var saveButton: some View {
         Button {
             viewModel.save(siteManager)
-            dismiss()
+//            dismiss()
         } label: {
             Text("Save")
                 .frame(maxWidth: .infinity)

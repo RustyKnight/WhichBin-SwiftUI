@@ -14,12 +14,13 @@ struct SettingsView: View {
     var body: some View {
         List {
             settingsSection
-            
+                .listRowBackground(Color.background)
+
             privacySection
+                .listRowBackground(Color.background)
         }
         .listStyle(.grouped)
-        .background(Color.background.darken(by: 0.4))
-        .scrollContentBackground(.hidden)
+        .listTheme
         .toolbarTheme
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)

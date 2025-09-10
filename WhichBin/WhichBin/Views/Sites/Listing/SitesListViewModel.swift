@@ -12,6 +12,7 @@ class SitesListViewModel: ObservableObject {
     
     enum Destination: Hashable {
         case site(Site)
+        case addSite
     }
     
     let siteManager: SiteManager
