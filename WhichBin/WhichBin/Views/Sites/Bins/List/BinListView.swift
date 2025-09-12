@@ -13,28 +13,86 @@ struct BinListView: View {
     @ObservedObject
     var viewModel: BinListViewModel
     
+    // Available bins should be defined by the data source???
+    
     var body: some View {
+        contentView
+            .toolbarTheme
+            .navigationTitle("Bins")
+            .navigationDestination(for: BinListViewModel.Destination.self) { target in
+                switch target {
+                case .bin(let bin):
+                    BinConfigurationView(
+                        viewModel: .init(
+                            dataSourceKey: viewModel.dataSourceKey,
+                            bin: bin
+                        )
+                    )
+                }
+            }
+            .task {
+                await viewModel.loadBins()
+            }
+    }
+}
+
+extension BinListView {
+    
+    @ViewBuilder
+    var contentView: some View {
+        switch viewModel.viewState {
+        case .initial, .loading:
+            loadingView
+            
+        case .loaded(let bins):
+            binListView(bins)
+            
+        case .error(let error):
+            errorView(error)
+        }
+    }
+    
+    var loadingView: some View {
+        VStack {
+            Text("Loading...")
+                .font(.title)
+                .foregroundStyle(.primary)
+            
+            Text("I know, this is so exciting...")
+                .foregroundStyle(.secondary)
+        }
+        .containerRelativeFrame(
+            [.horizontal, .vertical],
+            alignment: .center
+        )
+        .background(Color.listBackground)
+    }
+    
+    func binListView(_ bins: [Bin]) -> some View {
         List {
-            ForEach(Bin.allCases) { bin in
+            ForEach(bins) { bin in
                 binView(bin)
                     .listRowBackground(Color.background)
             }
         }
         .listStyle(.grouped)
         .listTheme
-        .toolbarTheme
-        .navigationTitle("Bins")
-        .navigationDestination(for: BinListViewModel.Destination.self) { target in
-            switch target {
-            case .bin(let bin):
-                BinConfigurationView(
-                    viewModel: .init(
-                        dataSourceKey: viewModel.dataSourceKey,
-                        bin: bin
-                    )
-                )
-            }
+    }
+    
+    func errorView(_ error: Error) -> some View {
+        VStack {
+            Text("Failed to load bin details")
+                .font(.title)
+                .foregroundStyle(.primary)
+            
+            Text("\(error.localizedDescription)")
+                .foregroundStyle(.secondary)
         }
+        .containerRelativeFrame(
+            [.horizontal, .vertical],
+            alignment: .center
+        )
+        .background(Color.listBackground)
     }
 }
 
@@ -43,7 +101,7 @@ extension BinListView {
     func binView(_ bin: Bin) -> some View {
         NavigationLink(value: BinListViewModel.Destination.bin(bin)) {
             HStack {
-                Text(bin.name.capitalized)
+                Text(bin.localDescription(for: viewModel.dataSourceKey).capitalized)
                 Spacer()
                 
                 let binColor = viewModel.binFillColor(for: bin)

@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/RustyKnight/CoreExtensions",
       "state" : {
-        "revision" : "89dcc24cf35920d34525b6a31b058b3705a6291b",
-        "version" : "1.0.14"
+        "branch" : "master",
+        "revision" : "f475047b2e3df6160ff1a27ef04074b09ffd2f2d"
       }
     },
     {
@@ -43,7 +43,7 @@
       "location" : "https://github.com/RustyKnight/WhichBinLib",
       "state" : {
         "branch" : "main",
-        "revision" : "bf1e61fa3d175c90d35074d5fa24740b8488fc4e"
+        "revision" : "298505eb2ee9dfb9bb8e6f31f014961ac8865d71"
       }
     },
     {

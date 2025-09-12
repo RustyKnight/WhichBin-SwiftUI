@@ -655,8 +655,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RustyKnight/CoreExtensions";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.14;
+				branch = master;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

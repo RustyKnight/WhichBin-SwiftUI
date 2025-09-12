@@ -94,6 +94,11 @@ struct SiteView: View {
 //        .toolbar {
 //            saveToolbarButton
 //        }
+        .onReceive(viewModel.dismissView) { shouldDismiss in
+            if shouldDismiss {
+                self.dismiss()
+            }
+        }
     }
 }
 

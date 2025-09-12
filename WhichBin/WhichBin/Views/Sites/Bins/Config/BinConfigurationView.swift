@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WhichBinLib
 
 struct BinConfigurationView: View {
 
@@ -49,6 +50,11 @@ struct BinConfigurationView: View {
         .background(Color.listBackground)
         .navigationTitle(viewModel.bin.localisedDescription)
         .toolbarTheme
+        .onReceive(viewModel.dismissView) { shouldDismiss in
+            if shouldDismiss {
+                self.dismiss()
+            }
+        }
     }
 }
 
@@ -60,15 +66,35 @@ struct WheelyBinView: View {
     let fillColor: Color
     
     let size: StandardImageSizeModifier.Size
-    
+
     var body: some View {
         WheelyBinShape()
             .stroke(strokeStyle, lineWidth: strokeWidth)
             .fill(fillColor)
             .standard(size: size)
     }
-}
 
+    init(strokeStyle: Color, strokeWidth: CGFloat, fillColor: Color, size: StandardImageSizeModifier.Size) {
+        self.strokeStyle = strokeStyle
+        self.strokeWidth = strokeWidth
+        self.fillColor = fillColor
+        self.size = size
+    }
+    
+    init(
+        dataSourceKey: DataSourceRegistry.Key,
+        bin: Bin,
+        strokeWidth: CGFloat = 4,
+        size: StandardImageSizeModifier.Size
+    ) {
+        self.init(
+            strokeStyle: bin.fillColor(for: dataSourceKey).darken(by: 0.5),
+            strokeWidth: strokeWidth,
+            fillColor: bin.fillColor(for: dataSourceKey),
+            size: size
+        )
+    }
+}
 
 private extension BinConfigurationView {
     
@@ -85,8 +111,7 @@ private extension BinConfigurationView {
     
     var saveButton: some View {
         Button {
-            //viewModel.save(siteManager)
-//            dismiss()
+            viewModel.save()
         } label: {
             Text("Save")
                 .frame(maxWidth: .infinity)
@@ -103,6 +128,5 @@ private extension BinConfigurationView {
         CancelButton {
             dismiss()
         }
-//        .tint(.secondary)
     }
 }

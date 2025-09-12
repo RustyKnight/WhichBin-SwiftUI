@@ -28,6 +28,9 @@ struct SchedulesView: View {
                 }
             }
             .toolbarTheme
+            .task {
+                await viewModel.load()
+            }
     }
 }
 
@@ -36,7 +39,7 @@ extension SchedulesView {
     @ViewBuilder
     var contentView: some View {
         if viewModel.hasAvailableSites {
-            Text("Site schedules")
+            siteCollectionsView
         } else {
             if let error = viewModel.siteLoadError {
                 siteLoadErrorView(error)
@@ -45,7 +48,133 @@ extension SchedulesView {
             }
         }
     }
+}
+
+extension SchedulesView {
     
+    @ViewBuilder
+    var siteCollectionsView: some View {
+        switch viewModel.viewState {
+        case .initial, .loading:
+            loadingCollectionsView
+            
+        case .loaded(let schedules, let errors):
+            collectionsView(
+                schedules: schedules,
+                errors: errors
+            )
+        }
+    }
+    
+    var loadingCollectionsView: some View {
+        VStack {
+            Spacer()
+            Text("Calculating the schedule")
+                .font(.title)
+            
+            Text("We know, it's exciting")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            Spacer()
+        }
+        .containerRelativeFrame(
+            [.horizontal, .vertical],
+            alignment: .top
+        )
+        .background(Color.listBackground)
+    }
+    
+    func collectionsView(schedules: [EventGroup], errors: [Error]) -> some View {
+        List {
+            collectionErrorsView(errors)
+            
+            schedulesView(schedules)
+        }
+        .padding()
+        .listTheme
+    }
+    
+    @ViewBuilder
+    func collectionErrorsView(_ errors: [Error]) -> some View {
+        if errors.isEmpty {
+            EmptyView()
+        } else {
+            Text("That didn't go well")
+        }
+    }
+    
+    @ViewBuilder
+    func schedulesView(_ schedules: [EventGroup]) -> some View {
+        collectionEventsView(schedules)
+    }
+    
+    @ViewBuilder
+    func collectionEventsView(_ events: [EventGroup]) -> some View {
+        let sorted = events.sorted { $0.date < $1.date }
+        
+        ForEach(sorted, id: \.date) { eventGroup in
+            let date = eventGroup.date
+            
+            let dateText = date.formatted(viewModel.dayDateStyle)
+            
+            Section(dateText) {
+                eventGroupView(eventGroup)
+            }
+        }
+    }
+    
+    func daysTillDescription(_ date: Date) -> String {
+        let daysTill = Date.today.daysBetween(date)
+        if daysTill < 1 {
+            return "Today"
+        } else if daysTill < 2 {
+            return "Tomorrow"
+        } else {
+            return "in \(daysTill) days"
+        }
+    }
+    
+    func eventGroupView(_ eventGroup: EventGroup) -> some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(eventGroup.scheduleGroup.dataSource.name)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                
+                let sites = eventGroup.scheduleGroup.sites
+                    .map { $0.name }
+                    .joined(separator: ", ")
+                
+                Text(sites)
+                    .padding(.bottom)
+                
+                Spacer()
+            }
+            .padding(.top, .Padding.small)
+
+            Spacer()
+            
+            VStack {
+                Text(daysTillDescription(eventGroup.date))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .padding(.top, .Padding.small)
+                Spacer()
+
+                HStack {
+                    ForEach(eventGroup.bins, id: \.id) { bin in
+                        WheelyBinView(
+                            dataSourceKey: eventGroup.scheduleGroup.dataSourceKey,
+                            bin: bin,
+                            strokeWidth: 2.0,
+                            size: .large24
+                        )
+                    }
+                }
+            }
+            .padding(.bottom, .Padding.small)
+        }
+    }
 }
 
 extension SchedulesView {
