@@ -115,17 +115,20 @@ private extension DataSourceListView {
                             await viewModel.verifyDataSource(key)
                         }
                     } label: {
-                        VStack(alignment: .leading) {
+                        HStack {
+                            VStack(alignment: .leading) {
                                 Text(city.description)
                                 if let dataSource = DataSourceRegistry.shared.dataSources[key] {
                                     Text(dataSource.name)
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
                                 }
+                            }
+                            Spacer()
                         }
                     }
                     .buttonStyle(.plain)
-                    .border(.red)
+                    .frame(maxWidth: .infinity)
                 }
             }
         }
@@ -140,7 +143,7 @@ private extension DataSourceListView {
                         await viewModel.verifyDataSource(item.key)
                     }
                 } label: {
-                    HStack {
+                    HStack(alignment: .bottom) {
                         VStack(alignment: .leading) {
                             Text(item.dataSource.name)
                             Text(item.dataSource.locationDescription)
@@ -154,6 +157,7 @@ private extension DataSourceListView {
                     }
                 }
                 .buttonStyle(.plain)
+                .frame(maxWidth: .infinity)
             }
         }
     }
