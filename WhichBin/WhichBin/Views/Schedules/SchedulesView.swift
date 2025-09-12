@@ -89,9 +89,15 @@ extension SchedulesView {
             collectionErrorsView(errors)
             
             schedulesView(schedules)
+                .listRowSeparator(.hidden)
         }
         .padding()
         .listTheme
+        .refreshable {
+            Task {
+                await viewModel.load()
+            }
+        }
     }
     
     @ViewBuilder
@@ -110,15 +116,31 @@ extension SchedulesView {
     
     @ViewBuilder
     func collectionEventsView(_ events: [EventGroup]) -> some View {
-        let sorted = events.sorted { $0.date < $1.date }
+        let dateGroup = events.groupedByDate
+        let sorted = dateGroup.sorted { $0.date < $1.date }
+        // Need to group dates ...
         
-        ForEach(sorted, id: \.date) { eventGroup in
-            let date = eventGroup.date
+        ForEach(sorted) { group in
+            let date = group.date
             
             let dateText = date.formatted(viewModel.dayDateStyle)
             
-            Section(dateText) {
-                eventGroupView(eventGroup)
+            Section {
+                VStack {
+                    HStack(alignment: .bottom) {
+                        Text(dateText)
+                        Spacer()
+                        Text(daysTillDescription(date))
+                            .stylingDaysTill(date)
+                            .padding(.top, .Padding.small)
+                    }
+                    .stylingDaysTill(date)
+                    Divider()
+                }
+                
+                ForEach(group.events) { events in
+                    eventGroupView(events)
+                }
             }
         }
     }
@@ -135,7 +157,7 @@ extension SchedulesView {
     }
     
     func eventGroupView(_ eventGroup: EventGroup) -> some View {
-        HStack {
+        HStack(alignment: .bottom) {
             VStack(alignment: .leading) {
                 Text(eventGroup.scheduleGroup.dataSource.name)
                     .font(.caption)
@@ -146,33 +168,21 @@ extension SchedulesView {
                     .joined(separator: ", ")
                 
                 Text(sites)
-                    .padding(.bottom)
-                
-                Spacer()
+                    .multilineTextAlignment(.leading)
             }
-            .padding(.top, .Padding.small)
-
+            
             Spacer()
             
-            VStack {
-                Text(daysTillDescription(eventGroup.date))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .padding(.top, .Padding.small)
-                Spacer()
-
-                HStack {
-                    ForEach(eventGroup.bins, id: \.id) { bin in
-                        WheelyBinView(
-                            dataSourceKey: eventGroup.scheduleGroup.dataSourceKey,
-                            bin: bin,
-                            strokeWidth: 2.0,
-                            size: .large24
-                        )
-                    }
+            HStack {
+                ForEach(eventGroup.bins, id: \.id) { bin in
+                    WheelyBinView(
+                        dataSourceKey: eventGroup.scheduleGroup.dataSourceKey,
+                        bin: bin,
+                        strokeWidth: 2.0,
+                        size: .large24
+                    )
                 }
             }
-            .padding(.bottom, .Padding.small)
         }
     }
 }
@@ -223,4 +233,61 @@ extension SchedulesView {
         }
         .background(.cellFill)
     }
+}
+
+private struct DateGroupedEvent: Identifiable {
+    var id: Date { date }
+    let date: Date
+    let events: [EventGroup]
+}
+
+private extension [EventGroup] {
+    
+    var groupedByDate: [DateGroupedEvent] {
+        let grouped = Dictionary(grouping: self, by: \.date)
+        return grouped.map { (key: Date, value: [EventGroup]) in
+            DateGroupedEvent(date: key, events: value)
+        }
+    }
+}
+
+private extension Text {
+    @ViewBuilder
+    func stylingDaysTill(_ date: Date) -> some View {
+        let daysTill = Date.today.daysBetween(date)
+        if daysTill < 1 {
+            self
+            .font(.caption)
+            .bold(true)
+            .foregroundStyle(.primary)
+        } else if daysTill < 2 {
+            self
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        } else {
+            self
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func stylingDaysTill(_ date: Date) -> some View {
+        let daysTill = Date.today.daysBetween(date)
+        if daysTill < 2 {
+            self
+                .padding(EdgeInsets.Padding.extraSmall)
+                .background(Color.background)
+                .cornerRadius(4)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(.primary, lineWidth: 1)
+                )
+        } else {
+            self
+        }
+    }
+
 }

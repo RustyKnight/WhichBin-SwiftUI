@@ -116,15 +116,16 @@ private extension DataSourceListView {
                         }
                     } label: {
                         VStack(alignment: .leading) {
-                            Text(city.description)
-                            if let dataSource = DataSourceRegistry.shared.dataSources[key] {
-                                Text(dataSource.name)
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
+                                Text(city.description)
+                                if let dataSource = DataSourceRegistry.shared.dataSources[key] {
+                                    Text(dataSource.name)
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
                         }
                     }
                     .buttonStyle(.plain)
+                    .border(.red)
                 }
             }
         }

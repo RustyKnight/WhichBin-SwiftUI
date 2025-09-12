@@ -64,12 +64,11 @@ extension SitesListView {
 
 extension SitesListView {
     
+    @ViewBuilder
     private func siteListView() -> some View {
         List {
-            ForEach(Array(viewModel.siteManager.sites)) { site in
-//                NavigationLink(destination: SiteDetailView(siteManager: self.siteManager, site: site)) {
-//                    Text(site.name)
-//                }
+            let sites = Array(viewModel.siteManager.sites).sorted { $0.name < $1.name }
+            ForEach(sites) { site in
                 siteView(site)
                     .listRowBackground(Color.background)
             }

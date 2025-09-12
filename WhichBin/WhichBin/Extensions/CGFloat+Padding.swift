@@ -25,4 +25,3 @@ extension CGFloat {
         case extraLarge64 = 64.0
     }
 }
-

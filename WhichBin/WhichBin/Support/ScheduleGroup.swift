@@ -22,7 +22,8 @@ struct ScheduleGroup {
     let sites: [Site]
 }
 
-struct EventGroup {
+struct EventGroup: Identifiable {
+    let id: UUID = UUID()
     let scheduleGroup: ScheduleGroup
     let date: Date
     let bins: [Bin]
