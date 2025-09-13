@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		703AD67A2E6A6AD4007BF15E /* SwiftLocation in Frameworks */ = {isa = PBXBuildFile; productRef = 703AD6792E6A6AD4007BF15E /* SwiftLocation */; };
+		708B07572E75226500C5C006 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 708B07562E75226500C5C006 /* MarkdownUI */; };
 		CEBF5E3F2DB2213E001D8D66 /* WhichBinMapKitLib in Frameworks */ = {isa = PBXBuildFile; productRef = CEBF5E3E2DB2213E001D8D66 /* WhichBinMapKitLib */; };
 		CEBF5E542DB35032001D8D66 /* CoreExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = CEBF5E532DB35032001D8D66 /* CoreExtensions */; };
 /* End PBXBuildFile section */
@@ -74,6 +75,7 @@
 				CEBF5E3F2DB2213E001D8D66 /* WhichBinMapKitLib in Frameworks */,
 				703AD67A2E6A6AD4007BF15E /* SwiftLocation in Frameworks */,
 				CEBF5E542DB35032001D8D66 /* CoreExtensions in Frameworks */,
+				708B07572E75226500C5C006 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +147,7 @@
 				CEBF5E3E2DB2213E001D8D66 /* WhichBinMapKitLib */,
 				CEBF5E532DB35032001D8D66 /* CoreExtensions */,
 				703AD6792E6A6AD4007BF15E /* SwiftLocation */,
+				708B07562E75226500C5C006 /* MarkdownUI */,
 			);
 			productName = WhichBin;
 			productReference = CE54CCF12DB21BEB0008311B /* WhichBin.app */;
@@ -232,6 +235,7 @@
 				CEBF5E3C2DB22129001D8D66 /* XCRemoteSwiftPackageReference "WhichBinMapKitLib" */,
 				CEBF5E522DB35026001D8D66 /* XCRemoteSwiftPackageReference "CoreExtensions" */,
 				703AD62E2E6A6251007BF15E /* XCRemoteSwiftPackageReference "SwiftLocation" */,
+				708B07552E75224E00C5C006 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CE54CCF22DB21BEB0008311B /* Products */;
@@ -643,6 +647,14 @@
 				kind = branch;
 			};
 		};
+		708B07552E75224E00C5C006 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
 		CEBF5E3C2DB22129001D8D66 /* XCRemoteSwiftPackageReference "WhichBinMapKitLib" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RustyKnight/WhichBinMapKitLib";
@@ -666,6 +678,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 703AD62E2E6A6251007BF15E /* XCRemoteSwiftPackageReference "SwiftLocation" */;
 			productName = SwiftLocation;
+		};
+		708B07562E75226500C5C006 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 708B07552E75224E00C5C006 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
 		};
 		CEBF5E3E2DB2213E001D8D66 /* WhichBinMapKitLib */ = {
 			isa = XCSwiftPackageProductDependency;

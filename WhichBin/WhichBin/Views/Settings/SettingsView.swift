@@ -29,7 +29,7 @@ struct SettingsView: View {
             case .siteManagement:
                 SitesListView(viewModel: .init(siteManager: viewModel.siteManager))
             case .privacy:
-                EmptyView()
+                PrivacyView(viewModel: .init())
             }
         }
     }

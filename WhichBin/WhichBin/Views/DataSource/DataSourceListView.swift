@@ -34,6 +34,8 @@ struct DataSourceListView: View {
                 
                 Spacer()
             }
+            .background(Color.listBackground)
+
             if viewModel.isVerifyingCollection {
                 verificationView
             }
@@ -107,8 +109,10 @@ private extension DataSourceListView {
                 switch item.value {
                 case .country(let country):
                     Text(country.description)
+
                 case .state(let state):
                     Text(state.description)
+
                 case .city(let city, let key):
                     Button {
                         Task {
@@ -133,6 +137,7 @@ private extension DataSourceListView {
             }
         }
         .listStyle(GroupedListStyle())
+        .listTheme
     }
 
     var groupedByDistanceView: some View {
@@ -156,10 +161,12 @@ private extension DataSourceListView {
                         Text(item.distanceDescription)
                     }
                 }
+                .listRowBackground(Color.background)
                 .buttonStyle(.plain)
                 .frame(maxWidth: .infinity)
             }
         }
+        .listTheme
     }
     
     var verificationView: some View {
