@@ -8,6 +8,7 @@
 import CoreExtensions
 import Foundation
 import WhichBinLib
+import Cadmus
 
 // We should be able to generate future schedules
 // from this information ...
@@ -79,6 +80,8 @@ extension [ScheduleGroup] {
         let firstWeekDay = calendar.firstDayOfWeek
         
         let startDate = calendar.previous(firstWeekDay, after: .today)
+        
+        log(debug: "startDate = \(startDate.quickDescription)")
         
         return flatMap { schedule in
             // Get the forecast and group them

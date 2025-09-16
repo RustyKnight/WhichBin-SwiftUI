@@ -1,5 +1,5 @@
 {
-  "originHash" : "ce77a84694925faeefccb4d5ffdc4af99968968fec280a4fb0ff3a34c29bcd04",
+  "originHash" : "2dd2f806b37319af6b30b30e15e3baa1714804d9a62d70f8fb8a75969b9c21a7",
   "pins" : [
     {
       "identity" : "cadmus",
@@ -16,7 +16,7 @@
       "location" : "https://github.com/RustyKnight/CoreExtensions",
       "state" : {
         "branch" : "master",
-        "revision" : "f475047b2e3df6160ff1a27ef04074b09ffd2f2d"
+        "revision" : "352027f17a897fbfee978138a92a6f3178afe7dc"
       }
     },
     {
@@ -70,7 +70,7 @@
       "location" : "https://github.com/RustyKnight/WhichBinLib",
       "state" : {
         "branch" : "main",
-        "revision" : "298505eb2ee9dfb9bb8e6f31f014961ac8865d71"
+        "revision" : "fe8d51b53d6d899d670a4b34b918a94621fbf768"
       }
     },
     {

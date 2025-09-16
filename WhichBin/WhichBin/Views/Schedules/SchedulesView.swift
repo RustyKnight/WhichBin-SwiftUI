@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreExtensions
 
 struct SchedulesView: View {
     
@@ -120,6 +121,12 @@ extension SchedulesView {
         let sorted = dateGroup.sorted { $0.date < $1.date }
         // Need to group dates ...
         
+        if events.isCollectionToday {
+            collectionTodayView
+        } else if events.isCollectionTomorrow {
+            collectionTomorrowView
+        }
+        
         ForEach(sorted) { group in
             let date = group.date
             
@@ -131,10 +138,10 @@ extension SchedulesView {
                         Text(dateText)
                         Spacer()
                         Text(daysTillDescription(date))
-                            .stylingDaysTill(date)
+                            //.stylingDaysTill(date)
                             .padding(.top, .Padding.small)
                     }
-                    .stylingDaysTill(date)
+//                    .stylingDaysTill(date)
                     Divider()
                 }
                 
@@ -142,6 +149,30 @@ extension SchedulesView {
                     eventGroupView(events)
                 }
             }
+        }
+    }
+    
+    var collectionTodayView: some View {
+        Section {
+            VStack(alignment: .leading) {
+                Text("Collection is TODAY!")
+                    .font(.title)
+                Text("Are the bins out yet?")
+                    .font(.title2)
+            }
+            .listRowBackground(Color.background)
+        }
+    }
+    
+    var collectionTomorrowView: some View {
+        Section {
+            VStack(alignment: .leading) {
+                Text("Collection is tomorrow")
+                    .font(.title)
+                Text("Are the bins out yet?")
+                    .foregroundStyle(.secondary)
+            }
+            .listRowBackground(Color.background)
         }
     }
     
@@ -273,6 +304,7 @@ private extension Text {
 }
 
 private extension View {
+    
     @ViewBuilder
     func stylingDaysTill(_ date: Date) -> some View {
         let daysTill = Date.today.daysBetween(date)
@@ -289,5 +321,21 @@ private extension View {
             self
         }
     }
+}
 
+private extension [EventGroup] {
+    
+    var isCollectionTomorrow: Bool {
+        contains { group in
+            let daysTill = Date.today.daysBetween(group.date)
+            return daysTill == 1
+        }
+    }
+    
+    var isCollectionToday: Bool {
+        contains { group in
+            let daysTill = Date.today.daysBetween(group.date)
+            return daysTill == 0
+        }
+    }
 }
