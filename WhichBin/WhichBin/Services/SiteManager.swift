@@ -9,20 +9,44 @@ import SwiftUI
 import CoreExtensions
 
 class SiteManager: ObservableObject {
-
+    
+    enum Error: Swift.Error {
+        case storeInaccessible
+    }
+    
     enum State {
         case initial
         case loaded
-        case error(Error)
+        case error(Swift.Error)
     }
+    
+    static let shared = SiteManager()
 
     @Published
     private(set) var sites: Set<Site> = []
 
     @Published
     private(set) var state: State = .initial
+    
+    var isLoaded: Bool {
+        switch state {
+        case .loaded:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    var loadError: Swift.Error? {
+        switch state {
+        case .error(let error):
+            error
+        default:
+            nil
+        }
+    }
 
-    init() {
+    private init() {
         do {
             try load()
             state = .loaded
@@ -50,10 +74,18 @@ class SiteManager: ObservableObject {
         guard sites.remove(siteWithId: id) else { return }
         try save()
     }
+    
+    private func store() throws -> URL {
+        guard let url = Support.sharedFolder else {
+            throw Error.storeInaccessible
+        }
+        return url.appendingPathComponent("Sites.json")
+    }
 
     private func load() throws {
-        let url = FileManager.libraryDirectory
-            .appendingPathComponent("Sites.json")
+        let url = try store()
+//        FileManager.libraryDirectory
+//            .appendingPathComponent("Sites.json")
         guard FileManager.default.fileExists(atPath: url) else { return }
         let data = try Data(contentsOf: url)
         let values = try JSONDecoder().decode([Site].self, from: data)
@@ -61,8 +93,9 @@ class SiteManager: ObservableObject {
     }
 
     private func save() throws {
-        let url = FileManager.libraryDirectory
-            .appendingPathComponent("Sites.json")
+        let url = try store()
+//        FileManager.libraryDirectory
+//            .appendingPathComponent("Sites.json")
         let data = try JSONEncoder().encode(Array(sites))
         try data.write(to: url)
     }

@@ -64,13 +64,20 @@ extension SchedulesView {
                 schedules: schedules,
                 errors: errors
             )
+            
+        case .error(let error):
+            VStack {
+                Spacer()
+                Text("Something went wrong")
+                Spacer()
+            }
         }
     }
     
     var loadingCollectionsView: some View {
         VStack {
             Spacer()
-            Text("Calculating the schedule")
+            Text("Gathering the schedule details")
                 .font(.title)
             
             Text("We know, it's exciting")

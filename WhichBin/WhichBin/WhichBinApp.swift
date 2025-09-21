@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct WhichBinApp: App {
-    @StateObject private var siteManager = SiteManager()
+    @StateObject private var siteManager = SiteManager.shared
 
     init() {
     }

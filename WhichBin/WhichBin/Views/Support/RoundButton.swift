@@ -24,7 +24,7 @@ public struct RoundButton<ButtonContent: View>: View {
 
 struct CircleButtonStyle: ButtonStyle {
 
-    let fillColor: Color = .blue
+    let fillColor: Color = .tint
 
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration

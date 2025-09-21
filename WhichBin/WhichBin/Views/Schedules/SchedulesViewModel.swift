@@ -15,15 +15,11 @@ class SchedulesViewModel: ObservableObject {
         case settings
     }
     
-    enum Error: Swift.Error {
-        case invalidDataSource([Site])
-        case failedToLoadSchedule(DataSource, [Site])
-    }
-    
     enum ViewState {
         case initial
         case loading
-        case loaded([EventGroup], [Error])
+        case loaded([EventGroup], [Swift.Error])
+        case error(Swift.Error)
     }
     
     let siteManager: SiteManager
@@ -64,50 +60,11 @@ class SchedulesViewModel: ObservableObject {
     func load() async {
         viewState = .loading
         
-        // Group the sites by data source key, so we're not reloading
-        // the same data set multiple times.
-        let groupedSites = Dictionary(grouping: siteManager.sites) { site in
-            site.dataSourceKey
+        do {
+            let scheduleResults = try await ScheduleService.load()
+            viewState = .loaded(scheduleResults.events, scheduleResults.errors)
+        } catch {
+            viewState = .error(error)
         }
-
-        // Build the scheduling...
-        var scheduleGroups: [ScheduleGroup] = []
-        var errors: [Error] = []
-        for (key, sites) in groupedSites {
-            guard let dataSource = DataSourceRegistry.shared.dataSources[key] else {
-                // How do we individualised error handling/reporting...?
-                log(warning: "Failed to find data source for \(key)")
-                errors.append(.invalidDataSource(sites))
-                continue
-            }
-            
-            do {
-                let schedules = try await dataSource.load()
-                
-                for schedule in schedules {
-                    let matches = sites.filter { site in
-                        schedule.polygon.mapMultiPolygon.contains(site.location.coordinate)
-                    }
-                    
-                    guard matches.isEmpty == false else { continue }
-                    
-                    let scheduleGroup = ScheduleGroup(
-                        dataSourceKey: key,
-                        dataSource: dataSource,
-                        schedule: schedule,
-                        sites: matches
-                    )
-                    
-                    scheduleGroups.append(scheduleGroup)
-                }
-            } catch {
-                log(error: "Failed to load schedules for \(key): \(error)")
-                errors.append(.failedToLoadSchedule(dataSource, sites))
-            }
-        }
-        
-        let nextSchedules = scheduleGroups.collections()
-        
-        viewState = .loaded(nextSchedules, errors)
     }
 }
