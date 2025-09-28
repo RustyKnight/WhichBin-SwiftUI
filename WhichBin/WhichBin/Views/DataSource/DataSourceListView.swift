@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WhichBinLib
+import WhichBinDataSourceLib
 
 /*
     We should allow for the displaying of a map showing

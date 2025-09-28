@@ -273,22 +273,6 @@ extension SchedulesView {
     }
 }
 
-private struct DateGroupedEvent: Identifiable {
-    var id: Date { date }
-    let date: Date
-    let events: [EventGroup]
-}
-
-private extension [EventGroup] {
-    
-    var groupedByDate: [DateGroupedEvent] {
-        let grouped = Dictionary(grouping: self, by: \.date)
-        return grouped.map { (key: Date, value: [EventGroup]) in
-            DateGroupedEvent(date: key, events: value)
-        }
-    }
-}
-
 private extension Text {
     @ViewBuilder
     func stylingDaysTill(_ date: Date) -> some View {

@@ -7,6 +7,7 @@
 
 import WhichBinLib
 import Foundation
+import WhichBinDataSourceLib
 
 struct Tree: Hashable, Sendable, Identifiable {
     let id = UUID()

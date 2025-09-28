@@ -9,6 +9,7 @@ import Cadmus
 import SwiftUI
 import WhichBinLib
 import WhichBinMapKitLib
+import WhichBinDataSourceLib
 import Combine
 
 class DataSourceListViewModel: ObservableObject {
@@ -90,11 +91,11 @@ class DataSourceListViewModel: ObservableObject {
 
         groupedByLocation = DataSourceRegistry.shared.grouped
 
-        let coreLocation = location.coreLocation
+        let coreLocation = location.location
         listByDistance = DataSourceRegistry.shared.dataSources.map {
             let key = $0.key
             let value = $0.value
-            let distance = coreLocation.distance(from: value.generalLocation.coreLocation)
+            let distance = coreLocation.distance(from: value.generalLocation.location)
 
             return .init(
                 key: key,
@@ -117,7 +118,7 @@ class DataSourceListViewModel: ObservableObject {
         verificationState = .unverified
         isVerifyingCollection = true
         
-        guard let dataSource = DataSourceRegistry.shared.dataSources[key] else {
+        guard let dataSource = DataSourceRegistry.shared.dataSource(for: key) else {
             log(debug: "Unknown data source: \(key)")
             return
         }
@@ -125,7 +126,7 @@ class DataSourceListViewModel: ObservableObject {
         log(debug: "Verifying data source: \(key)")
 
         do {
-            let coordinate = location.coreLocation.coordinate
+            let coordinate = location.coordinate
             let schedules = try await dataSource.load()
 
             let contains = schedules.contains { schedule in

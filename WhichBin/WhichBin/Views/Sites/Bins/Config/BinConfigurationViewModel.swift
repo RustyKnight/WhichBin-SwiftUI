@@ -8,6 +8,7 @@
 import Combine
 import SwiftUI
 import WhichBinLib
+import WhichBinDataSourceLib
 
 class BinConfigurationViewModel: ObservableObject {
     

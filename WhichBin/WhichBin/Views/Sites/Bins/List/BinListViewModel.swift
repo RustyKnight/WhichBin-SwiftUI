@@ -8,6 +8,7 @@
 import Cadmus
 import SwiftUI
 import WhichBinLib
+import WhichBinDataSourceLib
 
 class BinListViewModel: ObservableObject {
     

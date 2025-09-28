@@ -6,9 +6,11 @@
 //
 
 import WhichBinLib
+import WhichBinDataSourceLib
 import SwiftUI
 
 extension Bin {
+    
     func fillColor(for dataSourceKey: DataSourceRegistry.Key) -> Color {
         let defaults = UserDefaults.standard
         return defaults.color(dataSourceKey: dataSourceKey, bin: self) ?? defaultColor

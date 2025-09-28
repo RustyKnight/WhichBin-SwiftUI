@@ -8,6 +8,7 @@
 import CoreExtensions
 import Foundation
 import WhichBinLib
+import WhichBinDataSourceLib
 import Cadmus
 
 // We should be able to generate future schedules
@@ -76,6 +77,13 @@ extension [ScheduleGroup] {
     }
 
     private func forecasts() -> [EventGroup] {
+        // So, we could set a date a week in the past, then
+        // filter the results as "past" and "future".  This
+        // would then allow me to take the "last" past event
+        // which could be used to calculate the number of
+        // days between the last collection and the next collection
+        // and form some kind of progress bar :P
+        
         let calendar = Calendar.autoupdatingCurrent
         let firstWeekDay = calendar.firstDayOfWeek
         
@@ -102,6 +110,8 @@ extension [ScheduleGroup] {
     }
     
     func collections() -> [EventGroup] {
+        // Provide the ability to return
+        // past and future events :P
         forecasts()
             .filter { eventGroup in
                 eventGroup.date >= Date.today

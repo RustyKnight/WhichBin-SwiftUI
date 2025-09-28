@@ -9,6 +9,7 @@ import Cadmus
 import Combine
 import SwiftUI
 import WhichBinLib
+import WhichBinDataSourceLib
 
 struct SiteDescription: SiteDescribable {
     let name: String

@@ -6,6 +6,8 @@
 //
 
 import WhichBinLib
+import WhichBinDataSourceLib
+import WhichBinMapKitLib
 import Cadmus
 
 struct ScheduleService {
@@ -37,7 +39,7 @@ struct ScheduleService {
         var scheduleGroups: [ScheduleGroup] = []
         var errors: [Error] = []
         for (key, sites) in groupedSites {
-            guard let dataSource = DataSourceRegistry.shared.dataSources[key] else {
+            guard let dataSource = DataSourceRegistry.shared.dataSource(for: key) else {
                 // How do we individualised error handling/reporting...?
                 log(warning: "Failed to find data source for \(key)")
                 errors.append(.invalidDataSource(sites))
@@ -49,7 +51,7 @@ struct ScheduleService {
                 
                 for schedule in schedules {
                     let matches = sites.filter { site in
-                        schedule.polygon.mapMultiPolygon.contains(site.location.coordinate)
+                        schedule.polygon.contains(site.location)
                     }
                     
                     guard matches.isEmpty == false else { continue }
@@ -68,7 +70,7 @@ struct ScheduleService {
                 errors.append(.failedToLoadSchedule(dataSource, sites))
             }
         }
-        
+                
         let nextSchedules = scheduleGroups.collections()
         
         return (nextSchedules, errors)

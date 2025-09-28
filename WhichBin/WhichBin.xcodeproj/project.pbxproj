@@ -11,13 +11,17 @@
 		70587EA62E7E52F000C55B56 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70587EA52E7E52F000C55B56 /* WidgetKit.framework */; };
 		70587EA82E7E52F000C55B56 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70587EA72E7E52F000C55B56 /* SwiftUI.framework */; };
 		70587EB92E7E52F200C55B56 /* WidgetExtensionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 70587EA42E7E52F000C55B56 /* WidgetExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		70587EC02E7E530A00C55B56 /* WhichBinMapKitLib in Frameworks */ = {isa = PBXBuildFile; productRef = 70587EBF2E7E530A00C55B56 /* WhichBinMapKitLib */; };
 		70587EC22E7E530A00C55B56 /* CoreExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 70587EC12E7E530A00C55B56 /* CoreExtensions */; };
 		70587EC42E7E530A00C55B56 /* SwiftLocation in Frameworks */ = {isa = PBXBuildFile; productRef = 70587EC32E7E530A00C55B56 /* SwiftLocation */; };
 		70587EC72E7E533200C55B56 /* Cadmus in Frameworks */ = {isa = PBXBuildFile; productRef = 70587EC62E7E533200C55B56 /* Cadmus */; };
 		70587EC92E7E534100C55B56 /* Cadmus in Frameworks */ = {isa = PBXBuildFile; productRef = 70587EC82E7E534100C55B56 /* Cadmus */; };
 		708B07572E75226500C5C006 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 708B07562E75226500C5C006 /* MarkdownUI */; };
-		CEBF5E3F2DB2213E001D8D66 /* WhichBinMapKitLib in Frameworks */ = {isa = PBXBuildFile; productRef = CEBF5E3E2DB2213E001D8D66 /* WhichBinMapKitLib */; };
+		70DC30012E88C3E200A9D363 /* WhichBinDataSourceLib in Frameworks */ = {isa = PBXBuildFile; productRef = 70DC30002E88C3E200A9D363 /* WhichBinDataSourceLib */; };
+		70DC30032E88C3E200A9D363 /* WhichBinLib in Frameworks */ = {isa = PBXBuildFile; productRef = 70DC30022E88C3E200A9D363 /* WhichBinLib */; };
+		70DC30092E88C59400A9D363 /* WhichBinDataSourceLib in Frameworks */ = {isa = PBXBuildFile; productRef = 70DC30082E88C59400A9D363 /* WhichBinDataSourceLib */; };
+		70DC300B2E88C59400A9D363 /* WhichBinLib in Frameworks */ = {isa = PBXBuildFile; productRef = 70DC300A2E88C59400A9D363 /* WhichBinLib */; };
+		70DC300F2E88D23200A9D363 /* WhichBinMapKitLib in Frameworks */ = {isa = PBXBuildFile; productRef = 70DC300E2E88D23200A9D363 /* WhichBinMapKitLib */; };
+		70DC30112E88D23900A9D363 /* WhichBinMapKitLib in Frameworks */ = {isa = PBXBuildFile; productRef = 70DC30102E88D23900A9D363 /* WhichBinMapKitLib */; };
 		CEBF5E542DB35032001D8D66 /* CoreExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = CEBF5E532DB35032001D8D66 /* CoreExtensions */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +68,9 @@
 		70587EA52E7E52F000C55B56 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		70587EA72E7E52F000C55B56 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		70587EDF2E7E7ACF00C55B56 /* WidgetExtensionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtensionExtension.entitlements; sourceTree = "<group>"; };
+		70DC2F3E2E88BE5C00A9D363 /* WhichBinLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = WhichBinLib; path = ../WhichBinLib; sourceTree = SOURCE_ROOT; };
+		70DC2F3F2E88BFA200A9D363 /* WhichBinDataSourceLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = WhichBinDataSourceLib; path = ../WhichBinDataSourceLib; sourceTree = SOURCE_ROOT; };
+		70DC300D2E88D0C300A9D363 /* WhichBinMapKitLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = WhichBinMapKitLib; path = ../WhichBinMapKitLib; sourceTree = SOURCE_ROOT; };
 		CE54CCF12DB21BEB0008311B /* WhichBin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhichBin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE54CD022DB21BED0008311B /* WhichBinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhichBinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE54CD0C2DB21BED0008311B /* WhichBinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhichBinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,8 +88,14 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets/Assets.xcassets,
+				"Extensions/Date+QuickDescription.swift",
+				"Extensions/EventGroup+DateGrouping.swift",
 				"Extensions/FileManager+Security.swift",
 				"Extensions/UserDefaults+SecureShare.swift",
+				Models/Site/Site.swift,
+				Services/ScheduleService.swift,
+				Services/SiteManager.swift,
+				Support/ScheduleGroup.swift,
 				Support/Support.swift,
 			);
 			target = 70587EA32E7E52F000C55B56 /* WidgetExtensionExtension */;
@@ -133,10 +146,12 @@
 			files = (
 				70587EC42E7E530A00C55B56 /* SwiftLocation in Frameworks */,
 				70587EA82E7E52F000C55B56 /* SwiftUI.framework in Frameworks */,
-				70587EC02E7E530A00C55B56 /* WhichBinMapKitLib in Frameworks */,
+				70DC30112E88D23900A9D363 /* WhichBinMapKitLib in Frameworks */,
 				70587EA62E7E52F000C55B56 /* WidgetKit.framework in Frameworks */,
 				70587EC22E7E530A00C55B56 /* CoreExtensions in Frameworks */,
+				70DC300B2E88C59400A9D363 /* WhichBinLib in Frameworks */,
 				70587EC72E7E533200C55B56 /* Cadmus in Frameworks */,
+				70DC30092E88C59400A9D363 /* WhichBinDataSourceLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,9 +160,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				70587EC92E7E534100C55B56 /* Cadmus in Frameworks */,
-				CEBF5E3F2DB2213E001D8D66 /* WhichBinMapKitLib in Frameworks */,
 				703AD67A2E6A6AD4007BF15E /* SwiftLocation in Frameworks */,
 				CEBF5E542DB35032001D8D66 /* CoreExtensions in Frameworks */,
+				70DC300F2E88D23200A9D363 /* WhichBinMapKitLib in Frameworks */,
+				70DC30012E88C3E200A9D363 /* WhichBinDataSourceLib in Frameworks */,
+				70DC30032E88C3E200A9D363 /* WhichBinLib in Frameworks */,
 				708B07572E75226500C5C006 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -172,6 +189,9 @@
 		CE54CCE82DB21BEB0008311B = {
 			isa = PBXGroup;
 			children = (
+				70DC300D2E88D0C300A9D363 /* WhichBinMapKitLib */,
+				70DC2F3E2E88BE5C00A9D363 /* WhichBinLib */,
+				70DC2F3F2E88BFA200A9D363 /* WhichBinDataSourceLib */,
 				70587EDF2E7E7ACF00C55B56 /* WidgetExtensionExtension.entitlements */,
 				CE54CCF32DB21BEB0008311B /* WhichBin */,
 				CE54CD052DB21BED0008311B /* WhichBinTests */,
@@ -222,10 +242,12 @@
 			);
 			name = WidgetExtensionExtension;
 			packageProductDependencies = (
-				70587EBF2E7E530A00C55B56 /* WhichBinMapKitLib */,
 				70587EC12E7E530A00C55B56 /* CoreExtensions */,
 				70587EC32E7E530A00C55B56 /* SwiftLocation */,
 				70587EC62E7E533200C55B56 /* Cadmus */,
+				70DC30082E88C59400A9D363 /* WhichBinDataSourceLib */,
+				70DC300A2E88C59400A9D363 /* WhichBinLib */,
+				70DC30102E88D23900A9D363 /* WhichBinMapKitLib */,
 			);
 			productName = WidgetExtensionExtension;
 			productReference = 70587EA42E7E52F000C55B56 /* WidgetExtensionExtension.appex */;
@@ -250,11 +272,13 @@
 			);
 			name = WhichBin;
 			packageProductDependencies = (
-				CEBF5E3E2DB2213E001D8D66 /* WhichBinMapKitLib */,
 				CEBF5E532DB35032001D8D66 /* CoreExtensions */,
 				703AD6792E6A6AD4007BF15E /* SwiftLocation */,
 				708B07562E75226500C5C006 /* MarkdownUI */,
 				70587EC82E7E534100C55B56 /* Cadmus */,
+				70DC30002E88C3E200A9D363 /* WhichBinDataSourceLib */,
+				70DC30022E88C3E200A9D363 /* WhichBinLib */,
+				70DC300E2E88D23200A9D363 /* WhichBinMapKitLib */,
 			);
 			productName = WhichBin;
 			productReference = CE54CCF12DB21BEB0008311B /* WhichBin.app */;
@@ -314,7 +338,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					70587EA32E7E52F000C55B56 = {
 						CreatedOnToolsVersion = 16.2;
@@ -342,7 +366,6 @@
 			mainGroup = CE54CCE82DB21BEB0008311B;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				CEBF5E3C2DB22129001D8D66 /* XCRemoteSwiftPackageReference "WhichBinMapKitLib" */,
 				CEBF5E522DB35026001D8D66 /* XCRemoteSwiftPackageReference "CoreExtensions" */,
 				703AD62E2E6A6251007BF15E /* XCRemoteSwiftPackageReference "SwiftLocation" */,
 				708B07552E75224E00C5C006 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
@@ -537,6 +560,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -559,6 +583,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -598,6 +623,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -613,6 +639,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -625,9 +652,14 @@
 				CODE_SIGN_ENTITLEMENTS = WhichBin/WhichBin.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"WhichBin/Preview Content\"";
 				DEVELOPMENT_TEAM = YWXH886EY3;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_LOCATION = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhichBin/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Assist in managing your collection sites";
@@ -651,6 +683,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.kaizen.WhichBin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -668,9 +701,14 @@
 				CODE_SIGN_ENTITLEMENTS = WhichBin/WhichBin.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"WhichBin/Preview Content\"";
 				DEVELOPMENT_TEAM = YWXH886EY3;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_LOCATION = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhichBin/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Assist in managing your collection sites";
@@ -694,6 +732,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.kaizen.WhichBin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -709,6 +748,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
@@ -731,6 +771,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
@@ -752,6 +793,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
@@ -773,6 +815,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
@@ -864,14 +907,6 @@
 				minimumVersion = 2.4.1;
 			};
 		};
-		CEBF5E3C2DB22129001D8D66 /* XCRemoteSwiftPackageReference "WhichBinMapKitLib" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RustyKnight/WhichBinMapKitLib";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		CEBF5E522DB35026001D8D66 /* XCRemoteSwiftPackageReference "CoreExtensions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RustyKnight/CoreExtensions";
@@ -887,11 +922,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 703AD62E2E6A6251007BF15E /* XCRemoteSwiftPackageReference "SwiftLocation" */;
 			productName = SwiftLocation;
-		};
-		70587EBF2E7E530A00C55B56 /* WhichBinMapKitLib */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CEBF5E3C2DB22129001D8D66 /* XCRemoteSwiftPackageReference "WhichBinMapKitLib" */;
-			productName = WhichBinMapKitLib;
 		};
 		70587EC12E7E530A00C55B56 /* CoreExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -918,9 +948,28 @@
 			package = 708B07552E75224E00C5C006 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
 		};
-		CEBF5E3E2DB2213E001D8D66 /* WhichBinMapKitLib */ = {
+		70DC30002E88C3E200A9D363 /* WhichBinDataSourceLib */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEBF5E3C2DB22129001D8D66 /* XCRemoteSwiftPackageReference "WhichBinMapKitLib" */;
+			productName = WhichBinDataSourceLib;
+		};
+		70DC30022E88C3E200A9D363 /* WhichBinLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WhichBinLib;
+		};
+		70DC30082E88C59400A9D363 /* WhichBinDataSourceLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WhichBinDataSourceLib;
+		};
+		70DC300A2E88C59400A9D363 /* WhichBinLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WhichBinLib;
+		};
+		70DC300E2E88D23200A9D363 /* WhichBinMapKitLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WhichBinMapKitLib;
+		};
+		70DC30102E88D23900A9D363 /* WhichBinMapKitLib */ = {
+			isa = XCSwiftPackageProductDependency;
 			productName = WhichBinMapKitLib;
 		};
 		CEBF5E532DB35032001D8D66 /* CoreExtensions */ = {

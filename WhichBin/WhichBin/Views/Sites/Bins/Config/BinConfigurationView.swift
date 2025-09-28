@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WhichBinLib
+import WhichBinDataSourceLib
 
 struct BinConfigurationView: View {
 

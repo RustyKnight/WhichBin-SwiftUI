@@ -8,6 +8,7 @@
 import Foundation
 import MapKit
 import WhichBinLib
+import WhichBinDataSourceLib
 
 struct Site: Codable, Hashable, Identifiable {
     
@@ -43,6 +44,6 @@ struct Site: Codable, Hashable, Identifiable {
 
 extension Site {
     var dataSource: DataSource? {
-        DataSourceRegistry.shared.dataSources[dataSourceKey]
+        DataSourceRegistry.shared.dataSource(for: dataSourceKey)
     }
 }

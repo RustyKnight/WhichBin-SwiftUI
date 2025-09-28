@@ -6,6 +6,7 @@
 //
 
 import WhichBinLib
+import WhichBinDataSourceLib
 
 extension DataSourceRegistry {
 
