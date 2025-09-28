@@ -87,15 +87,15 @@ extension [ScheduleGroup] {
         let calendar = Calendar.autoupdatingCurrent
         let firstWeekDay = calendar.firstDayOfWeek
         
-        let startDate = calendar.previous(firstWeekDay, after: .today)
+        let startDate = calendar.previous(firstWeekDay, after: .today) - 1.weeks
         
         log(debug: "startDate = \(startDate.quickDescription)")
         
         return flatMap { schedule in
             // Get the forecast and group them
-            // by date
+            // by date.
             let events = Dictionary(
-                grouping: schedule.schedule.forecast(forWeeksAhead: 4, after: startDate),
+                grouping: schedule.schedule.forecast(forWeeksAhead: 6, after: startDate),
                 by: \.date
             )
             
@@ -109,12 +109,19 @@ extension [ScheduleGroup] {
         }
     }
     
-    func collections() -> [EventGroup] {
+    func collections() -> (future: [EventGroup], past: [EventGroup]) {
         // Provide the ability to return
         // past and future events :P
-        forecasts()
+        let future = forecasts()
             .filter { eventGroup in
                 eventGroup.date >= Date.today
             }
+        
+        let past = forecasts()
+            .filter { eventGroup in
+                eventGroup.date < Date.today
+            }
+        
+        return (future, past)
     }
 }

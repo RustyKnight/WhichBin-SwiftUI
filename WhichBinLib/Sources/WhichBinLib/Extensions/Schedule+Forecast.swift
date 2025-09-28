@@ -10,6 +10,11 @@ import CoreExtensions
 
 public extension Schedule {
     
+    /// Returns a forecast of future events.
+    /// - Parameters:
+    ///   - weeks: Number of weeks in the future to be included.
+    ///   - date: Events to be included after the date.
+    /// - Returns: Collection events.
     func forecast(forWeeksAhead weeks: Int, after date: Date = .today) -> [any Event] {
         // If `date` is the start of the week, the algorithm would skip this week
         // entirely, so we subtract 1 day in order to capture it.
@@ -40,7 +45,12 @@ public extension Schedule {
 }
 
 public extension [Schedule] {
-
+    
+    /// Returns a forecast of future events.
+    /// - Parameters:
+    ///   - weeks: Number of weeks in the future to be included.
+    ///   - date: Events to be included after the date.
+    /// - Returns: Collection events.
     func forecast(forWeeksAhead weeks: Int, after date: Date = .today) -> [any Event] {
         flatMap { schedule in
             schedule.forecast(

@@ -17,7 +17,11 @@ struct ScheduleService {
         case failedToLoadSchedule(DataSource, [Site])
     }
     
-    typealias ScheduleResults = (events: [EventGroup], errors: [Error])
+    struct ScheduleResults {
+        let lastEvent: EventGroup?
+        let futureEvents: [EventGroup]
+        let errors: [Error]
+    }
     
     /// Loads all the schedules for all the configured sites and groups
     /// them accordingly.
@@ -71,8 +75,15 @@ struct ScheduleService {
             }
         }
                 
-        let nextSchedules = scheduleGroups.collections()
+        let schedules = scheduleGroups.collections()
         
-        return (nextSchedules, errors)
+        let past = schedules.past.sorted { $0.date > $1.date }
+        let previousSchedule = past.first
+        
+        return .init(
+            lastEvent: previousSchedule,
+            futureEvents: schedules.future,
+            errors: errors
+        )
     }
 }

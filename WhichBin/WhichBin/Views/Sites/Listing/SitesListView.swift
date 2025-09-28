@@ -83,7 +83,7 @@ extension SitesListView {
     @ViewBuilder
     private func siteView(_ site: Site) -> some View {
         NavigationLink(value: SitesListViewModel.Destination.site(site)) {
-            if let dataSource = DataSourceRegistry.shared.dataSources[site.dataSourceKey] {
+            if let dataSource = DataSourceRegistry.shared.dataSource(for: site.dataSourceKey) {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(site.name)

@@ -9,11 +9,13 @@ import WhichBinLib
 import WhichBinDataSourceLib
 
 extension DataSourceRegistry {
-
+    
+    /// Groups the countries, states and cities into a tree structure
+    /// which can be easily displayed within a collapsable structure.
     var grouped: [Tree] {
-        let sources = DataSourceRegistry.shared.dataSources
+        let sources = DataSourceRegistry.shared.availableDataSources
 
-        let cities = sources.values.map { $0.city }
+        let cities = sources.map { $0.value.city }
         let states = cities.map { $0.state }
         let countries = states.map { $0.country }
 

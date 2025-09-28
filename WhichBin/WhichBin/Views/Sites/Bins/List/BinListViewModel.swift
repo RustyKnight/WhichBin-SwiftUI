@@ -38,7 +38,7 @@ class BinListViewModel: ObservableObject {
     
     @MainActor
     func loadBins() async {
-        guard let dataSource = DataSourceRegistry.shared.dataSources[dataSourceKey] else {
+        guard let dataSource = DataSourceRegistry.shared.dataSource(for: dataSourceKey) else {
             viewState = .error(DataSourceRegistry.Error.invalidDataSource)
             return
         }

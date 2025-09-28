@@ -92,7 +92,7 @@ class DataSourceListViewModel: ObservableObject {
         groupedByLocation = DataSourceRegistry.shared.grouped
 
         let coreLocation = location.location
-        listByDistance = DataSourceRegistry.shared.dataSources.map {
+        listByDistance = DataSourceRegistry.shared.availableDataSources.map {
             let key = $0.key
             let value = $0.value
             let distance = coreLocation.distance(from: value.generalLocation.location)

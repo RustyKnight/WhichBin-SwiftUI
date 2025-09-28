@@ -9,6 +9,7 @@ import Foundation
 
 public extension DateComponentsFormatter {
     
+    /// Date format for `day`.
     static let days: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.day]

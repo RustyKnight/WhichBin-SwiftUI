@@ -123,7 +123,7 @@ private extension DataSourceListView {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(city.description)
-                                if let dataSource = DataSourceRegistry.shared.dataSources[key] {
+                                if let dataSource = DataSourceRegistry.shared.dataSource(for: key) {
                                     Text(dataSource.name)
                                         .font(.caption)
                                         .foregroundStyle(.secondary)

@@ -18,7 +18,7 @@ class SchedulesViewModel: ObservableObject {
     enum ViewState {
         case initial
         case loading
-        case loaded([EventGroup], [Swift.Error])
+        case loaded(ScheduleService.ScheduleResults)
         case error(Swift.Error)
     }
     
@@ -62,7 +62,7 @@ class SchedulesViewModel: ObservableObject {
         
         do {
             let scheduleResults = try await ScheduleService.load()
-            viewState = .loaded(scheduleResults.events, scheduleResults.errors)
+            viewState = .loaded(scheduleResults)
         } catch {
             viewState = .error(error)
         }

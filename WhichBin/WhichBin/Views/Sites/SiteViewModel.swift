@@ -60,14 +60,14 @@ class SiteViewModel: ObservableObject {
     
     var dataSourceDescription: String? {
         guard let dataSource else { return nil }
-        return DataSourceRegistry.shared.dataSources[dataSource]?.name
+        return DataSourceRegistry.shared.dataSource(for: dataSource)?.name
     }
     
     private var siteDescription: SiteDescribable? {
         guard name.trimmed.isEmpty == false,
               let coordinates,
               let dataSourceKey = dataSource,
-              let dataSource = DataSourceRegistry.shared.dataSources[dataSourceKey] else { return nil }
+              let dataSource = DataSourceRegistry.shared.dataSource(for: dataSourceKey) else { return nil }
         return SiteDescription(
             name: name,
             location: coordinates,

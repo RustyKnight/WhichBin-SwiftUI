@@ -39,7 +39,7 @@ struct WhichBinTimeLineProvider: TimelineProvider {
         Task {
             do {
                 let results = try await ScheduleService.load()
-                let events = results.events
+                let events = results.futureEvents
                 
                 let dateGroup = events.groupedByDate
                 let sorted = dateGroup.sorted { $0.date < $1.date }

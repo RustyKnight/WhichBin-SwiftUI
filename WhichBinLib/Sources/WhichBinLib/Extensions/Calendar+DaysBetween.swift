@@ -23,6 +23,9 @@ public extension Calendar {
 }
 
 public extension Date {
+    /// Calculates the number of days between this and another date.
+    /// - Parameter date: Other date.
+    /// - Returns: Days between this and the other date.  May be negative.
     func daysBetween(_ date: Date) -> Int {
         let calendar = Calendar.current
         return calendar.daysBetween(self, and: date)

@@ -11,6 +11,8 @@ import CoreExtensions
 
 public extension Date {
     
+    /// Weekday representation which supports decoding
+    /// and some other features.
     enum Weekday: String, Decodable, CaseIterable, Sendable {
         case monday = "Monday"
         case tuesday = "Tuesday"
@@ -31,7 +33,8 @@ public extension Date {
             case .saturday: return 7
             }
         }
-
+        
+        /// Convert to `Calendar.Weekday`
         public var calendarWeekday: Calendar.Weekday {
             switch self {
             case .sunday: Calendar.Weekday.sunday
@@ -45,6 +48,7 @@ public extension Date {
         }
     }
     
+    /// Weekday from current `Date`.
     var weekday: Int {
         Calendar.current.component(.weekday, from: self)
     }

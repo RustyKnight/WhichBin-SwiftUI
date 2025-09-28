@@ -59,11 +59,8 @@ extension SchedulesView {
         case .initial, .loading:
             loadingCollectionsView
             
-        case .loaded(let schedules, let errors):
-            collectionsView(
-                schedules: schedules,
-                errors: errors
-            )
+        case .loaded(let schedules):
+            collectionsView(schedules)
             
         case .error(let error):
             VStack {
@@ -92,9 +89,9 @@ extension SchedulesView {
         .background(Color.listBackground)
     }
     
-    func collectionsView(schedules: [EventGroup], errors: [Error]) -> some View {
+    func collectionsView(_ schedules: ScheduleService.ScheduleResults) -> some View {
         List {
-            collectionErrorsView(errors)
+            collectionErrorsView(schedules.errors)
             
             schedulesView(schedules)
                 .listRowSeparator(.hidden)
@@ -118,15 +115,16 @@ extension SchedulesView {
     }
     
     @ViewBuilder
-    func schedulesView(_ schedules: [EventGroup]) -> some View {
+    func schedulesView(_ schedules: ScheduleService.ScheduleResults) -> some View {
         collectionEventsView(schedules)
     }
     
     @ViewBuilder
-    func collectionEventsView(_ events: [EventGroup]) -> some View {
+    func collectionEventsView(_ schedules: ScheduleService.ScheduleResults) -> some View {
+        let events = schedules.futureEvents
+        // Group the events by date.
         let dateGroup = events.groupedByDate
-        let sorted = dateGroup.sorted { $0.date < $1.date }
-        // Need to group dates ...
+        var sorted = dateGroup.sorted { $0.date < $1.date }
         
         if events.isCollectionToday {
             collectionTodayView
@@ -134,27 +132,48 @@ extension SchedulesView {
             collectionTomorrowView
         }
         
+        let nextGroup = sorted.removeFirst()
+        eventCollectionEvent(
+            group: nextGroup,
+            lastEvent: schedules.lastEvent
+        )
+        
         ForEach(sorted) { group in
-            let date = group.date
-            
-            let dateText = date.formatted(viewModel.dayDateStyle)
-            
-            Section {
-                VStack {
-                    HStack(alignment: .bottom) {
-                        Text(dateText)
-                        Spacer()
-                        Text(daysTillDescription(date))
-                            //.stylingDaysTill(date)
-                            .padding(.top, .Padding.small)
-                    }
-//                    .stylingDaysTill(date)
-                    Divider()
+            eventCollectionEvent(group: group)
+        }
+    }
+    
+    @ViewBuilder
+    private func eventCollectionEvent(
+        group: DateGroupedEvent,
+        lastEvent: EventGroup? = nil
+    ) -> some View {
+        let date = group.date
+        
+        let dateText = date.formatted(viewModel.dayDateStyle)
+        
+        Section {
+            VStack {
+                HStack(alignment: .bottom) {
+                    Text(dateText)
+                    Spacer()
+                    Text(daysTillDescription(date))
+                        .padding(.top, .Padding.small)
                 }
                 
-                ForEach(group.events) { events in
-                    eventGroupView(events)
+                if let lastEvent {
+                    let daysBetween = lastEvent.date.daysBetween(date)
+                    let daysFrom = lastEvent.date.daysBetween(.today)
+                    
+                    if daysFrom < daysBetween {
+                        ProgressView(value: Double(daysFrom), total: Double(daysBetween))
+                    }
                 }
+                Divider()
+            }
+            
+            ForEach(group.events) { events in
+                eventGroupView(events)
             }
         }
     }
