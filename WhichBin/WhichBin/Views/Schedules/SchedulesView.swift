@@ -157,16 +157,31 @@ extension SchedulesView {
                 HStack(alignment: .bottom) {
                     Text(dateText)
                     Spacer()
-                    Text(daysTillDescription(date))
-                        .padding(.top, .Padding.small)
+                    daysTillDescription(date)
                 }
                 
                 if let lastEvent {
+                    // We block a period of time from the end of the last
+                    // event and the start of the event as we tend to
+                    // exclude the actual event day ... because we don't
+                    // know the actual collection time, "Today" becomes
+                    // the overall catch phrase.
+                    // This provides us with a presentable range of time
+                    // until the bins actually need to be out.
+                    let nextEventTime = date.startOfDay.timeIntervalSince1970
+                    let lastEventTime = lastEvent.date.endOfDay.timeIntervalSince1970
+                    let currentTime = Date.today.timeIntervalSince1970
+                    
+                    let range = nextEventTime - lastEventTime
+                    let value = currentTime - lastEventTime
+                    
                     let daysBetween = lastEvent.date.daysBetween(date)
                     let daysFrom = lastEvent.date.daysBetween(.today)
                     
                     if daysFrom < daysBetween {
-                        ProgressView(value: Double(daysFrom), total: Double(daysBetween))
+                        // We could place some more additional focus on the progress
+                        // for "tomorrow"
+                        ProgressView(value: Double(value), total: Double(range))
                     }
                 }
                 Divider()
@@ -202,14 +217,21 @@ extension SchedulesView {
         }
     }
     
-    func daysTillDescription(_ date: Date) -> String {
+    @ViewBuilder
+    func daysTillDescription(_ date: Date) -> some View {
         let daysTill = Date.today.daysBetween(date)
         if daysTill < 1 {
-            return "Today"
+            Text("Today")
+                .padding(.top, .Padding.small)
+                .bold(true)
         } else if daysTill < 2 {
-            return "Tomorrow"
+            Text("Tomorrow")
+                .padding(.top, .Padding.small)
+                .bold()
+                .underline()
         } else {
-            return "in \(daysTill) days"
+            Text("in \(daysTill) days")
+                .padding(.top, .Padding.small)
         }
     }
     
@@ -291,47 +313,47 @@ extension SchedulesView {
         .background(.cellFill)
     }
 }
-
-private extension Text {
-    @ViewBuilder
-    func stylingDaysTill(_ date: Date) -> some View {
-        let daysTill = Date.today.daysBetween(date)
-        if daysTill < 1 {
-            self
-            .font(.caption)
-            .bold(true)
-            .foregroundStyle(.primary)
-        } else if daysTill < 2 {
-            self
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        } else {
-            self
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
-    }
-}
-
-private extension View {
-    
-    @ViewBuilder
-    func stylingDaysTill(_ date: Date) -> some View {
-        let daysTill = Date.today.daysBetween(date)
-        if daysTill < 2 {
-            self
-                .padding(EdgeInsets.Padding.extraSmall)
-                .background(Color.background)
-                .cornerRadius(4)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(.primary, lineWidth: 1)
-                )
-        } else {
-            self
-        }
-    }
-}
+//
+//private extension Text {
+//    @ViewBuilder
+//    func stylingDaysTill(_ date: Date) -> some View {
+//        let daysTill = Date.today.daysBetween(date)
+//        if daysTill < 1 {
+//            self
+//            .font(.caption)
+//            .bold(true)
+//            .foregroundStyle(.primary)
+//        } else if daysTill < 2 {
+//            self
+//                .font(.caption)
+//                .foregroundStyle(.secondary)
+//        } else {
+//            self
+//                .font(.caption)
+//                .foregroundStyle(.secondary)
+//        }
+//    }
+//}
+//
+//private extension View {
+//    
+//    @ViewBuilder
+//    func stylingDaysTill(_ date: Date) -> some View {
+//        let daysTill = Date.today.daysBetween(date)
+//        if daysTill < 2 {
+//            self
+//                .padding(EdgeInsets.Padding.extraSmall)
+//                .background(Color.background)
+//                .cornerRadius(4)
+//                .overlay(
+//                    RoundedRectangle(cornerRadius: 4)
+//                        .stroke(.primary, lineWidth: 1)
+//                )
+//        } else {
+//            self
+//        }
+//    }
+//}
 
 private extension [EventGroup] {
     
