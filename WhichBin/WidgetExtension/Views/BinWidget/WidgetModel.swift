@@ -13,9 +13,17 @@ struct WidgetModel: TimelineEntry, Codable, Hashable {
     
     let date: Date
     
+    let nextEvent: DateGroupedEvent?
+    let lastEvent: EventGroup?
+    
     let debugDetails: String?
     
-    init(date: Date, debugDetails: String? = nil) {
+    init(
+        date: Date,
+        nextEvent: DateGroupedEvent? = nil,
+        lastEvent: EventGroup? = nil,
+        debugDetails: String? = nil
+    ) {
         self.date = date
         self.debugDetails = debugDetails
     }

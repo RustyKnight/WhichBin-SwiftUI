@@ -15,6 +15,8 @@ struct LocationView: View {
 
     @ObservedObject
     var viewModel: LocationViewModel
+    
+    @FocusState private var searchFieldFocused: Bool
 
     var body: some View {
         VStack {
@@ -24,6 +26,9 @@ struct LocationView: View {
 
             ZStack(alignment: .bottom) {
                 mapView
+                    .onTapGesture {
+                        searchFieldFocused = false
+                    }
                 if case .results(let results) = viewModel.searchState {
                     searchResultsView(results)
                 }
@@ -31,7 +36,12 @@ struct LocationView: View {
                     Spacer()
                     HStack {
                         Spacer()
-                        locationButton
+                        if viewModel.isTargetingLocation {
+                            ProgressView()
+                                .standard(size: .extraLarge32)
+                        } else {
+                            locationButton
+                        }
                     }
                     HStack {
                         cancelButton
@@ -55,6 +65,7 @@ private extension LocationView {
         List(results, id: \.self) { item in
             Text("\(item.addressDescription)")
                 .onTapGesture {
+                    searchFieldFocused = false
                     viewModel.selectedPlaceMaker = item.placemark
                 }
         }
@@ -66,7 +77,7 @@ private extension LocationView {
             Image.magnifyingGlass
                 .foregroundStyle(.secondary)
 
-            DebounceTextField("Search", text: $viewModel.searchText) { value in
+            DebounceTextField("Search", text: $viewModel.searchText, focused: $searchFieldFocused) { value in
                 viewModel.performSearch()
             }
             .padding()
@@ -104,7 +115,7 @@ private extension LocationView {
             } else {
                 Image.Location.circle
                     .resizable()
-                    .frame(width: 32, height: 32)
+                    .standard(size: .extraLarge32)
                     .foregroundStyle(.secondary)
             }
         }

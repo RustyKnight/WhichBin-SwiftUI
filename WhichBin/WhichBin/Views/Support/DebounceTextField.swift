@@ -14,14 +14,16 @@ struct DebounceTextField: View {
 
     @State var label: String
     @Binding var value: String
+    @FocusState<Bool>.Binding var focused: Bool
     var valueChanged: ((_ value: String) -> Void)?
 
     @State var debounceSeconds = 1.110
 
-    init(_ label: String, text: Binding<String>, valueChange: ((_ value: String) -> Void)?) {
+    init(_ label: String, text: Binding<String>, focused: FocusState<Bool>.Binding, valueChange: ((_ value: String) -> Void)?) {
         self.label = label
         self._value = text
         self.valueChanged = valueChange
+        self._focused = focused
     }
 
     var body: some View {
@@ -40,5 +42,6 @@ struct DebounceTextField: View {
                     valueChanged(value)
                 }
             }
+            .focused($focused)
     }
 }

@@ -40,9 +40,8 @@ class LocationViewModel: ObservableObject {
 
     @Binding var target: Target?
 
-    var canTargetCurrentLocation: Bool {
-        location.authorizationStatus.isAuthorised
-    }
+    @Published
+    var canTargetCurrentLocation: Bool
 
     @Published private(set) var isTargetingLocation = false
 
@@ -53,6 +52,8 @@ class LocationViewModel: ObservableObject {
 
     init(target: Binding<Target?>) {
         self._target = target
+        
+        self.canTargetCurrentLocation = location.authorizationStatus.isAuthorised
 
         $selectedPlaceMaker.sink { value in
             guard value != nil else { return }
@@ -87,6 +88,7 @@ class LocationViewModel: ObservableObject {
         } catch {
             log(error: "Failed to get location permission: \(error.localizedDescription)")
         }
+        self.canTargetCurrentLocation = location.authorizationStatus.isAuthorised
     }
 
     @MainActor

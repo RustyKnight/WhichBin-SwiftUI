@@ -39,11 +39,25 @@ struct WhichBinTimeLineProvider: TimelineProvider {
         Task {
             do {
                 let results = try await ScheduleService.load()
-                let events = results.futureEvents
+                let futureEvents = results.futureEvents
+                let lastEvent = results.lastEvent
                 
-                let dateGroup = events.groupedByDate
+                let dateGroup = futureEvents.groupedByDate
                 let sorted = dateGroup.sorted { $0.date < $1.date }
-
+                let nextEvent = sorted.first
+                
+                let model = WidgetModel(
+                    date: .today + 1.hours,
+                    nextEvent: nextEvent,
+                    lastEvent: lastEvent
+                )
+                
+                completion(
+                    Timeline<WidgetModel>(
+                        entries: [model],
+                        policy: .atEnd
+                    )
+                )
             } catch {
                 completion(Timeline<WidgetModel>.emptyState(debugDetails: "\(error)"))
             }

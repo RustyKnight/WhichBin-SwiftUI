@@ -72,10 +72,11 @@ extension SchedulesView {
     }
     
     var loadingCollectionsView: some View {
-        VStack {
+        VStack(alignment: .center) {
             Spacer()
             Text("Gathering the schedule details")
                 .font(.title)
+                .multilineTextAlignment(.center)
             
             Text("We know, it's exciting")
                 .font(.caption)
